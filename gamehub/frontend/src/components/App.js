@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom'
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import Header from './layout/Header'
-// import Dashboard from './leads/Dashboard'
+import Dashboard from './layout/Dashboard'
 import Alerts from './layout/Alerts'
 import Login from './accounts/Login'
 import Register from './accounts/Register'
@@ -42,8 +42,9 @@ class App extends Component {
                 {/* <Test /> */}
                 {/* <Switch> */}
                 {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-                {/* <Route exact path="/" component={Dashboard} /> */}
-                <Route exact path="/" component={Defaultgame} />
+                <Route exact path="/" component={Dashboard} />
+
+                <Route exact path="/defaultgame" component={Defaultgame} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 {/* </Switch> */}

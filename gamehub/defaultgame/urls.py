@@ -14,7 +14,7 @@ from .api import TurnsViewSet
 
 router = routers.DefaultRouter()
 router.register('api/defaultgame/games', GamesViewSet, 'games')
-router.register('api/defaultgame/players', PlayersViewSet, 'players')
+router.register('api/defaultgame/activegames', PlayersViewSet, 'players')
 router.register('api/defaultgame/rounds', RoundsViewSet, 'rounds')
 router.register('api/defaultgame/turns', TurnsViewSet, 'turns')
 # router.register('api/defaultgame/testing', GamesViewSetActive, 'games')
