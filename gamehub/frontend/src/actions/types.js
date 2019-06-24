@@ -1,6 +1,4 @@
-export const GET_LEADS = "GET_LEADS"
-export const DELETE_LEAD = "DELETE_LEAD"
-export const ADD_LEAD = "ADD_LEAD"
+
 export const GET_ERRORS = "GET_ERRORS"
 export const GET_MESSAGES = "GET_MESSAGES"
 export const CREATE_MESSAGE = "CREATE_MESSAGE"
@@ -15,3 +13,4 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS"
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
 export const REGISTER_FAIL = "REGISTER_FAIL"
 export const GET_GAMEPLAY = "GET_GAMEPLAY"
+

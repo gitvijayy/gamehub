@@ -1,12 +1,7 @@
 import { GET_GAMEPLAY } from '../actions/types.js'
 
 const initialState = {
-  // gameid: 10,
-  // status: 'Active',
-  // players: ['vijay', 'yajiv'],
-  // rounds: [1, 2, 3, 4],
-  // prizecards: [8, 9, 10, 11],
-  // turns: [[1, 2], [2, 2], [3, 3], [4, 4]],
+
   gameplay: []
 }
 
@@ -24,3 +19,33 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+//!for referance
+/*import { GET_LEADS, DELETE_LEAD, ADD_LEAD } from '../actions/types.js'
+
+const initialState = {
+  leads: []
+}
+
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case GET_LEADS:
+      // console.log(action.payload)
+      return {
+        ...state,
+        leads: action.payload
+      }
+    case DELETE_LEAD:
+      return {
+        ...state,
+        leads: state.leads.filter(lead => lead.id !== action.payload)
+      }
+    case ADD_LEAD:
+      return {
+        ...state,
+        leads: [...state.leads, action.payload]
+      }
+    default:
+      return state;
+  }
+} */
