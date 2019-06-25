@@ -1,14 +1,19 @@
+
+require("../../templates/frontend/main.css")
+
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
-import Header from './layout/Header'
+import Navbar from './layout/Navbar'
+import Gamelist from './layout/Gamelist'
+import Activegames from './layout/Activegames'
+import Activeplayers from './layout/Activeplayers'
 import Dashboard from './layout/Dashboard'
 import Alerts from './layout/Alerts'
 import Login from './accounts/Login'
 import Register from './accounts/Register'
 import PrivateRoute from './common/PrivateRoute'
 import Defaultgame from './games/Defaultgame'
-
 import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import { Provider } from 'react-redux'
@@ -35,21 +40,29 @@ class App extends Component {
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
             <Fragment>
-              <Header />
+              <Navbar />
               <Alerts />
-              <div className="container">
-
+              <div class="d-flex">
+                <Activegames />
+                <Gamelist />
+                <Activeplayers />
                 {/* <Test /> */}
                 {/* <Switch> */}
                 {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-                <Route exact path="/" component={Dashboard} />
+                {/* <Route exact path="/" component={Dashboard} /> */}
 
-                <Route exact path="/defaultgame" component={Defaultgame} />
+                {/* <Route exact path="/defaultgame" component={Defaultgame} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
+                <Route exact path="/login" component={Login} /> */}
                 {/* </Switch> */}
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}
+
+
+
+
+
+
               </div>
             </Fragment>
           </Router>

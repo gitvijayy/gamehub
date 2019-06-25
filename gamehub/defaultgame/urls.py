@@ -6,6 +6,7 @@ from django.urls import path, include
 # from knox import views as knox_views
 
 from rest_framework import routers
+# from rest_framework import RestRouter
 from .api import GamesViewSet
 from .api import RoundsViewSet
 from .api import PlayersViewSet
@@ -13,6 +14,7 @@ from .api import TurnsViewSet
 # from .api import GamesViewSetActive
 
 router = routers.DefaultRouter()
+# router = routers.RestRouter()
 router.register('api/defaultgame/games', GamesViewSet, 'games')
 router.register('api/defaultgame/activegames', PlayersViewSet, 'players')
 router.register('api/defaultgame/rounds', RoundsViewSet, 'rounds')

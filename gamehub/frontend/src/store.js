@@ -12,4 +12,9 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(...middleware))
 )
 
+
+// import { WebSocketHandler, store } from 'channels-redux';
+// const webSocketHandler = new WebSocketHandler(store);
+// webSocketHandler.subscribeAll();
+
 export default store

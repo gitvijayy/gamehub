@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'knox',
     'accounts',
-    'defaultgame'
+    'defaultgame',
+    'chat',
+    'channels',
+    'channels_redux'
+
 ]
 
 REST_FRAMEWORK = {
@@ -78,6 +82,26 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'gamehub.wsgi.application'
+ASGI_APPLICATION = "gamehub.routing.application"
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
 
 
 # Database

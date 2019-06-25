@@ -1,0 +1,104 @@
+.game-over {
+  background-image: url(https://i.ytimg.com/vi/GFVGfWJil30/maxresdefault.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.user {
+  height: 35px;
+  width: 35px;
+  margin-right: 10%;
+  margin-bottom: 2%;
+}
+
+.card-images {
+  margin-top: 4%;
+  height: 170px;
+}
+
+.logo {
+  font-family: "Anton", sans-serif;
+  font-size: 2em;
+}
+
+.logo img {
+  height: 50px;
+  margin-right: 1.5%;
+}
+
+.side-containers {
+  background: snow;
+  box-shadow: inset 0px -10px 25px #27233a, 0px 5px 5px black;
+  margin: 1%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* .active-games {
+  justify-content: space-evenly;
+} */
+
+.active-games div {
+  margin-top: 5%;
+}
+
+.active-games div button {
+  margin-bottom: 5%;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.box-shadow {
+  margin: 4%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0px -10px 25px #27233a, 0px 5px 5px black;
+}
+
+.bg-common {
+  background: tan;
+}
+
+.card-title {
+  font-family: "Anton", sans-serif;
+}
+
+.game-top-div {
+  margin: 4%;
+}
+
+.game-top-div button {
+  border-radius: 5px;
+}
+
+.active-users {
+  margin: 1%;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.active-users h3 {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  margin: 10%;
+}
+
+@media screen and (max-width: 1000px) {
+  .side-containers {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    /* margin: 10px auto 5px 20px;
+    width: 28%; */
+    margin: 0;
+    width: 0;
+    display: none;
+  }
+}
+
+.user-block {
+  margin: 3%;
+}

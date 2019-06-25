@@ -59,10 +59,13 @@ class TurnSerializer(serializers.ModelSerializer):
 
     def create(self,  validated_data):
         if validated_data['round_id'].turns.count() >= 1:
+            # raise serializers.ValidationError(
+            #     validated_data['round_id'], validated_data['round_id'].turns.count())
             player_valid_turn = Turns.objects.filter(
                 round_id=validated_data['round_id'], player=self.context['request'].user)
             if player_valid_turn:
                 raise serializers.ValidationError("Not Your Turn")
+
             prize_card = prize_card_generator(
                 validated_data['round_id'].game_id)
             if prize_card == "Game Over":
@@ -70,6 +73,7 @@ class TurnSerializer(serializers.ModelSerializer):
             newRound = Rounds.objects.create(
                 game_id=validated_data['round_id'].game_id, prizeCard=prize_card)
             newRound.save()
+
         newTurn = Turns.objects.create(
             round_id=validated_data['round_id'], player=self.context['request'].user, action=validated_data['action'])
         return newTurn

@@ -14,11 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-
+from django.urls import path, include, re_path
+from django.conf.urls import include as include1, url
+# from django.views.generic import TemplateView
+# from django.contrib import admin
+# from django.urls import path, include, re_path
+# from django.views.generic import TemplateView
 urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
     path('', include('defaultgame.urls')),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    url(r'^chat/', include('chat.urls'))
+    # path('chat/', include1('chat.api.urls', namespace='chat')),
+    # re_path(r'^.*', TemplateView.as_view(template_name='index.html'))
 ]
