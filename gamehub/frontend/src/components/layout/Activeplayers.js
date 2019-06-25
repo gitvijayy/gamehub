@@ -6,7 +6,7 @@ export default class Activeplayers extends Component {
   }
 
   render() {
-
+    const male = require("../images/male.png")
     const { players } = this.state
     const loadplayers =
 
@@ -18,7 +18,7 @@ export default class Activeplayers extends Component {
 
             return (
               <h4 key={index} className="text-center font-weight-bold user-block">
-                <a href="#"><img className="user" src="images/male.png" />{player}</a>
+                <a href="#"><img className="user" src={male} />{player}</a>
               </h4>
             )
           })}

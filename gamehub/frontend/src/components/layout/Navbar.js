@@ -9,7 +9,7 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-common" >
-        <a className="logo navbar-brand col-3 col-md-11" href="#"><img src="" />GameHub</a>
+        <a className="logo navbar-brand col-3 col-md-11" href="#"><img src={require('../images/aces.png')} />GameHub</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

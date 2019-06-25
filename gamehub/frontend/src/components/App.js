@@ -42,7 +42,7 @@ class App extends Component {
             <Fragment>
               <Navbar />
               <Alerts />
-              <div class="d-flex">
+              <div className="d-flex">
                 <Activegames />
                 <Gamelist />
                 <Activeplayers />
