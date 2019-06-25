@@ -12,6 +12,7 @@ django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 django-extensions="*"
+channels="*"
 
 [requires]
 python_version = "3.6"

@@ -17,18 +17,9 @@ module.exports = {
           'sass-loader'
         ]
       }, {
-        test: /\.(png|jpeg|svg|jpg)$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 25000,
-          }
-        }
-      },
-      {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
-          'file-loader',
+          'url-loader',
           {
             loader: 'image-webpack-loader',
             options: {
