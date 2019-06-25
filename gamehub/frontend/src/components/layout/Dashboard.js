@@ -1,11 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import Gamelist from './Gamelist'
+import Activegames from './Activegames'
+import Activeplayers from './Activeplayers'
 export class Dashboard extends Component {
   render() {
     return (
-
-      <Link to="/defaultgame"> <button className="btn btn-primary">DefaultGame</button></Link>
-
+      <Fragment>
+        <Activegames />
+        <Gamelist />
+        <Activeplayers />
+      </Fragment >
     )
   }
 }

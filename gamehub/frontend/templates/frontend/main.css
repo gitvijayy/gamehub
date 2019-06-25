@@ -48,6 +48,10 @@
   margin-left: 5%;
 }
 
+.logout {
+  box-shadow: inset 0px -10px 25px red, 0px 5px 5px black;
+}
+
 .box-shadow {
   margin: 4%;
   height: 80px;

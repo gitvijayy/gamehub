@@ -5,9 +5,7 @@ import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import Navbar from './layout/Navbar'
-import Gamelist from './layout/Gamelist'
-import Activegames from './layout/Activegames'
-import Activeplayers from './layout/Activeplayers'
+
 import Dashboard from './layout/Dashboard'
 import Alerts from './layout/Alerts'
 import Login from './accounts/Login'
@@ -43,18 +41,16 @@ class App extends Component {
               <Navbar />
               <Alerts />
               <div className="d-flex">
-                <Activegames />
-                <Gamelist />
-                <Activeplayers />
-                {/* <Test /> */}
-                {/* <Switch> */}
-                {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-                {/* <Route exact path="/" component={Dashboard} /> */}
 
-                {/* <Route exact path="/defaultgame" component={Defaultgame} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} /> */}
-                {/* </Switch> */}
+                {/* <Test /> */}
+                <Switch>
+                  {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
+                  <Route exact path="/" component={Dashboard} />
+
+
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} /> */}
+                </Switch>
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}
 
