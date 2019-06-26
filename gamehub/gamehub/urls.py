@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
     path('', include('defaultgame.urls')),
+    path('', include('war.urls')),
     path('admin/', admin.site.urls),
     url(r'^chat/', include('chat.urls'))
     # path('chat/', include1('chat.api.urls', namespace='chat')),

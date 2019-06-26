@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'accounts',
     'defaultgame',
     'chat',
-    'channels'
+    'channels',
+    'war'
 ]
 
 REST_FRAMEWORK = {
