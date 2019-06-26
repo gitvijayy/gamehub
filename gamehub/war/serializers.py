@@ -68,18 +68,26 @@ class PlayerNameSerializer(serializers.ModelSerializer):
         # depth = 5
         # depth = 2
 
+class RoundSerializer(serializers.ModelSerializer):
+    # turns = TurnDataSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Rounds
+        fields = ['id']
+        # depth = 5
+
 class GameSerializer(serializers.ModelSerializer):
     # Games.objects.all().delete()
     # Turns.objects.all().delete()
     # Rounds.objects.all().delete()
     # Players.objects.all().delete()
     # player = UserNameSerializer()
-    # rounds = RoundSerializer(many=True, read_only=True)
+    round = RoundSerializer(many=True, read_only=True)
     playerswar = PlayerNameSerializer(many=True, read_only=True)
 
     class Meta:
         model = Games
-        fields = ['id', 'status',  'playerswar']
+        fields = ['id', 'status',  'playerswar','round']
         # fields = '__all__'
         # depth = 5 # needs rounds
 
@@ -117,10 +125,10 @@ class GameSerializer(serializers.ModelSerializer):
                         game.status = 'Active'
                         game.save()
                         addSecondPlayer(game,current_players)
-                        # prize_card = random.randint(1, 13)
-                        # newRound = Rounds.objects.create(
-                        #     game_id=game, prizeCard=prize_card)
-                        # newRound.save()
+                        prize_card = random.randint(1, 13)
+                        newRound = Rounds.objects.create(
+                            game_id=game,)
+                        newRound.save()
                         return game
         newGame = addGame()
         return newGame
