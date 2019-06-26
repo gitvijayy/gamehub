@@ -86,19 +86,62 @@ export class Defaultgame extends Component {
 
       }
     }
+
+    const player1cards = []
+    const player2cards = []
+    const player1points = 0
+    const player2points = 0
+    const player1name = ""
+    const player2name = ""
+    const test = [1, 2, 3, 4]
+
+    test.map(turn => {
+      player1cards.push(<img key={"p1" + turn} src={require("../images/blackBack.png")} />)
+      player2cards.push(<img key={"p" + turn} src={require("../images/blackBack.png")} />)
+    })
+
+    const newprizecard = <img key="asd" src={require("../images/blackBack.png")} />
+
+
     // console.log(gamelayout)
     return (
-      <Fragment>
-        <div >
-          {gamelayout}
+      < section className="col-12 col-md-8 row" >
 
-          <button onClick={this.onClick} className="btn btn-primary">Turn</button>
+        <div className=" col-12 col-md-11 bg-alternate-2 ">
+          <div className="playingcard">
 
+            {player1cards}
+          </div>
+          <div className="playingcard">
+            <img className="aces" src={require("../images/aces.png")} />
+
+            {newprizecard}
+            <table className="table table-borderless table-dark  text-center" style={{ width: "25%" }}>
+              <thead className="text-dark login" style={{ background: "red" }}>
+                <tr>
+                  <th scope="col">Player</th>
+                  <th scope="col">Points</th>
+                </tr>
+              </thead>
+              <tbody className="bg-light text-dark table-shadow ">
+                <tr>
+                  <td>{player1name}</td>
+                  <td>{player1points}</td>
+                </tr>
+                <tr>
+                  <td>{player2name}</td>
+                  <td>{player2points}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="playingcard">
+
+            {player2cards}
+          </div>
         </div>
-        {/* <div className="row">
-          {player2}
-        </div> */}
-      </Fragment>
+      </section>
     )
   }
 }
@@ -108,3 +151,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { getGamePlay, addTurn })(Defaultgame)
+
+
+

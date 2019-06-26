@@ -12,7 +12,7 @@ export default class Gamelist extends Component {
     }, {
       url: "/war",
       name: "War",
-      img: require("../images/rummy.jpeg"),
+      img: require("../images/war.png"),
       description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
 
     }, {
@@ -48,8 +48,8 @@ export default class Gamelist extends Component {
     const { gamelist } = this.state
     const loadgamelist = gamelist.map(game => {
       return (
-        <div key={game.url} className="card col-12 col-md-3 bg-common game-top-div">
-          <img className="card-img-top card-images" src={game.img} alt="Card image cap" />
+        <div key={game.url} className="card col-12 col-md-3 bg-common game-top-div game-cards">
+          <img className="card-img-top card-images game-images" src={game.img} alt="Card image cap" />
           <div className="card-body ">
             <h4 className="card-title  ">{game.name}</h4>
             <p className="card-text ">{game.description}</p>

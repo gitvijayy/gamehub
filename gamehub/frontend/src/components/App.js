@@ -5,7 +5,7 @@ import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import Navbar from './layout/Navbar'
-
+import { login } from '../actions/auth'
 import Dashboard from './layout/Dashboard'
 import Alerts from './layout/Alerts'
 import Login from './accounts/Login'
@@ -17,7 +17,9 @@ import AlertTemplate from 'react-alert-template-basic'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { loadUser } from '../actions/auth'
-
+import Gamelist from './layout/Gamelist'
+import Activegames from './layout/Activegames'
+import Activeplayers from './layout/Activeplayers'
 
 const alertOptions = {
   timeout: 3000,
@@ -40,21 +42,24 @@ class App extends Component {
             <Fragment>
               <Navbar />
               <Alerts />
+
               <div className="d-flex">
+                <Activegames />
+                {/* <Gamelist /> */}
 
                 {/* <Test /> */}
                 <Switch>
                   {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-                  <Route exact path="/" component={Dashboard} />
+                  <Route exact path="/" component={Gamelist} />
 
 
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} /> */}
+                  <Route exact path="/defaultgame" component={Defaultgame} />
+                  {/* <Route exact path="/login" component={Login} /> */} */}
                 </Switch>
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}
 
-
+                <Activeplayers />
 
 
 

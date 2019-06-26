@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'accounts',
     'defaultgame',
     'chat',
-    'channels'
+    'channels',
+    'channels_redis',
+    'channels_redux'
+
 ]
 
 REST_FRAMEWORK = {
@@ -87,7 +90,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('localhost', 6379)],
         },
     },
 }

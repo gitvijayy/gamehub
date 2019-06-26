@@ -52,6 +52,24 @@
   box-shadow: inset 0px -10px 25px red, 0px 5px 5px black;
 }
 
+.login {
+  box-shadow: inset 0px -10px 25px red, 0px 5px 5px black;
+}
+
+.login:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.game-cards {
+  box-shadow: inset 0px -10px 25px tan, 0px 5px 5px black;
+}
+
+.game-images {
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+}
+
 .box-shadow {
   margin: 4%;
   height: 80px;
@@ -105,4 +123,55 @@
 
 .user-block {
   margin: 3%;
+}
+
+.playingcard img {
+  width: 7%;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+  height: 120px;
+}
+
+.playingcard img:hover {
+  cursor: pointer;
+}
+
+.playingcard {
+  justify-content: space-around;
+  display: flex;
+}
+
+.bg-alternate-2 {
+  background-image: url(https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-050.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 4%;
+  /* box-shadow: inset 0px -10px 25px lightblue, 0px 5px 5px black; */
+  /* background: transparent; */
+}
+
+.active-games div {
+  max-height: 55em;
+}
+
+.block {
+  height: 40em;
+}
+
+.aces {
+  width: 25% !important;
+  box-shadow: none !important;
+  height: 150px !important;
+}
+
+.table-shadow {
+  box-shadow: inset 0px -10px 25px snow, 0px 5px 5px black;
+}
+
+.table-borderless td,
+.table-borderless th {
+  border: 0;
 }
