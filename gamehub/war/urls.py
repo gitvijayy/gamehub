@@ -10,7 +10,7 @@ from rest_framework import routers
 from .api import GamesViewSet
 from .api import RoundsViewSet
 from .api import PlayersViewSet
-# from .api import TurnsViewSet
+from .api import TurnsViewSet
 # from .api import GamesViewSetActive
 
 router = routers.DefaultRouter()
@@ -18,7 +18,7 @@ router = routers.DefaultRouter()
 router.register('api/war/games', GamesViewSet, 'games')
 router.register('api/war/activegames', PlayersViewSet, 'players')
 router.register('api/war/rounds', RoundsViewSet, 'rounds')
-# router.register('api/war/turns', TurnsViewSet, 'turns')
+router.register('api/war/turns', TurnsViewSet, 'turns')
 # router.register('api/defaultgame/testing', GamesViewSetActive, 'games')
 # router.register('api/goofspiel/game/turn', GoofspielViewSet, 'goofspiel')
 

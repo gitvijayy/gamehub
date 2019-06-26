@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from war.models import Games
 from war.models import Players
 from war.models import Rounds
+from war.models import Turns
 
 import random
 
@@ -68,13 +69,48 @@ class PlayerNameSerializer(serializers.ModelSerializer):
         # depth = 5
         # depth = 2
 
+class TurnDataSerializer(serializers.ModelSerializer):
+    player = UserNameSerializer()
+
+    class Meta:
+        model = Turns
+        fields = ['id', 'player', 'action']
+
+
+class TurnSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Turns
+        fields = '__all__'
+
+    def create(self,  validated_data):
+        if validated_data['round_id'].turns.count() >= 1:
+            # raise serializers.ValidationError(
+            #     validated_data['round_id'], validated_data['round_id'].turns.count())
+            player_valid_turn = Turns.objects.filter(
+                round_id=validated_data['round_id'], player=self.context['request'].user)
+            if player_valid_turn:
+                raise serializers.ValidationError("Not Your Turn")
+
+            # prize_card = prize_card_generator(
+            #     validated_data['round_id'].game_id)
+            # if prize_card == "Game Over":
+                # raise serializers.ValidationError("Game Over")
+            # deck = Players.objects.filter(person=self.context['request'].user).deck
+            newRound = Rounds.objects.create(
+                game_id=validated_data['round_id'].game_id)
+            newRound.save()
+
+        newTurn = Turns.objects.create(
+            round_id=validated_data['round_id'], player=self.context['request'].user, action=validated_data['action'])
+        return newTurn
+        
 class RoundSerializer(serializers.ModelSerializer):
-    # turns = TurnDataSerializer(many=True, read_only=True)
+    turns = TurnDataSerializer(many=True, read_only=True)
 
     class Meta:
         model = Rounds
-        fields = ['id']
-        # depth = 5
+        fields = ['id', 'turns']
+    
 
 class GameSerializer(serializers.ModelSerializer):
     # Games.objects.all().delete()
