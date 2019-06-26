@@ -15,6 +15,7 @@ class Players(models.Model):
     player = models.ForeignKey(
         User, related_name="userswar", on_delete=models.CASCADE, null=True)
     deck = models.CharField(max_length=500)
+    deck_length = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
