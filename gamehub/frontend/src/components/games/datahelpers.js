@@ -1,10 +1,23 @@
+
+export const cards = () => {
+  let suits = ["C", "H", "S", "D"]
+  let cardnumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  let cardmap = [...cardnumbers, ...cardnumbers, ...cardnumbers, ...cardnumbers]
+
+  return {
+    suits: suits,
+    cardnumbers: cardnumbers,
+    cardmap: cardmap
+  }
+}
+
 export const defaultgame = (payload) => {
-  let playerActions = { roundid: [], prizeCard: [], players: {} }
+  let gameplay = { roundid: [], prizeCard: [], players: {} }
   let players = payload.players.map(value => {
-    playerActions.players[value.player.username] = []
+    gameplay.players[value.player.username] = []
     return value.player.username
   })
-  console.log(playerActions)
+  console.log(gameplay)
   let rounds = []
 
 
@@ -13,25 +26,18 @@ export const defaultgame = (payload) => {
     value.turns.forEach((element, index) => {
 
       if (index < 2) {
-        playerActions.players[players[index]].push(element.action)
+        gameplay.players[players[index]].push(element.action)
       }
     })
-    playerActions.roundid.push(value.id)
-    playerActions.prizeCard.push(value.prizeCard)
+    gameplay.roundid.push(value.id)
+    gameplay.prizeCard.push(value.prizeCard)
 
   })
-
-
-
-  // console.log(playerActions)
-
-
-
-
-
-
   return {
 
-    playerActions: playerActions
+    gameplay: gameplay,
+    cards: cards()
   }
 }
+
+

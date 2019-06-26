@@ -149,8 +149,15 @@
   flex-direction: column;
   justify-content: space-around;
   margin: 4%;
+  box-shadow: inset 0px -10px 25px lightblue, 0px 5px 5px black;
+  /* http: //www.4usky.com/data/out/2/163983240-ace-of-spades-wallpapers.jpg */
+  /* https: //images.all-free-download.com/images/graphiclarge/playing_cards_and_dice_vector_290620.jpg */
   /* box-shadow: inset 0px -10px 25px lightblue, 0px 5px 5px black; */
   /* background: transparent; */
+  /* https: //images.pexels.com/photos/131634/pexels-photo-131634.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 */
+  /* https: //images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 */
+  /* https: //visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-050.jpg */
+  /* https: //images.pexels.com/photos/988872/pexels-photo-988872.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=650&w=940 */
 }
 
 .active-games div {
