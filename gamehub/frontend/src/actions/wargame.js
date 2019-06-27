@@ -17,12 +17,13 @@ const tokenConfig = (getState) => {
 
 export const getWarGamePlay = (state) => (dispatch, getState) => {
     // let abc = defaultgame(123)
-    console.log(state.props.gameplay)
-    console.log(getState())
+    // const roundId = state.props.gameplay.status? state.props.gameplay.: null
+    // console.log(state)
+    // console.log(getState())
     // console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHello')
     // console.log("in")
     
-    axios.get('/api/war/games/37/', tokenConfig(getState)).then(res => {
+    axios.get('/api/war/games/39/', tokenConfig(getState)).then(res => {
   
       dispatch({
         type: GET_WAR_GAMEPLAY,
@@ -45,7 +46,7 @@ export const getWarGamePlay = (state) => (dispatch, getState) => {
       // })
       console.log('made post request')
   
-      axios.get('/api/war/games/37/', tokenConfig(getState)).then(res => {
+      axios.get('/api/war/games/38/', tokenConfig(getState)).then(res => {
   
         // chatSocket.send(JSON.stringify({
         //   'message': res.data
@@ -70,3 +71,5 @@ export const getWarGamePlay = (state) => (dispatch, getState) => {
       returnErrors(err.response.data, err.response.status)
     ))
   }
+
+  // export getNewGame

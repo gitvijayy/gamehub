@@ -22,7 +22,7 @@ export class WarGame extends Component {
     }
 
     componentDidMount() {
-        this.props.getWarGamePlay(this)
+        this.props.getWarGamePlay()
     }
 
     render() {
@@ -50,22 +50,26 @@ export class WarGame extends Component {
 
         const users = game ? getPlayers(game) : 'Loading'
         const decks = game ? getDecks(game) : 'Loading'
-        const round = game ? game.round[game.round.length-1].id: 'Loading'
-
-        const player1 = game? `this is player1: ${game.playerswar[0].player.username} and he has ${game.playerswar[0].deck_length} cards left`: 'Loading'
-        const player2 = game? `this is player1: ${game.playerswar[1].player.username} and he has ${game.playerswar[1].deck_length} cards left`: 'Loading'
+        // console.log(game.round)
+        const round = game && game.round.length > 0 ? game.round[game.round.length-1].id: 'Loading'
+        // const round = game && game.round.length === 0 ? game.round: 'Loading'
+        // console.log(round.length)
+        const player1 = game? `${game.playerswar[0].player.username} and he has ${game.playerswar[0].deck_length} cards left`: 'Loading'
+        const player2statues = game?game.playerswar[1]:null
+        const player2 = player2statues? `${game.playerswar[1].player.username} and he has ${game.playerswar[1].deck_length} cards left`: 'Loading'
         // console.log(users)
 
         return(
             <Fragment>
                 <h1> War Game is Here</h1>
                 <button onClick={this.addTurn}>Click to create a turn </button>
+                <button onClick={this.startNewGame}>Click to start a new game</button>
                 <p> Game Statues: {this.props.gameplay.status}</p>
                 <p> Round: {round}</p>
                 <p> This is my users : {users}</p>
                 <p> This is their deck: {decks}</p>
-                <p> {player1} </p>
-                <p> {player2} </p>
+                <p> this is player1: {player1} </p>
+                <p> this is player2: {player2} </p>
             </Fragment>
         )
     }
