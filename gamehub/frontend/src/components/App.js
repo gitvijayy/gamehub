@@ -17,6 +17,7 @@ import AlertTemplate from 'react-alert-template-basic'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { loadUser } from '../actions/auth'
+import { WarGame } from './games/wargame/wargame'
 
 
 const alertOptions = {
@@ -43,17 +44,18 @@ class App extends Component {
               <div className="d-flex">
 
                 {/* <Test /> */}
-                <Switch>
+                {/* <Switch> */}
                   {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-                  <Route exact path="/" component={Dashboard} />
+                  {/* <Route exact path="/" component={Dashboard} /> */}
 
 
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} /> */}
-                </Switch>
+                  {/* <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} /> */} */}
+                {/* </Switch> */}
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}
-
+                
+                  <WarGame/>
 
 
 
