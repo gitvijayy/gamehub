@@ -17,7 +17,7 @@ import AlertTemplate from 'react-alert-template-basic'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { loadUser } from '../actions/auth'
-import { WarGame } from './games/wargame/wargame'
+import WarGame  from './games/wargame/wargame'
 
 
 const alertOptions = {
@@ -35,38 +35,42 @@ class App extends Component {
   render() {
 
     return (
+        // {/* <h1>Hello there how are you</h1> */}
+    
       <Provider store={store}>
-        <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router>
-            <Fragment>
-              <Navbar />
-              <Alerts />
-              <div className="d-flex">
+        <WarGame/>
+      
+        {/* //  <AlertProvider template={AlertTemplate} {...alertOptions}>
+        //    <Router>
+        //      <Fragment>
+        //        <Navbar />
+        //        <Alerts />
+        //       <div className="d-flex">
 
-                {/* <Test /> */}
-                {/* <Switch> */}
-                  {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-                  {/* <Route exact path="/" component={Dashboard} /> */}
+        //         <Test />
+        //         <Switch>
+        //           // <PrivateRoute exact path="/" component={Dashboard} />
+        //           // <Route exact path="/" component={Dashboard} />
 
 
-                  {/* <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} /> */} */}
-                {/* </Switch> */}
-                {/* <Dashboard /> */}
-                {/* <Defaultgame /> */}
+        //          <Route exact path="/register" component={Register} />
+        //         <Route exact path="/login" component={Login} /> 
+        //         </Switch>
+        //         <Dashboard />
+        //         <Defaultgame />
                 
-                  <WarGame/>
+                  
+              
 
 
 
 
-
-              </div>
-            </Fragment>
-          </Router>
-        </AlertProvider>
+        //        </div>
+        //      </Fragment>
+        //    </Router>
+        //  </AlertProvider> */}
+      
       </Provider>
-
 
     )
   }
