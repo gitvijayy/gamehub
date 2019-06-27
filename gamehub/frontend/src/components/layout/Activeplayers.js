@@ -10,7 +10,7 @@ export default class Activeplayers extends Component {
     const { players } = this.state
     const loadplayers =
 
-      <div className="container">
+      <div className="container pre-scrollable ">
 
         {
 
@@ -26,12 +26,13 @@ export default class Activeplayers extends Component {
 
 
     return (
-      <section className=" text-dark  side-containers active-users">
-        <h3 className=" text-white alert-danger bg-dark text-center justify-content-center box-shadow">Active Players</h3>
+      // <section className=" text-dark side-containers active-users">
+      <Fragment>
+        <button className=" btn btn-dark btn-lg newgame text-white">Players Online</button>
+
         {loadplayers}
-
-
-      </section>
+      </Fragment>
+      // </section>
     )
   }
 }

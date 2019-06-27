@@ -21,6 +21,7 @@ import Gamelist from './layout/Gamelist'
 import Activegames from './layout/Activegames'
 import Activeplayers from './layout/Activeplayers'
 
+
 const alertOptions = {
   timeout: 3000,
   position: "top center"
@@ -43,8 +44,8 @@ class App extends Component {
               <Navbar />
               <Alerts />
 
-              <div className="d-flex">
-                <Activegames />
+              <div className="container">
+                {/* <Activegames /> */}
                 {/* <Gamelist /> */}
 
                 {/* <Test /> */}
@@ -52,6 +53,7 @@ class App extends Component {
                   {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
                   <Route exact path="/" component={Gamelist} />
 
+                  {/* <Route exact path="/loaders" component={Loaders} /> */}
 
                   <Route exact path="/defaultgame" component={Defaultgame} />
                   {/* <Route exact path="/login" component={Login} /> */} */}
@@ -59,7 +61,7 @@ class App extends Component {
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}
 
-                <Activeplayers />
+                {/* <Activeplayers /> */}
 
 
 

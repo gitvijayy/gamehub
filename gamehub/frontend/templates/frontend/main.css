@@ -71,11 +71,13 @@
 }
 
 .box-shadow {
-  margin: 4%;
-  height: 80px;
+  margin: 7%;
+  height: 40px;
   display: flex;
   flex-direction: column;
-  box-shadow: inset 0px -10px 25px #27233a, 0px 5px 5px black;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  background: black;
+  color: snow;
 }
 
 .bg-common {
@@ -87,7 +89,11 @@
 }
 
 .game-top-div {
-  margin: 4%;
+  margin: 2%;
+}
+
+.media-margin {
+  margin-left: 5%;
 }
 
 .game-top-div button {
@@ -118,6 +124,16 @@
     margin: 0;
     width: 0;
     display: none;
+  }
+  .media-margin {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .game-top-div {
+    margin: 2%;
+    max-width: 100%;
   }
 }
 
@@ -158,6 +174,23 @@
   /* https: //images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 */
   /* https: //visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-050.jpg */
   /* https: //images.pexels.com/photos/988872/pexels-photo-988872.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=650&w=940 */
+}
+
+.newgame {
+  height: 60px;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+}
+
+.leader {
+  height: 60px;
+  box-shadow: inset 0px -10px 25px green, 0px 5px 5px black;
+}
+
+.rules {
+  height: 60px;
+  box-shadow: inset 0px -10px 25px red, 0px 5px 5px black;
+
+  color: black;
 }
 
 .active-games div {

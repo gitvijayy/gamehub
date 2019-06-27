@@ -2,9 +2,11 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
-
-
+from .models import PlayerOnline
+from rest_framework import viewsets, permissions
 # Register Api
+
+
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -43,3 +45,24 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+# class PlayersonlineViewSet(viewsets.ModelViewSet):
+#     queryset = PlayerOnline.objects.all()
+#     permission_classes = [
+#         permissions.AllowAny,
+#     ]
+
+#     serializer_class = PlayerOnlineSerializer
+
+    # def get_object(self):
+    #     return PlayerOnline.objects.all()
+
+    # def post(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     user = serializer.save()
+    #     return Response({
+    #         "user": "added"
+
+    #     })

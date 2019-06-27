@@ -1,7 +1,7 @@
 
 export const cards = () => {
   let suits = ["C", "H", "S", "D"]
-  let cardnumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  let cardnumbers = [1, 2, 3, 4, 5, 6, 7, 4, 9, 10, 11, 12, 13]
   let cardmap = [...cardnumbers, ...cardnumbers, ...cardnumbers, ...cardnumbers]
 
   return {
@@ -12,32 +12,62 @@ export const cards = () => {
 }
 
 export const defaultgame = (payload) => {
-  let gameplay = { roundid: [], prizeCard: [], players: {} }
+
+  let gameplay = { roundid: 1, prizeCard: 0, players: {}, playersbalance: {}, playerpoints: {} }
+
   let players = payload.players.map(value => {
     gameplay.players[value.player.username] = []
     return value.player.username
   })
-  console.log(gameplay)
-  let rounds = []
+
+  let cards1 = cards()
+  let cards2 = cards()
 
 
-  payload.rounds.forEach(value => {
-    let action = []
-    value.turns.forEach((element, index) => {
+  if (payload.rounds) {
+    payload.rounds.forEach((value, index) => {
 
-      if (index < 2) {
-        gameplay.players[players[index]].push(element.action)
+
+
+      if (value.turns[0] && value.turns[0].action) {
+        let mappedCard1 = cards1.cardmap[value.turns[0].action - 1]
+        let cardPlayed = cards1.cardnumbers.indexOf(mappedCard1)
+        if (cardPlayed > -1) {
+          cards1.cardnumbers.splice(cardPlayed, 1)
+        }
       }
+
+      if (value.turns[1] && value.turns[1].action) {
+        let mappedCard2 = cards2.cardmap[value.turns[1].action - 1]
+        let cardPlayed = cards2.cardnumbers.indexOf(mappedCard2)
+        if (cardPlayed > -1) {
+          cards2.cardnumbers.splice(cardPlayed, 1)
+        }
+      }
+
+
+      gameplay.roundid = value.id
+      gameplay.prizeCard = value.prizeCard
+
     })
-    gameplay.roundid.push(value.id)
-    gameplay.prizeCard.push(value.prizeCard)
+  }
 
-  })
+
+  // gameplay.players.forEach(player=>{
+  //   player.push()
+  // })
+
+  gameplay.players[players[0]] ? gameplay.players[players[0]].push(cards1.cardnumbers) : false
+  gameplay.players[players[1]] ? gameplay.players[players[1]].push(cards2.cardnumbers) : false
+
+
   return {
-
     gameplay: gameplay,
     cards: cards()
   }
 }
+
+
+
 
 

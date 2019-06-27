@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
-import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ERRORS, GET_GAMEPLAY, ADD_TURN } from './types'
+import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ERRORS, GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES } from './types'
 
 
 
@@ -18,11 +18,11 @@ const tokenConfig = (getState) => {
   return config
 }
 
-export const getGamePlay = () => (dispatch, getState) => {
+export const getGamePlay = (game, gameid) => (dispatch, getState) => {
   // let abc = defaultgame(123)
   console.log("in")
-  axios.get('/api/defaultgame/games/1/', tokenConfig(getState)).then(res => {
-
+  axios.get(`/api/${game}/games/1/`, tokenConfig(getState)).then(res => {
+    // ${ gameid }
     dispatch({
       type: GET_GAMEPLAY,
       payload: res.data
@@ -33,67 +33,82 @@ export const getGamePlay = () => (dispatch, getState) => {
 
 }
 
+export const getActiveGames = (game) => (dispatch, getState) => {
+  // let abc = defaultgame(123)
+  console.log("in")
+  axios.get(`/api/${game}/activegames/`, tokenConfig(getState)).then(res => {
 
-// export const addTurn = (turn) => (dispatch, getState) => {
-//   axios.post(`/api/defaultgame/turns`, turn, tokenConfig(getState)).then(res => {
-//     // // dispatch(createMessage({ leadAdded: "Lead Added" }))
-//     // dispatch({
-//     //   type: ADD_TURN,
-//     //   payload: res.data
-//     // })
+    dispatch({
+      type: GET_ACTIVEGAMES,
+      payload: res.data
+    })
+  }).catch(err => dispatch(
+    returnErrors(err.response.data, err.response.status)
+  ))
 
-//     axios.get('/api/defaultgame/games/1/', tokenConfig(getState)).then(res => {
+}
 
-//       chatSocket.send(JSON.stringify({
-//         'message': res.data
-//       }));
-//       chatSocket.onmessage = function (e) {
-//         var data = JSON.parse(e.data);
-//         var message = data['message'];
-//         // document.querySelector('#chat-log').value += (message + '\n');
-//         dispatch({
-//           type: GET_GAMEPLAY,
-//           payload: message
-//         })
-//       };
+export const getNewGame = (game, cb) => (dispatch, getState) => {
+  axios.post(`/api/${game}/games/`, null, tokenConfig(getState)).then(res => {
+
+    dispatch({
+      type: GET_NEWGAME,
+      payload: res.data
+    })
+
+    cb()
+
+  }).catch(err => dispatch(
+    returnErrors(err.response.data, err.response.status)
+  ))
+
+}
+
+export const setGame = (game) => (dispatch, getState) => {
+  // let abc = defaultgame(123)
+  console.log("in")
+  // axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
+
+  dispatch({
+    type: SET_GAME,
+    payload: game
+  })
+  // }).catch(err => dispatch(
+  //   returnErrors(err.response.data, err.response.status)
+  // ))
+
+}
 
 
-//     }).catch(err => dispatch(
-//       returnErrors(err.response.data, err.response.status)
-//     ))
 
+
+
+// export const addLead = (lead) => (dispatch, getState) => {
+//   axios.post(`/api/leads/`, lead, tokenConfig(getState)).then(res => {
+//     dispatch(createMessage({ leadAdded: "Lead Added" }))
+//     dispatch({
+//       type: ADD_LEAD,
+//       payload: res.data
+//     })
+
+//   }).catch(err => dispatch(
+//     returnErrors(err.response.data, err.response.status)
+//   ))
+// }
 
 export const addTurn = (turn) => (dispatch, getState) => {
   axios.post(`/api/defaultgame/turns/`, turn, tokenConfig(getState)).then(res => {
-    // dispatch(createMessage({ leadAdded: "Lead Added" }))
-    // dispatch({
-    //   type: ADD_LEAD,
-    //   payload: res.data
-    // })
 
+    // axios.get('/api/defaultgame/games/1/', tokenConfig(getState)).then(res => {
 
-    axios.get('/api/defaultgame/games/1/', tokenConfig(getState)).then(res => {
+    //   dispatch({
+    //     type: GET_GAMEPLAY,
+    //     payload: res.data
+    //   })
 
-      // chatSocket.send(JSON.stringify({
-      //   'message': res.data
-      // }));
-
-
-      // chatSocket.onmessage = function (e) {
-      //   var data = JSON.parse(e.data);
-      //   var message = data['message'];
-      //   console.log("in")
-      // document.querySelector('#chat-log').value += (message + '\n');
-      dispatch({
-        type: GET_GAMEPLAY,
-        payload: res.data
-      })
-      // };
-
-
-    }).catch(err => dispatch(
-      returnErrors(err.response.data, err.response.status)
-    ))
+    // }).catch(err => dispatch(
+    //   returnErrors(err.response.data, err.response.status)
+    // ))
 
   }).catch(err => dispatch(
     returnErrors(err.response.data, err.response.status)
