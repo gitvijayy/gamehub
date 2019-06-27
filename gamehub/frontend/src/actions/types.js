@@ -15,4 +15,4 @@ export const REGISTER_FAIL = "REGISTER_FAIL"
 export const GET_GAMEPLAY = "GET_GAMEPLAY"
 
 export const GET_WAR_GAMEPLAY = "GET_WAR_GAMEPLAY"
-
+export const ADD_WAR_TURN = "ADD_WAR_TURN"

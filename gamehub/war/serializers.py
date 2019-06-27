@@ -94,7 +94,7 @@ def handleRound(round):
     # print(user.username)
     # player2 = Players.objects.get(player=user2)
     
-    if (cardplayed1 > cardplayed2):
+    if ((cardplayed1 % 13) > (cardplayed2 % 13)):
         # user1 = User.objects.get(username=turn1.player.username)
         # print('this is user1: ' + user1.username)
         # player1 = Players.objects.get(player=user1)
