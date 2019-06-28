@@ -35,9 +35,10 @@ class TurnsViewSet(viewsets.ModelViewSet):
     serializer_class = TurnSerializer
 
 class PlayersViewSet(viewsets.ModelViewSet):
-    queryset = Players.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
     serializer_class = PlayerSerializer
 
+    def get_queryset(self):
+        return self.request.user.userswar.all()

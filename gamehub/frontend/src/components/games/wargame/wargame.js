@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // import { getGamePlay } from '../../actions/defaultgame'
 // import { defaultgame } from './datahelpers.js'
-import { addWarTurn } from '../../../actions/wargame'
-import { getWarGamePlay } from '../../../actions/wargame'
+// import { addWarTurn } from '../../../actions/wargame'
+import { getWarGamePlay, addWarTurn, makeNewGame,getWarActivegames } from '../../../actions/wargame'
 import auth from '../../../reducers/auth';
 // import auth from '../../../reducers/auth';
 
@@ -12,18 +12,35 @@ export class WarGame extends Component {
 
     addTurn = (e) => {
         const rounds = this.props.gameplay.round
-        console.log(rounds)
+        // console.log(rounds)
         const lastRound = rounds[rounds.length-1]
-        console.log(lastRound)
-        this.props.addWarTurn(lastRound.id)
+        // console.log(lastRound)
+        this.props.addWarTurn(lastRound.id, this.props.gameplay.id)
         // rounds = this.props.gameplay.round
         // this.props.gameplay.round.length-1
         // console.log(rounds)
     }
 
-    componentDidMount() {
-        this.props.getWarGamePlay()
+    startNewGame = (e) => {
+        this.props.makeNewGame(()=>{
+            this.props.getWarActivegames()
+        })
+        document.cookie `gameid = ${e.target.id}`
     }
+
+    goToGame = (e) => {
+        // console.log(e.target.id)
+        this.props.getWarGamePlay(e.target.id)
+        document.cookie = `gameid = ${e.target.id}`
+    }
+
+    componentDidMount() {
+        const game_id= document.cookie.split('=')[1]
+        // const game_id = 54;
+        this.props.getWarGamePlay(game_id)
+        this.props.getWarActivegames()
+    }
+
 
     render() {
         // console.log(this.props.gameplay)
@@ -55,10 +72,12 @@ export class WarGame extends Component {
         // const round = game && game.round.length === 0 ? game.round: 'Loading'
         // console.log(round.length)
         const player1 = game? `${game.playerswar[0].player.username} and he has ${game.playerswar[0].deck_length} cards left`: 'Loading'
-        const player2statues = game?game.playerswar[1]:null
+        const player2statues = game? game.playerswar[1]:null
         const player2 = player2statues? `${game.playerswar[1].player.username} and he has ${game.playerswar[1].deck_length} cards left`: 'Loading'
         // console.log(users)
-
+        const games = this.props.games.length > 0 ? this.props.games : 'Loading'
+        // const gamestest = 'Loading'
+        // console.log(games)
         return(
             <Fragment>
                 <h1> War Game is Here</h1>
@@ -70,16 +89,22 @@ export class WarGame extends Component {
                 <p> This is their deck: {decks}</p>
                 <p> this is player1: {player1} </p>
                 <p> this is player2: {player2} </p>
+                {typeof games === 'string'? <p>{games}</p>: 
+            games.map(game => {
+                // console.log(game.game_id)
+                return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment>
+            })}
             </Fragment>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    gameplay: state.wargame.gameplay
+    gameplay: state.wargame.gameplay,
+    games: state.wargame.games
   })
   
-  export default connect(mapStateToProps, { getWarGamePlay, addWarTurn })(WarGame)
+  export default connect(mapStateToProps, { getWarGamePlay, addWarTurn, makeNewGame,getWarActivegames })(WarGame)
   
 
 // export default WarGame;

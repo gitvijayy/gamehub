@@ -1,8 +1,9 @@
-import { GET_WAR_GAMEPLAY } from '../actions/types.js'
+import { GET_WAR_GAMEPLAY,MAKE_NEW_GAME, GET_WAR_ACTIVEGAMES } from '../actions/types.js'
 
 const initialState = {
 
-  gameplay: []
+  gameplay: [],
+  games:[]
 }
 
 export default function (state = initialState, action) {
@@ -13,7 +14,12 @@ export default function (state = initialState, action) {
         ...state,
         gameplay: action.payload
       }
+    case GET_WAR_ACTIVEGAMES:
 
+      return {
+        ...state,
+        games: action.payload
+      }
     default:
       return state;
   }
