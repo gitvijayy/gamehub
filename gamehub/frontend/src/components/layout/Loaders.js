@@ -8,8 +8,8 @@ export default class Loaders extends Component {
   render() {
     const styles = {
       "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
+      "justifyContent": "center",
+      "alignItems": "center",
       "height": "900px",
     }
     return (

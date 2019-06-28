@@ -58,7 +58,7 @@ class Gamelist extends Component {
     // );
     // return e
     // <Link to={e.target.name}>Register</Link>
-
+    document.cookie = `gameid=0`
     this.props.setGame(e)
   }
 

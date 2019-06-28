@@ -1,7 +1,7 @@
 import React, { Component, Fragment, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { getGamePlay, getNewGame, setGame } from '../../actions/defaultgame'
+import { getGamePlay, getNewGame, setGame, getActiveGames } from '../../actions/defaultgame'
 import { defaultgame, cards } from './datahelpers.js'
 import { addTurn } from '../../actions/defaultgame'
 import Activeplayers from '../layout/Activeplayers'
@@ -19,10 +19,10 @@ export class Defaultgame extends Component {
 
 
   state = {
-    gamedata: [],
+    gameplay: [],
     loading: false,
     name: 'defaultgame',
-    gameid: 0
+
   }
 
   onClick1 = (e) => {
@@ -39,24 +39,43 @@ export class Defaultgame extends Component {
     chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       var message = data['message'];
+      this.props.getActiveGames(this.state.name)
     };
   }
 
 
   componentDidMount() {
-    this.props.getGamePlay(this.state.name, this.state.gameid)
+    let gameid = document.cookie.split(";")[1].split("=")[1]
+
+    this.props.getGamePlay(this.state.name, gameid)
     this.props.setGame(this.state.name)
+    this.props.getActiveGames(this.state.name)
   }
-
-
-
 
   render() {
 
+
+
+    console.log(this.props.activegames)
+
     const newGame = () => {
       this.props.getNewGame(this.state.name, () => {
-        this.setState({ gameid: this.props.newgame.id })
-        this.props.getGamePlay(this.state.name, this.state.gameid)
+        document.cookie = `gameid=${this.props.newgame.id}`
+        // let gameid = document.cookie.split("=")[1]
+        // this.setState({ gameid: this.props.newgame.id })
+        // const gameplay = this.props.getGamePlay(this.state.name, this.props.newgame.id)
+        // this.setState({ gameplay: gameplay })
+
+
+
+
+        var lead = { "round_id": 13, "action": 99 }
+        chatSocket.send(JSON.stringify({
+
+          'message': lead
+        }));
+
+
       })
 
 
@@ -78,15 +97,50 @@ export class Defaultgame extends Component {
     //   return <Loaders />
     // }
 
-    console.log(this.props.gameplay)
+    // console.log(this.props.gameplay)
+    const playercards = []
 
     const data = this.props.gameplay.players ? defaultgame(this.props.gameplay) : null
-    if (data) {
-      console.log(data)
+    console.log(data)
+    if (data && data.gameplay && data.gameplay.players) {
+
+
+      for (var player in data.gameplay.players) {
+
+        const current = <div className="playingcard">
+
+          {
+
+            data.gameplay.players[player][0].map(action => {
+
+
+
+              return <img key={action + player} src={require(`../images/cards/${action}C.png`)} />
+            })}
+
+        </div>
+
+
+        playercards.push(current)
+        console.log("inasda")
+
+
+      }
     }
 
+
+
+
+
+
+
+
+    console.log(data)
+
+    console.log(playercards)
+
     return (
-      < section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
+      <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
         style={{ height: "57em" }} >
 
 
@@ -99,10 +153,11 @@ export class Defaultgame extends Component {
 
 
         <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
-          <div className="playingcard">
+          {/* <div className="playingcard"> */}
 
-            {/* {player1cards[0]} */}
-          </div>
+          {/* {player1cards[0]} */}
+          {/* </div> */}
+          {playercards[0]}
           <div className="playingcard">
             <img className="aces" src={require("../images/aces.png")} />
 
@@ -129,10 +184,11 @@ export class Defaultgame extends Component {
 
           </div>
 
-          <div className="playingcard">
+          {playercards[1]}
+          {/* <div className="playingcard"> */}
 
-            {/* {player1cards[1]} */}
-          </div>
+          {/* {player1cards[1]} */}
+          {/* </div> */}
         </div>
 
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
@@ -140,10 +196,13 @@ export class Defaultgame extends Component {
             display: "flex", flexDirection: "column",
             justifyContent: "space-evenly"
           }}>
-          <Activegames gamename={this.state.name} />
-          <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
-          <button onClick={test} className="btn btn-danger btn-lg rules">Rules</button>
+          <Activegames gamename={this.state.name} activegames={this.props.activegames} />
+          <div>
 
+            <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
+
+            <button onClick={test} className="btn btn-danger btn-lg rules">Rules</button>
+          </div>
 
         </div>
 
@@ -158,10 +217,11 @@ export class Defaultgame extends Component {
 const mapStateToProps = state => ({
   gameplay: state.defaultgame.gameplay,
   user: state.auth,
-  newgame: state.defaultgame.newgame[0]
+  newgame: state.defaultgame.newgame[0],
+  activegames: state.defaultgame.activegames
 })
 
-export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame })(Defaultgame)
+export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Defaultgame)
 
 
 {/* <img className="card-img-top card-images game-images" src="{game.img}" alt="Card image cap" />

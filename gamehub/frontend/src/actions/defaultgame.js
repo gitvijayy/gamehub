@@ -21,7 +21,7 @@ const tokenConfig = (getState) => {
 export const getGamePlay = (game, gameid) => (dispatch, getState) => {
   // let abc = defaultgame(123)
   console.log("in")
-  axios.get(`/api/${game}/games/1/`, tokenConfig(getState)).then(res => {
+  axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
     // ${ gameid }
     dispatch({
       type: GET_GAMEPLAY,
@@ -35,7 +35,7 @@ export const getGamePlay = (game, gameid) => (dispatch, getState) => {
 
 export const getActiveGames = (game) => (dispatch, getState) => {
   // let abc = defaultgame(123)
-  console.log("in")
+  // console.log("in")
   axios.get(`/api/${game}/activegames/`, tokenConfig(getState)).then(res => {
 
     dispatch({

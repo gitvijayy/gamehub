@@ -184,13 +184,16 @@
 .leader {
   height: 60px;
   box-shadow: inset 0px -10px 25px green, 0px 5px 5px black;
+  margin-top: 10%;
+  width: 8em;
 }
 
 .rules {
   height: 60px;
   box-shadow: inset 0px -10px 25px red, 0px 5px 5px black;
-
   color: black;
+  margin-top: 10%;
+  width: 8em;
 }
 
 .active-games div {
