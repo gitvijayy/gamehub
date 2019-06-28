@@ -142,10 +142,28 @@
 }
 
 .playingcard img {
-  width: 7%;
+  width: 15%;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+  height: 200px;
+}
+
+.playingcard.middle img {
+  width: 10%;
   box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
   border-radius: 5px;
   height: 120px;
+}
+
+.playingcard .middle {
+  display:flex;
+  flex-direction: column;
+}
+
+.cardsplayed {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .playingcard img:hover {

@@ -65,9 +65,9 @@ const PictureDictionary = [
 ]
 
 const DeckDictionary = {
-    green : <img src = {require('../../images/cards/green_back.png')} className='card-images'></img>,
-    purple : <img src = {require('../../images/cards/purple_back.png')} className='card-images'></img>,
-    yellow : <img src = {require('../../images/cards/yellow_back.png')} className='card-images'></img>,
-    red : <img src = {require('../../images/cards/red_back.png')} className='card-images'></img>,
+    green : require('../../images/cards/green_back.png'), 
+    purple : require('../../images/cards/purple_back.png'),
+    yellow : require('../../images/cards/yellow_back.png'),
+    red : require('../../images/cards/red_back.png'),
 }
 

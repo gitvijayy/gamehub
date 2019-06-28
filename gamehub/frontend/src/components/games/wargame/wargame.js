@@ -8,9 +8,7 @@ import { convertNumberToCard, fetchDeckImage } from './wargameHelpers'
 import { getWarGamePlay, addWarTurn, makeNewGame,getWarActivegames } from '../../../actions/wargame'
 import auth from '../../../reducers/auth';
 // import auth from '../../../reducers/auth';
-
 export class WarGame extends Component {
-
     addTurn = (e) => {
         const rounds = this.props.gameplay.round
         // console.log(rounds)
@@ -21,28 +19,23 @@ export class WarGame extends Component {
         // this.props.gameplay.round.length-1
         // console.log(rounds)
     }
-
     startNewGame = (e) => {
         this.props.makeNewGame(()=>{
             this.props.getWarActivegames()
         })
         document.cookie `gameid = ${e.target.id}`
     }
-
     goToGame = (e) => {
         // console.log(e.target.id)
         this.props.getWarGamePlay(e.target.id)
         document.cookie = `gameid = ${e.target.id}`
     }
-
     componentDidMount() {
         const game_id= document.cookie.split('=')[1]
         // const game_id = 54;
         this.props.getWarGamePlay(game_id)
         this.props.getWarActivegames()
     }
-
-
     render() {
         // console.log(this.props.gameplay)
         // console.log(this.props.gameplay)
@@ -58,24 +51,31 @@ export class WarGame extends Component {
             // console.log(player)
             return players
         }
-
         const getDecks = (game) => {
             const decks = game.playerswar.map(player => {
                 return player.deck_length
             })
             return decks
         }
-
         const users = game ? getPlayers(game) : 'Loading'
         const decks = game ? getDecks(game) : 'Loading'
         // console.log(game.round)
         const round = game && game.round.length > 0 ? game.round[game.round.length-1]: 'Loading'
         const roundID = typeof round === 'string'? round: round.id
         const turns = typeof round === 'string' ? round: round.turns
-
-        const lastRound = game && game.round.length > 0 ? game.round[game.round.length-2]: 'Loading'
-        
+        const lastRound = game && game.round.length > 0 ? game.round[game.round.length-2]: null
+        const lastTurns = lastRound ? lastRound.turns : 'Loading'
         console.log(lastRound)
+        const userturn = typeof turns === 'string'? turns: turns.filter(turn => {
+            return turn.player.username === this.props.user.username
+        })
+        const opponentturn = typeof turns === 'string'? turns: turns.filter(turn => {
+            return turn.player.username !== this.props.user.username
+        })
+
+        
+        console.log(userturn)
+        // console.log(opponentturn)
         // console.log(turns);
         // const round = game && game.round.length === 0 ? game.round: 'Loading'
         // console.log(round.length)
@@ -88,48 +88,74 @@ export class WarGame extends Component {
         // console.log(games)
         return(
             <Fragment>
-                <h1> War Game is Here</h1>
-                <button onClick={this.addTurn}>Click to create a turn </button>
-                <button onClick={this.startNewGame}>Click to start a new game</button>
-                <p> Game Statues: {this.props.gameplay.status}</p>
-                <p> Round: {roundID}</p>
+                {/* <h1> War Game is Here</h1> */}
+                {/* <button onClick={this.addTurn}>Click to create a turn </button> */}
+                {/* <button onClick={this.startNewGame}>Click to start a new game</button> */}
+                {/* <p> Game Statues: {this.props.gameplay.status}</p> */}
+                {/* <p> Round: {roundID}</p> */}
                 {/* <p> This is my users : {users}</p>
                 <p> This is their deck: {decks}</p> */}
-                <p> this is player1: {player1} </p>
-                <p> this is player2: {player2} </p>
-                {typeof games === 'string'? <p>{games}</p>: 
-            games.map(game => {
-                // console.log(game.game_id)
-                return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment>
-            })}
+                {/* <p> this is player1: {player1} </p> */}
+                {/* <p> this is player2: {player2} </p> */}
+                {/* {typeof games === 'string'? <p>{games}</p>:  */}
+            {/* games.map(game => { */}
+                {/* // console.log(game.game_id) */}
+                {/* return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment> */}
+            {/* })} */}
+            {/* {typeof lastTurns === 'string'? <p>Turns: {lastTurns}</p>: */}
+            {/* lastTurns.map(turn => { */}
+                {/* return <p>LastTurns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p> */}
+            {/* }) */}
+        {/* } */}
+            {/* {typeof turns === 'string'? <p>Turns: {turns}</p>: */}
+            {/* turns.map(turn => { */}
+                {/* return <p>Turns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p> */}
+            {/* }) */}
+        {/* } */}
+            <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+            
+            
+            <div className="playingcard">
+                    <img src={fetchDeckImage('red')}/>
+                    {opponentturn[0]? convertNumberToCard(opponentturn[0].action):null}
+            </div>
+            
+  
+    
+              <div className="playingcard middle">
+                {/* <div className="middle"> */}
+                {/* <div className="cardsplayed"> {convertNumberToCard(2)} </div> */}
+                    {/* <img src={require("../../images/dark_soldier.png")} /> */}
+                    <img className="aces" src={require("../../images/cards/aces.png")} />
+                    {/* <img src={require("../../images/shouting_soldier.jpg")} /> */}
+                    {/* <div className="cardsplayed"> {convertNumberToCard(11)} </div> */}
+                {/* </div> */}
+              </div>
 
-            {typeof lastRound === 'string'? <p>Turns: {lastRound}</p>:
-            lastRound.turns.map(turn => {
-                return <p>LastTurns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p>
-            })
-        }
-            {typeof turns === 'string'? <p>Turns: {turns}</p>:
-            turns.map(turn => {
-                return <p>Turns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p>
-            })
 
-        }
+            <div className="playingcard">
+              <img src={fetchDeckImage('green')} onClick={this.addTurn}/>
+              {userturn[0]?convertNumberToCard(userturn[0].action):null}
+           </div>
+
+
+            </div>
+        
         {/* {convertNumberToCard(2)} */}
         {/* <img src='../../images/cards/1C.png'></img> */}
         {/* <img src={require('../../images/cards/green_back.png')} /> */}
-        {fetchDeckImage('green')}
-        {fetchDeckImage('red')}
+        {/* {fetchDeckImage('green')} */}
+        {/* {fetchDeckImage('red')} */}
             </Fragment>
         )
     }
 }
-
 const mapStateToProps = state => ({
     gameplay: state.wargame.gameplay,
-    games: state.wargame.games
+    games: state.wargame.games,
+    user: state.auth.user
   })
   
   export default connect(mapStateToProps, { getWarGamePlay, addWarTurn, makeNewGame,getWarActivegames })(WarGame)
   
-
 // export default WarGame;
