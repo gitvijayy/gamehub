@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { convertNumberToCard } from './wargameHelpers' 
+import { convertNumberToCard, fetchDeckImage } from './wargameHelpers' 
 // import { getGamePlay } from '../../actions/defaultgame'
 // import { defaultgame } from './datahelpers.js'
 // import { addWarTurn } from '../../../actions/wargame'
@@ -116,6 +116,9 @@ export class WarGame extends Component {
         }
         {/* {convertNumberToCard(2)} */}
         {/* <img src='../../images/cards/1C.png'></img> */}
+        {/* <img src={require('../../images/cards/green_back.png')} /> */}
+        {fetchDeckImage('green')}
+        {fetchDeckImage('red')}
             </Fragment>
         )
     }

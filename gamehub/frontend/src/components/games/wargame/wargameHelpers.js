@@ -5,7 +5,7 @@ export const convertNumberToCard = (number) => {
 }
 
 export const fetchDeckImage = (color) => {
-    DeckDictionary[type]
+    return DeckDictionary[color]
 }
 
 const PictureDictionary = [
@@ -64,8 +64,10 @@ const PictureDictionary = [
 
 ]
 
-DeckDictionary = {
-    'black' : <img src = {require('../../images/cards/blackBack.png')} className='card-images'></img>
-    'purple' : <img src = {require('../../images/cards/purple_back.png')} className='card-images'></img>
+const DeckDictionary = {
+    green : <img src = {require('../../images/cards/green_back.png')} className='card-images'></img>,
+    purple : <img src = {require('../../images/cards/purple_back.png')} className='card-images'></img>,
+    yellow : <img src = {require('../../images/cards/yellow_back.png')} className='card-images'></img>,
+    red : <img src = {require('../../images/cards/red_back.png')} className='card-images'></img>,
 }
 
