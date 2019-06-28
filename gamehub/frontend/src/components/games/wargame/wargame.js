@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { convertNumberToCard } from './wargameHelpers' 
 // import { getGamePlay } from '../../actions/defaultgame'
 // import { defaultgame } from './datahelpers.js'
 // import { addWarTurn } from '../../../actions/wargame'
@@ -104,14 +105,17 @@ export class WarGame extends Component {
 
             {typeof lastRound === 'string'? <p>Turns: {lastRound}</p>:
             lastRound.turns.map(turn => {
-                return <p>LastTurns: {turn.player.username} played the card {turn.action}</p>
+                return <p>LastTurns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p>
             })
         }
             {typeof turns === 'string'? <p>Turns: {turns}</p>:
             turns.map(turn => {
-                return <p>Turns: {turn.player.username} played the card {turn.action}</p>
+                return <p>Turns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p>
             })
+
         }
+        {/* {convertNumberToCard(2)} */}
+        {/* <img src='../../images/cards/1C.png'></img> */}
             </Fragment>
         )
     }
