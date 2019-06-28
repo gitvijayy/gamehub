@@ -16,18 +16,19 @@ def prize_card_generator(gameid):
     prize_cards_list = []
     for card in prize_cards:
         prize_cards_list.append(card.prizeCard)
-    print(prize_cards_list)
+
     if len(prize_cards_list) != 13:
         random_card = random.randint(1, 13)
         while prize_cards_list.count(random_card) == 1:
-            # i = 1
-            # while i == 1:
-            #     if random_card in prize_cards_list:
             random_card = random.randint(1, 13)
-        # else:
-        #     break
         return random_card
-    return "Game Over"
+    return 0
+
+
+def add_turn(roundid, action, player):
+    newTurn = Turns.objects.create(
+        round_id=roundid, player=player, action=action)
+    return newTurn
 
 
 class UserNameSerializer(serializers.ModelSerializer):
@@ -58,39 +59,47 @@ class TurnSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self,  validated_data):
-        turncount = validated_data['round_id'].turns.count()
+        roundid = validated_data['round_id']
+        turncount = roundid.turns.count()
+        gameid = roundid.game_id
+        user = self.context['request'].user
+        print(gameid.id)
+
         if turncount == 0:
-
             players = Players.objects.filter(
-                game_id=validated_data['round_id'].game_id)
-
+                game_id=gameid)
             for player in players:
-
-                if player.player != self.context['request'].user:
+                if player.player != user:
                     raise serializers.ValidationError("Not Your Turn")
                 else:
-                    break
+                    newturn = add_turn(roundid, validated_data['action'], user)
+                    return newturn
 
         if turncount >= 1:
-            # raise serializers.ValidationError(
-            #     validated_data['round_id'], validated_data['round_id'].turns.count())
-
             player_valid_turn = Turns.objects.filter(
-                round_id=validated_data['round_id'], player=self.context['request'].user)
-            if player_valid_turn:
+                round_id=roundid, player=user)
+            prize_card = prize_card_generator(gameid)
+            if player_valid_turn and prize_card != 0:
                 raise serializers.ValidationError("Not Your Turn")
 
-            prize_card = prize_card_generator(
-                validated_data['round_id'].game_id)
-            if prize_card == "Game Over":
-                raise serializers.ValidationError("Game Over")
-            newRound = Rounds.objects.create(
-                game_id=validated_data['round_id'].game_id, prizeCard=prize_card)
-            newRound.save()
+            # prize_card = prize_card_generator(gameid)
+            if prize_card == 0:
+                newturn = add_turn(roundid, validated_data['action'], user)
+                gameover = Games.objects.get(id=gameid.id)
+                gameover.status = "Game Over"
+                gameover.save()
+                return newturn
 
-        newTurn = Turns.objects.create(
-            round_id=validated_data['round_id'], player=self.context['request'].user, action=validated_data['action'])
-        return newTurn
+                # gameover = Games.objects.filter(id=)
+                # newturn = add_turn(roundid, validated_data['action'], user)
+                # newturn.save()
+                # raise serializers.ValidationError("Game Over")
+            else:
+                newturn = add_turn(roundid, validated_data['action'], user)
+                newRound = Rounds.objects.create(
+                    game_id=gameid, prizeCard=prize_card)
+                newRound.save()
+                return newturn
 
 
 class RoundSerializer(serializers.ModelSerializer):

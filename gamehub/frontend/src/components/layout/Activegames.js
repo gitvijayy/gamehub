@@ -9,14 +9,10 @@ class Activegames extends Component {
 
   render() {
 
-
-
     const onClick = (id) => {
       document.cookie = `gameid=${id}`
       this.props.getGamePlay(this.props.gamename, id)
     }
-
-
     let loadgames = ""
     if (this.props.activegames) {
       loadgames = this.props.activegames.map((game, index) => {
@@ -24,13 +20,12 @@ class Activegames extends Component {
         if (game.game_id.status == "New") {
           gameclass = "col-12 alert-warning btn-lg"
         }
-
-
-        // console.log("asda", game.game_id.id)
-        return <button onClick={() => { onClick(game.game_id.id) }} key={game.game_id.id} className={gameclass}
-          style={{ height: "50px", marginTop: "10%" }}>{game.game_id.id}</button>
-
-
+        if (game.game_id.status != "Game Over") {
+          console.log(game.game_id.status)
+          console.log("in")
+          return <button onClick={() => { onClick(game.game_id.id) }} key={game.game_id.id} className={gameclass}
+            style={{ height: "50px", marginTop: "10%" }}>{game.game_id.id}</button>
+        }
       })
     }
 

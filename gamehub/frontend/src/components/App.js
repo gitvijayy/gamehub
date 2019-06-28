@@ -56,7 +56,7 @@ class App extends Component {
                   {/* <Route exact path="/loaders" component={Loaders} /> */}
 
                   <Route exact path="/defaultgame" component={Defaultgame} />
-                  {/* <Route exact path="/login" component={Login} /> */} */}
+                  {/* <Route exact path="/login" component={Login} /> */}
                 </Switch>
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}

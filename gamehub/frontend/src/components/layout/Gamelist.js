@@ -63,26 +63,26 @@ class Gamelist extends Component {
   }
 
   render() {
-
+    const styles = { borderRadius: "5px" }
     const { gamelist } = this.state
     const loadgamelist = gamelist.map(game => {
 
       return (
         <div key={game.url} className="card col-12 col-md-3 bg-common game-top-div game-cards">
           <img className="card-img-top card-images game-images" src={game.img} alt="Card image cap" />
-          <div className="card-body ">
+          <div className="card-body text-white">
             <h4 className="card-title  ">{game.name}</h4>
             <p className="card-text ">{game.description}asdad</p>
             <article className="d-flex justify-content-between">
-              <Link onClick={() => {
+              <Link style={styles} onClick={() => {
                 this.onClick(game.name)
-              }} className="btn btn-dark btn-lg" to={game.url}>PLAY</Link>
+              }} className="btn btn-warning btn-lg text-dark " to={game.url}>PLAY</Link>
               {/* {this.state.loading && <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
               </Spinner>} */}
               {/* <button  className="btn btn-dark btn-lg">PLAY</button></Link> */}
 
-              < button className=" btn btn-dark btn-lg">Rules</button>
+              < button style={styles} className=" btn btn-warning btn-lg text-dark">Rules</button>
             </article>
           </div>
         </div>

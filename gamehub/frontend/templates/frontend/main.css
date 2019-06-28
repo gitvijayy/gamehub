@@ -34,6 +34,16 @@
   flex-direction: column;
 }
 
+.playerbet {
+  box-shadow: none !important;
+  margin-left: 10% !important;
+  width: 7em !important;
+  height: 100px !important;
+  /* align-items: center; */
+  /* justify-content: center; */
+  margin-top: 10% !important;
+}
+
 .player1name {
   position: absolute;
   left: 45%;
@@ -52,7 +62,7 @@
   display: grid;
 }
 
-.middlebox img {
+.prizecard {
   width: auto !important;
   /* align-items: center; */
   /* justify-content: center; */
@@ -88,7 +98,7 @@
 }
 
 .game-cards {
-  box-shadow: inset 0px -10px 25px tan, 0px 5px 5px black;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
 }
 
 .game-images {
@@ -107,7 +117,7 @@
 }
 
 .bg-common {
-  background: tan;
+  background: #373a3c;
 }
 
 .card-title {
@@ -115,7 +125,7 @@
 }
 
 .game-top-div {
-  margin: 2%;
+  margin: 3%;
 }
 
 .media-margin {
