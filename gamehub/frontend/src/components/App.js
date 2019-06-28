@@ -5,7 +5,7 @@ import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import Navbar from './layout/Navbar'
-
+import { login } from '../actions/auth'
 import Dashboard from './layout/Dashboard'
 import Alerts from './layout/Alerts'
 import Login from './accounts/Login'
@@ -18,6 +18,9 @@ import { Provider } from 'react-redux'
 import store from '../store'
 import { loadUser } from '../actions/auth'
 import WarGame  from './games/wargame/wargame'
+import Gamelist from './layout/Gamelist'
+import Activegames from './layout/Activegames'
+import Activeplayers from './layout/Activeplayers'
 
 
 const alertOptions = {
@@ -38,38 +41,39 @@ class App extends Component {
         // {/* <h1>Hello there how are you</h1> */}
     
       <Provider store={store}>
-        <WarGame/>
-      
-        {/* //  <AlertProvider template={AlertTemplate} {...alertOptions}>
-        //    <Router>
-        //      <Fragment>
-        //        <Navbar />
-        //        <Alerts />
-        //       <div className="d-flex">
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <Router>
+            <Fragment>
+              <Navbar />
+              <Alerts />
 
-        //         <Test />
-        //         <Switch>
-        //           // <PrivateRoute exact path="/" component={Dashboard} />
-        //           // <Route exact path="/" component={Dashboard} />
+              <div className="container">
+                {/* <Activegames /> */}
+                {/* <Gamelist /> */}
+
+                {/* <Test /> */}
+                <Switch>
+                  {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
+                  <Route exact path="/" component={Gamelist} />
+
+                  {/* <Route exact path="/loaders" component={Loaders} /> */}
+
+                  <Route exact path="/defaultgame" component={Defaultgame} />
+                  {/* <Route exact path="/login" component={Login} /> */} 
+                  <Route exact path="/war" component={WarGame}/>
+                </Switch>
+                {/* <Dashboard /> */}
+                {/* <Defaultgame /> */}
+
+                {/* <Activeplayers /> */}
 
 
-        //          <Route exact path="/register" component={Register} />
-        //         <Route exact path="/login" component={Login} /> 
-        //         </Switch>
-        //         <Dashboard />
-        //         <Defaultgame />
-                
-                  
-              
 
 
-
-
-        //        </div>
-        //      </Fragment>
-        //    </Router>
-        //  </AlertProvider> */}
-      
+              </div>
+            </Fragment>
+          </Router>
+        </AlertProvider>
       </Provider>
 
     )

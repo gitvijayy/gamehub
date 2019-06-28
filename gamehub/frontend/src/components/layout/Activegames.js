@@ -1,37 +1,56 @@
 import React, { Component, Fragment } from 'react'
+import { getActiveGames, getGamePlay } from '../../actions/defaultgame'
+import { connect } from 'react-redux'
+class Activegames extends Component {
 
-export default class Activegames extends Component {
-
-  state = {
-    games: ["asdad", "asdad", "asdad", "asdad", "asdad", "asdad", "asdad", "asdad",]
-  }
+  // componentDidMount() {
+  //   this.props.getActiveGames(this.props.gamename)
+  // }
 
   render() {
 
-    const { games } = this.state
-    const loadgames =
-
-      <div className="container">
-
-        {
-
-          games.map((game, index) => {
-
-            return <button key={index} className="col-12 alert-success btn-lg" style={{ height: "80px" }}>{game}</button>
-          })}
-      </div>
 
 
+    const onClick = (id) => {
+      document.cookie = `gameid=${id}`
+      this.props.getGamePlay(this.props.gamename, id)
+    }
 
+
+    let loadgames = ""
+    if (this.props.activegames) {
+      loadgames = this.props.activegames.map((game, index) => {
+        let gameclass = "col-12 alert-success btn-lg"
+        if (game.game_id.status == "New") {
+          gameclass = "col-12 alert-warning btn-lg"
+        }
+
+
+        // console.log("asda", game.game_id.id)
+        return <button onClick={() => { onClick(game.game_id.id) }} key={game.game_id.id} className={gameclass}
+          style={{ height: "50px", marginTop: "10%" }}>{game.game_id.id}</button>
+
+
+      })
+    }
 
     return (
-      <section className="col-1 col-md-2 text-white side-containers active-games ">
-        <h3 className="text-white alert-danger bg-dark text-center justify-content-center box-shadow">Active Games</h3>
-        {loadgames}
-      </section>
+      <div >
+        <button className=" btn btn-dark btn-lg newgame text-white">Active Games</button>
+        <div className="container pre-scrollable ">
+          {loadgames}
+        </div>
+      </div >
     )
   }
 }
+
+
+const mapStateToProps = state => ({
+  activegames: state.defaultgame.activegames,
+})
+
+export default connect(mapStateToProps, { getActiveGames, getGamePlay })(Activegames)
 
 
 

@@ -68,7 +68,14 @@ export class WarGame extends Component {
         const users = game ? getPlayers(game) : 'Loading'
         const decks = game ? getDecks(game) : 'Loading'
         // console.log(game.round)
-        const round = game && game.round.length > 0 ? game.round[game.round.length-1].id: 'Loading'
+        const round = game && game.round.length > 0 ? game.round[game.round.length-1]: 'Loading'
+        const roundID = typeof round === 'string'? round: round.id
+        const turns = typeof round === 'string' ? round: round.turns
+
+        const lastRound = game && game.round.length > 0 ? game.round[game.round.length-2]: 'Loading'
+        
+        console.log(lastRound)
+        // console.log(turns);
         // const round = game && game.round.length === 0 ? game.round: 'Loading'
         // console.log(round.length)
         const player1 = game? `${game.playerswar[0].player.username} and he has ${game.playerswar[0].deck_length} cards left`: 'Loading'
@@ -84,9 +91,9 @@ export class WarGame extends Component {
                 <button onClick={this.addTurn}>Click to create a turn </button>
                 <button onClick={this.startNewGame}>Click to start a new game</button>
                 <p> Game Statues: {this.props.gameplay.status}</p>
-                <p> Round: {round}</p>
-                <p> This is my users : {users}</p>
-                <p> This is their deck: {decks}</p>
+                <p> Round: {roundID}</p>
+                {/* <p> This is my users : {users}</p>
+                <p> This is their deck: {decks}</p> */}
                 <p> this is player1: {player1} </p>
                 <p> this is player2: {player2} </p>
                 {typeof games === 'string'? <p>{games}</p>: 
@@ -94,6 +101,17 @@ export class WarGame extends Component {
                 // console.log(game.game_id)
                 return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment>
             })}
+
+            {typeof lastRound === 'string'? <p>Turns: {lastRound}</p>:
+            lastRound.turns.map(turn => {
+                return <p>LastTurns: {turn.player.username} played the card {turn.action}</p>
+            })
+        }
+            {typeof turns === 'string'? <p>Turns: {turns}</p>:
+            turns.map(turn => {
+                return <p>Turns: {turn.player.username} played the card {turn.action}</p>
+            })
+        }
             </Fragment>
         )
     }

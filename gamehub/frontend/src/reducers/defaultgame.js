@@ -1,8 +1,12 @@
-import { GET_GAMEPLAY } from '../actions/types.js'
+import { GET_GAMEPLAY, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES } from '../actions/types.js'
+import { getNewGame } from '../actions/defaultgame.js';
 
 const initialState = {
 
-  gameplay: []
+  gameplay: [],
+  newgame: [],
+  name: "",
+  activegames: []
 }
 
 export default function (state = initialState, action) {
@@ -14,6 +18,29 @@ export default function (state = initialState, action) {
         ...state,
         gameplay: action.payload
       }
+
+    case GET_NEWGAME:
+      // console.log(action.payload)
+
+      return {
+        ...state,
+        newgame: [action.payload]
+      }
+
+    case SET_GAME:
+      // console.log(action.payload)
+      return {
+        ...state,
+        name: [action.payload]
+      }
+
+    case GET_ACTIVEGAMES:
+      console.log("amhere", action.payload)
+      return {
+        ...state,
+        activegames: action.payload
+      }
+
 
     default:
       return state;

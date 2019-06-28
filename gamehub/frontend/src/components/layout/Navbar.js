@@ -3,52 +3,48 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/auth.js';
-
+import { login } from '../../actions/auth'
+import Login from '../accounts/Login'
+import Button from 'react-bootstrap/Button'
+import Register from '../accounts/Register'
 class Navbar extends Component {
+  constructor(...args) {
+    super(...args);
 
+    this.state = { modalShowLogin: false, modalShowRegister: false };
+  }
   render() {
     const { isAuthenticated, user } = this.props.auth
+    let modalClose = () => this.setState({ modalShowLogin: false, modalShowRegister: false });
+
+    let logout1 = () => {
+      this.props.logout()
+      this.setState({ modalShowLogin: false, modalShowRegister: false });
+    }
+
+
     const authLinks = (
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-        {/* <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome${user.username}` : ""}</strong>
-        </span> */}
-        {/* <li className="nav-item">
-          <strong>{user ? `Welcome${user.username}` : ""}</strong> */}
-
-        {/* <li className="nav-item">
-          <button onClick={this.props.logout} className="nav-link btn btn-info btn-sm text-light">Logout</button>
-        </li> */}
-
-        {/* <Link to="/login" style={{ fontWeight: "bold" }} className="nav-link "> Login <span className="sr-only">(current)</span></Link> */}
-        {/* <button onClick={this.props.logout} className="nav-link btn btn-info btn-sm text-light">Logout</button>
-        </li> */}
-
-        {/* <span className="navbar-text mr-3"> */}
-
-        {/* </span> */}
-        <li className="row">
-          <strong class="mr-2" style={{ marginTop: "4%" }}>{user ? `Welcome ${user.username}` : ""}</strong>
-
-          <button onClick={this.props.logout} className="mr-1 btn btn-danger btn-sm text-dark logout">Logout</button>
+        <li className="row" style={{ display: "grid" }}>
+          <strong className="mr-2" style={{ marginTop: "4%" }}>{user ? `Welcome ${user.username}` : ""}</strong>
+          <button onClick={logout1} className="mr-1 btn btn-danger btn-sm text-dark logout">Logout</button>
         </li>
-
-
-
-
       </ul>
     )
     const guestLinks = (
       <ul className="navbar-nav ">
         <li className="nav-item">
-          <Link to="/login" style={{ fontWeight: "bold" }} className="nav-link "> Login <span className="sr-only">(current)</span></Link>
+          <a role="button" onClick={() => this.setState({ modalShowLogin: true })}
+            className="mr-1 btn btn-danger btn-sm text-dark login">Login</a>
+          <Login show={this.state.modalShowLogin} onHide={modalClose} />
         </li>
         <li className="nav-item">
-          <Link to="/register" style={{ fontWeight: "bold" }} className="nav-link ">Register</Link>
+          <a role="button" onClick={() => this.setState({ modalShowRegister: true })}
+            className="mr-1 btn btn-danger btn-sm text-dark login">Register</a>
+          <Register show={this.state.modalShowRegister} onHide={modalClose} />
         </li>
       </ul>
     )
-
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-common" >
@@ -67,7 +63,8 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+
 })
 export default connect(mapStateToProps, { logout })(Navbar)
 
