@@ -20,7 +20,7 @@ const tokenConfig = (getState) => {
 
 export const getGamePlay = (game, gameid) => (dispatch, getState) => {
   // let abc = defaultgame(123)
-  console.log("in")
+  // console.log("in")
   axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
     // ${ gameid }
     dispatch({
@@ -64,9 +64,30 @@ export const getNewGame = (game, cb) => (dispatch, getState) => {
 
 }
 
+
+export const addTurn = (game, turn) => (dispatch, getState) => {
+  axios.post(`/api/${game}/turns/`, turn, tokenConfig(getState)).then(res => {
+
+    // axios.get('/api/defaultgame/games/1/', tokenConfig(getState)).then(res => {
+
+    //   dispatch({
+    //     type: GET_GAMEPLAY,
+    //     payload: res.data
+    //   })
+
+    // }).catch(err => dispatch(
+    //   returnErrors(err.response.data, err.response.status)
+    // ))
+
+  }).catch(err => dispatch(
+    returnErrors(err.response.data, err.response.status)
+  ))
+}
+
+
 export const setGame = (game) => (dispatch, getState) => {
   // let abc = defaultgame(123)
-  console.log("in")
+  // console.log("in")
   // axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
 
   dispatch({
@@ -95,25 +116,6 @@ export const setGame = (game) => (dispatch, getState) => {
 //     returnErrors(err.response.data, err.response.status)
 //   ))
 // }
-
-export const addTurn = (turn) => (dispatch, getState) => {
-  axios.post(`/api/defaultgame/turns/`, turn, tokenConfig(getState)).then(res => {
-
-    // axios.get('/api/defaultgame/games/1/', tokenConfig(getState)).then(res => {
-
-    //   dispatch({
-    //     type: GET_GAMEPLAY,
-    //     payload: res.data
-    //   })
-
-    // }).catch(err => dispatch(
-    //   returnErrors(err.response.data, err.response.status)
-    // ))
-
-  }).catch(err => dispatch(
-    returnErrors(err.response.data, err.response.status)
-  ))
-}
 
 
 

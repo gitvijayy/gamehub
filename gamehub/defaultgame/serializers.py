@@ -58,9 +58,23 @@ class TurnSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self,  validated_data):
-        if validated_data['round_id'].turns.count() >= 1:
+        turncount = validated_data['round_id'].turns.count()
+        if turncount == 0:
+
+            players = Players.objects.filter(
+                game_id=validated_data['round_id'].game_id)
+
+            for player in players:
+
+                if player.player != self.context['request'].user:
+                    raise serializers.ValidationError("Not Your Turn")
+                else:
+                    break
+
+        if turncount >= 1:
             # raise serializers.ValidationError(
             #     validated_data['round_id'], validated_data['round_id'].turns.count())
+
             player_valid_turn = Turns.objects.filter(
                 round_id=validated_data['round_id'], player=self.context['request'].user)
             if player_valid_turn:

@@ -2,12 +2,11 @@
 export const cards = () => {
   let suits = ["C", "H", "S", "D"]
   let cardnumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-  // let cardmap = [...cardnumbers, ...cardnumbers, ...cardnumbers, ...cardnumbers]
 
   return {
     suits: suits,
     cardnumbers: cardnumbers
-    // cardmap: cardmap
+
   }
 }
 
@@ -23,9 +22,6 @@ export const defaultgame = (payload) => {
 
   let cards1 = cards()
   let cards2 = cards()
-  // let player1points = 0
-  // let player2points = 0
-
 
   if (payload.rounds) {
     payload.rounds.forEach((value, index) => {
@@ -35,20 +31,23 @@ export const defaultgame = (payload) => {
 
       if (value.turns[0] && value.turns[0].action) {
         // let mappedCard1 = cards1.cardmap[value.turns[0].action - 1]
-        let cardPlayed = cards1.cardnumbers.indexOf(value.turns[0].action - 1)
+        let cardPlayed = cards1.cardnumbers.indexOf(value.turns[0].action)
         if (cardPlayed > -1) {
           cards1.cardnumbers.splice(cardPlayed, 1)
         }
-        player1action = value.turns[0].action
+        if (value.turns[1] && value.turns[1].action) {
+          player1action = value.turns[0].action
+        }
+
       }
 
       if (value.turns[1] && value.turns[1].action) {
         // let mappedCard2 = cards2.cardmap[value.turns[1].action - 1]
-        let cardPlayed = cards2.cardnumbers.indexOf(value.turns[1].action - 1)
+        let cardPlayed = cards2.cardnumbers.indexOf(value.turns[1].action)
         if (cardPlayed > -1) {
           cards2.cardnumbers.splice(cardPlayed, 1)
         }
-        player1action = value.turns[1].action
+        player2action = value.turns[1].action
       }
 
       // if (value.turns[0].action > value.turns[1].action) {
@@ -82,12 +81,22 @@ export const defaultgame = (payload) => {
   // gameplay.players[1] ? gameplay.players[1].push(cards2.cardnumbers) : false
 
   return {
-    gameplay: gameplay,
-    cards: cards()
+    gameplay: gameplay
+
   }
 }
 
+export const getcookie = (cb) => {
+  console.log("inside func")
+  document.cookie.split(";").forEach(cookie => {
+    name = cookie.split("=")[0].trim()
 
+    if (name == "gameid") {
+      console.log("inside cookie")
+      cb(cookie.split("=")[1])
+    }
+  })
+}
 
 
 

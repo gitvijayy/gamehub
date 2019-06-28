@@ -35,7 +35,7 @@ export default function (state = initialState, action) {
       }
 
     case GET_ACTIVEGAMES:
-      console.log("amhere", action.payload)
+      // console.log("amhere", action.payload)
       return {
         ...state,
         activegames: action.payload

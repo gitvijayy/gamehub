@@ -2,7 +2,7 @@ import React, { Component, Fragment, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getGamePlay, getNewGame, setGame, getActiveGames } from '../../actions/defaultgame'
-import { defaultgame, cards } from './datahelpers.js'
+import { defaultgame, cards, getcookie } from './datahelpers.js'
 import { addTurn } from '../../actions/defaultgame'
 import Activeplayers from '../layout/Activeplayers'
 import Activegames from '../layout/Activegames'
@@ -33,58 +33,46 @@ export class Defaultgame extends Component {
     }));
   }
 
-
-
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
-      var data = JSON.parse(e.data);
-      var message = data['message'];
+      // var data = JSON.parse(e.data);
+      // var message = data['message'];
       this.props.getActiveGames(this.state.name)
+      getcookie((id) => {
+        this.props.getGamePlay(this.state.name, id)
+      })
+
     };
   }
 
 
   componentDidMount() {
-    let gameid = document.cookie.split(";")[1].split("=")[1]
+    console.log("in")
+    getcookie((id) => {
+      this.props.getGamePlay(this.state.name, id)
+    })
 
-    this.props.getGamePlay(this.state.name, gameid)
-    this.props.setGame(this.state.name)
+
+
     this.props.getActiveGames(this.state.name)
   }
 
   render() {
 
-
-
-    console.log(this.props.activegames)
-
     const newGame = () => {
       this.props.getNewGame(this.state.name, () => {
         document.cookie = `gameid=${this.props.newgame.id}`
-        // let gameid = document.cookie.split("=")[1]
-        // this.setState({ gameid: this.props.newgame.id })
-        // const gameplay = this.props.getGamePlay(this.state.name, this.props.newgame.id)
-        // this.setState({ gameplay: gameplay })
-
-
-
-
-        var lead = { "round_id": 13, "action": 99 }
+        // var lead = { "round_id": 13, "action": 99 }
         chatSocket.send(JSON.stringify({
-
-          'message': lead
+          'message': "message"
         }));
-
-
       })
 
 
     }
 
+
     const test = () => {
-
-      // console.log(this.props.newgame)
-
     }
     // if (!this.state.loading) {
     //   setTimeout(
@@ -99,98 +87,126 @@ export class Defaultgame extends Component {
 
     // console.log(this.props.gameplay)
     const playercards = []
+    const playerpoints = []
+    let newprizecard = ""
+
+
+    let gameblock =
+      <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+        <Loaders />
+      </div>
+
 
     const data = this.props.gameplay.players ? defaultgame(this.props.gameplay) : null
     console.log(data)
-    if (data && data.gameplay && data.gameplay.players) {
 
+
+
+    if (data && data.gameplay && data.gameplay.players) {
+      if (data.gameplay.prizeCard) {
+        newprizecard = <img key={data.gameplay.prizeCard} src={require(`../images/cards/${data.gameplay.prizeCard}D.png`)} />
+      }
 
       for (var player in data.gameplay.players) {
 
         const current = <div className="playingcard">
-
           {
-
             data.gameplay.players[player][0].map(action => {
+              if (this.props.user.user.username && player == this.props.user.user.username) {
+                return <img key={action + player} onClick={(e) => { addTurn(e) }}
+                  id={action} src={require(`../images/cards/${action}C.png`)} />
+              } else {
+                return <img key={action + player}
+                  src={require(`../images/blackBack.png`)} />
+              }
 
-
-
-              return <img key={action + player} src={require(`../images/cards/${action}C.png`)} />
             })}
 
         </div>
 
-
         playercards.push(current)
-        console.log("inasda")
+        const points = <tr key={player}>
+          <td>{player}</td>
+          <td>{data.gameplay.playerpoints[player]}</td>
 
+        </tr>
+
+        playerpoints.push(points)
+
+        if (Object.keys(data.gameplay.players).length > 1) {
+
+          gameblock = <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+            <div className="player1name">
+              <p className="logo" >{Object.keys(data.gameplay.players)[0]}</p>
+            </div>
+            {playercards[0]}
+            <div className="playingcard middlebox">
+              {/* <img className="aces" src={require("../images/aces.png")} /> */}
+              <div>
+                <button onClick={test} className="btn btn-danger btn-lg rules">{Object.keys(data.gameplay.players)[0]}</button>
+                {newprizecard}
+              </div>
+              <div>
+                <button onClick={test} className="btn btn-success btn-lg leader text-dark">Prize</button>
+                {newprizecard}
+              </div>
+              <div>
+                <button onClick={test} className="btn btn-danger btn-lg rules">{Object.keys(data.gameplay.players)[1]}</button>
+                {newprizecard}
+              </div>
+
+
+
+              <table className="table table-borderless table-dark  text-center" style={{ width: "25%", marginTop: "10%" }}>
+                <thead className="text-dark login" style={{ background: "red" }}>
+                  <tr>
+                    <th scope="col">Player</th>
+
+                    <th scope="col">Points</th>
+
+                  </tr>
+                </thead>
+                <tbody className="bg-light text-dark table-shadow ">
+                  {playerpoints}
+                </tbody>
+              </table>
+            </div>
+            {playercards[1]}
+            <div className="player2name">
+              <p className="logo " >{Object.keys(data.gameplay.players)[1]}</p>
+            </div>
+          </div>
+        }
 
       }
+
+
     }
 
-
-
-
-
-
-
-
-    console.log(data)
-
-    console.log(playercards)
+    const addTurn = (e) => {
+      let turn = {
+        round_id: data.gameplay.roundid,
+        action: e.target.id
+      }
+      console.log(turn)
+      this.props.addTurn(this.state.name, turn)
+      chatSocket.send(JSON.stringify({
+        'message': "message"
+      }));
+      console.log(e.target.id)
+    }
+    console.log(this.props.gameplay)
 
     return (
+
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
         style={{ height: "57em" }} >
-
-
-        <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2">
-
+        <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
           <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
           <button className="btn btn-success btn-lg leader text-dark">Archive</button>
         </div>
-
-
-        <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
-          {/* <div className="playingcard"> */}
-
-          {/* {player1cards[0]} */}
-          {/* </div> */}
-          {playercards[0]}
-          <div className="playingcard">
-            <img className="aces" src={require("../images/aces.png")} />
-
-            {/* {newprizecard} */}
-
-            <table className="table table-borderless table-dark  text-center" style={{ width: "25%" }}>
-              <thead className="text-dark login" style={{ background: "red" }}>
-                <tr>
-                  <th scope="col">Player</th>
-                  <th scope="col">Points</th>
-                </tr>
-              </thead>
-              <tbody className="bg-light text-dark table-shadow ">
-                <tr>
-                  {/* <td>{player1name}</td> */}
-                  {/* <td>{player1points}</td> */}
-                </tr>
-                <tr>
-                  {/* <td>{player2name}</td> */}
-                  {/* <td>{player2points}</td> */}
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
-
-          {playercards[1]}
-          {/* <div className="playingcard"> */}
-
-          {/* {player1cards[1]} */}
-          {/* </div> */}
-        </div>
-
+        {gameblock}
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
             display: "flex", flexDirection: "column",
@@ -198,14 +214,10 @@ export class Defaultgame extends Component {
           }}>
           <Activegames gamename={this.state.name} activegames={this.props.activegames} />
           <div>
-
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
-
             <button onClick={test} className="btn btn-danger btn-lg rules">Rules</button>
           </div>
-
         </div>
-
       </section >
     )
 

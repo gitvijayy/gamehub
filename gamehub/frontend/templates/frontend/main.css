@@ -34,6 +34,32 @@
   flex-direction: column;
 }
 
+.player1name {
+  position: absolute;
+  left: 45%;
+  top: 0px;
+}
+
+.player2name {
+  position: absolute;
+  left: 45%;
+  bottom: 0px;
+  top: 735px;
+}
+
+.middlebox {
+  flex-direction: row;
+  display: grid;
+}
+
+.middlebox img {
+  width: auto !important;
+  /* align-items: center; */
+  /* justify-content: center; */
+  margin-left: 20% !important;
+  margin-top: 10% !important;
+}
+
 /* .active-games {
   justify-content: space-evenly;
 } */
