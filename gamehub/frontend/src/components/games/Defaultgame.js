@@ -8,7 +8,7 @@ import Activeplayers from '../layout/Activeplayers'
 import Activegames from '../layout/Activegames'
 import Loaders from '../layout/Loaders'
 import Spinner from 'react-bootstrap/Spinner'
-
+import { ANIMATION_STATUS } from '../../actions/types'
 
 var chatSocket = new WebSocket(
   'ws://' + window.location.host +
@@ -102,6 +102,9 @@ export class Defaultgame extends Component {
     let newprizecard = ""
     let player1bet = <img className="playerbet" key={"p1"} src={require(`../images/bet2.png`)} />
     let player2bet = <img className="playerbet" key={"p2"} src={require(`../images/bet2.png`)} />
+    // let playerbets = [<img className="playerbet" key={"p1"} src={require(`../images/bet2.png`)} />,
+    // <img className="playerbet" key={"p2"} src={require(`../images/bet2.png`)} />]
+
 
     let gameblock =
       <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
@@ -123,10 +126,19 @@ export class Defaultgame extends Component {
 
     // }
 
+
     console.log(data)
     // console.log(this.props.gameplay)
     if (data && data.gameplay && data.gameplay.players) {
+
+
+
       //console.log(data.gameplay.animate)
+
+
+
+
+
       if (data.gameplay.prizeCard) {
         newprizecard = <img className="prizecard" key={data.gameplay.prizeCard} src={require(`../images/cards/${data.gameplay.prizeCard}D.png`)} />
       }
@@ -144,14 +156,32 @@ export class Defaultgame extends Component {
       }
 
 
+
+
+
+
+
+
       let suit = -1
+      let playerindex = 0
       for (var player in data.gameplay.players) {
+
+        // if (this.props.user && this.props.user.user
+        //   && this.props.user.user.username
+        //   && player == this.props.user.user.username) {
+
+        //   if (data.gameplay.current[playerindex]) {
+        //     playerbets[playerindex] = <img className="prizecard" key={"p2"} src={require(`../images/blackBack.png`)} />
+        //   }
+        // }
+
+        // playerindex++
+
 
         suit++
         const current = <div className="playingcard">
           {
             data.gameplay.players[player][0].map((action, index) => {
-
               if (this.props.user && this.props.user.user
                 && this.props.user.user.username
                 && player == this.props.user.user.username) {
@@ -175,8 +205,14 @@ export class Defaultgame extends Component {
 
         playerpoints.push(points)
 
+        if (this.props.animate) {
+          player1bet = <img className="prizecard" key={"p1"} src={require(`../images/cards/${data.gameplay.previous[0]}H.png`)} />
+          player2bet = <img className="prizecard" key={"p2"} src={require(`../images/cards/${data.gameplay.previous[1]}C.png`)} />
+          newprizecard = <img className="prizecard" key={data.gameplay.prizeCard} src={require(`../images/cards/${data.gameplay.previous[2]}D.png`)} />
+        }
+
         if (Object.keys(data.gameplay.players).length > 1 && data.gameplay.status != "Game Over") {
-          console.log(data.gameplay.animate)
+
 
           gameblock = <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
             <div className="player1name">
@@ -188,6 +224,7 @@ export class Defaultgame extends Component {
               <div>
                 <button onClick={test} className="btn btn-danger btn-lg rules">{Object.keys(data.gameplay.players)[0]}</button>
                 {player1bet}
+                {/* {playerbets[0]} */}
               </div>
               <div>
                 <button onClick={test} className="btn btn-success btn-lg leader text-dark">Prize</button>
@@ -196,6 +233,7 @@ export class Defaultgame extends Component {
               <div>
                 <button onClick={test} className="btn btn-danger btn-lg rules">{Object.keys(data.gameplay.players)[1]}</button>
                 {player2bet}
+                {/* {playerbets[1]} */}
               </div>
 
               <table className="table table-borderless table-dark  text-center" style={{ width: "25%", marginTop: "2%" }}>
@@ -271,7 +309,8 @@ const mapStateToProps = state => ({
   gameplay: state.defaultgame.gameplay,
   user: state.auth,
   newgame: state.defaultgame.newgame[0],
-  activegames: state.defaultgame.activegames
+  activegames: state.defaultgame.activegames,
+  animate: state.defaultgame.animate
 })
 
 export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Defaultgame)

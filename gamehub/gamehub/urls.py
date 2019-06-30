@@ -24,8 +24,11 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
     path('', include('defaultgame.urls')),
+    path('', include('goofspiel.urls')),
     path('admin/', admin.site.urls),
-    url(r'^chat/', include('chat.urls'))
+    url(r'^chat/', include('chat.urls')),
+    # url(r'^ws/socket/', include('defaultgame.urls'))
+
     # path('chat/', include1('chat.api.urls', namespace='chat')),
     # re_path(r'^.*', TemplateView.as_view(template_name='index.html'))
 ]

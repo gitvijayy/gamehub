@@ -1,4 +1,4 @@
-import { GET_GAMEPLAY, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES } from '../actions/types.js'
+import { GET_GAMEPLAY, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS } from '../actions/types.js'
 import { getNewGame } from '../actions/defaultgame.js';
 
 const initialState = {
@@ -6,7 +6,8 @@ const initialState = {
   gameplay: [],
   newgame: [],
   name: "",
-  activegames: []
+  activegames: [],
+  animate: false
 }
 
 export default function (state = initialState, action) {
@@ -39,6 +40,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         activegames: action.payload
+      }
+
+    case ANIMATION_STATUS:
+      return {
+        ...state,
+        animate: action.payload
       }
 
 

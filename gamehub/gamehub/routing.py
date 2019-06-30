@@ -3,6 +3,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 import chat.routing
 import defaultgame.routing
+import goofspiel.routing
 
 application = ProtocolTypeRouter({
     # (http->django views is added by default)
@@ -16,4 +17,9 @@ application = ProtocolTypeRouter({
             defaultgame.routing.websocket_urlpatterns
         )
     ),
+    'websocket': AuthMiddlewareStack(
+        URLRouter(
+            goofspiel.routing.websocket_urlpatterns
+        )
+    )
 })

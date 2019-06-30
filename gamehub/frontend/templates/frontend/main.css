@@ -193,6 +193,30 @@
   display: flex;
 }
 
+.playingcard1 img {
+  width: 7.5% !important;
+  height: 105px !important;
+}
+
+.memorycard img {
+  width: 7.5%;
+  height: 105px;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+  margin-bottom: 2%;
+  margin-right: 1%;
+}
+
+.memorycard img:hover {
+  cursor: pointer;
+}
+
+.memorycard {
+  justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .bg-alternate-2 {
   background-image: url(https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-050.jpg);
   background-repeat: no-repeat;

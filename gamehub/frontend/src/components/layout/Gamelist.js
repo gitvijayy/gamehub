@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
-import { setGame } from '../../actions/defaultgame'
+import { setGame } from '../../actions/goofspiel'
 import { connect } from 'react-redux'
+import { cssAnimations } from '../games/goofspiel/datahelpers'
 class Gamelist extends Component {
 
   state = {
     gamelist: [{
-      url: "/defaultgame",
-      name: "defaultgame",
+      url: "/rummy",
+      name: "Rummy",
       img: require("../images/rummy.jpeg"),
       description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
 
@@ -68,6 +69,7 @@ class Gamelist extends Component {
     const loadgamelist = gamelist.map(game => {
 
       return (
+
         <div key={game.url} className="card col-12 col-md-3 bg-common game-top-div game-cards">
           <img className="card-img-top card-images game-images" src={game.img} alt="Card image cap" />
           <div className="card-body text-white">
@@ -87,6 +89,7 @@ class Gamelist extends Component {
           </div>
         </div>
 
+
       )
     })
 
@@ -102,7 +105,7 @@ class Gamelist extends Component {
 
 
 const mapStateToProps = state => ({
-  gamename: state.defaultgame.name
+  gamename: state.goofspiel.name
 })
 
 export default connect(mapStateToProps, { setGame })(Gamelist)

@@ -20,7 +20,8 @@ export const defaultgame = (payload) => {
     playerpoints: {},
     current: [0, 0],
     animate: false,
-    suits: []
+    suits: [],
+    previous: [0, 0, 0]
   }
 
   let players = payload.players.map(value => {
@@ -67,7 +68,15 @@ export const defaultgame = (payload) => {
       if (index == (payload.rounds.length - 1)) {
         gameplay.current[0] = player1action
         gameplay.current[1] = player2action
+
       }
+
+      if ((payload.rounds.length - 2) >= 0 && index == (payload.rounds.length - 2)) {
+        gameplay.previous[0] = player1action
+        gameplay.previous[1] = player2action
+        gameplay.previous[2] = value.prizeCard
+      }
+
       gameplay.roundid = value.id
       gameplay.prizeCard = value.prizeCard
     })

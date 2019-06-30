@@ -117,12 +117,12 @@ class GameSerializer(serializers.ModelSerializer):
     # Rounds.objects.all().delete()
     # Players.objects.all().delete()
     # player = UserNameSerializer()
-    rounds = RoundSerializer(many=True, read_only=True)
-    players = PlayerNameSerializer(many=True, read_only=True)
+    roundss = RoundSerializer(many=True, read_only=True)
+    playerss = PlayerNameSerializer(many=True, read_only=True)
 
     class Meta:
         model = Games
-        fields = ['id', 'status',  'players', 'rounds']
+        fields = ['id', 'status',  'playerss', 'roundss']
 
     def create(self,  validated_data):
         def addGame():
@@ -138,7 +138,7 @@ class GameSerializer(serializers.ModelSerializer):
         inactive_games = Games.objects.filter(status="New")
         if inactive_games:
             for game in inactive_games:
-                current_players = game.players.all()
+                current_players = game.playerss.all()
                 for player in current_players:
                     if player.player == self.context['request'].user:
                         newGame = addGame()

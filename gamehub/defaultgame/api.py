@@ -44,7 +44,7 @@ class PlayersViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerSerializer
 
     def get_queryset(self):
-        return self.request.user.users.all()
+        return self.request.user.userss.all()
 
 
 # Lead Viewset

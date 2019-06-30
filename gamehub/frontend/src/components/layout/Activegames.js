@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { getActiveGames, getGamePlay } from '../../actions/defaultgame'
 import { connect } from 'react-redux'
+import { cssAnimations } from '../games/goofspiel/datahelpers'
 class Activegames extends Component {
 
   // componentDidMount() {
@@ -13,6 +14,7 @@ class Activegames extends Component {
       document.cookie = `gameid=${id}`
       this.props.getGamePlay(this.props.gamename, id)
     }
+
     let loadgames = ""
     if (this.props.activegames) {
       loadgames = this.props.activegames.map((game, index) => {
@@ -21,8 +23,7 @@ class Activegames extends Component {
           gameclass = "col-12 alert-warning btn-lg"
         }
         if (game.game_id.status != "Game Over") {
-          console.log(game.game_id.status)
-          console.log("in")
+
           return <button onClick={() => { onClick(game.game_id.id) }} key={game.game_id.id} className={gameclass}
             style={{ height: "50px", marginTop: "10%" }}>{game.game_id.id}</button>
         }
@@ -42,7 +43,7 @@ class Activegames extends Component {
 
 
 const mapStateToProps = state => ({
-  activegames: state.defaultgame.activegames,
+  activegames: state.goofspiel.activegames,
 })
 
 export default connect(mapStateToProps, { getActiveGames, getGamePlay })(Activegames)

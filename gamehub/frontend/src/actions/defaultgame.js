@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
-import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ERRORS, GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES } from './types'
+import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS } from './types'
 import { defaultgame, cards, getcookie } from '../components/games/datahelpers'
 
 
@@ -21,24 +21,41 @@ const tokenConfig = (getState) => {
 export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
   // let abc = defaultgame(123)
   // console.log("in")
+  let data;
   axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
     // ${ gameid }
 
-    //let data = defaultgame(res.data)
+    data = defaultgame(res.data)
 
 
     dispatch({
       type: GET_GAMEPLAY,
-      payload: defaultgame(res.data)
+      payload: data
     })
 
-
-
+    if (data.gameplay.animate) {
+      dispatch({
+        type: ANIMATION_STATUS,
+        payload: true
+      })
+      setTimeout(
+        function () {
+          dispatch({
+            type: ANIMATION_STATUS,
+            payload: false
+          })
+        }
+        ,
+        1500
+      );
+    }
     // res.data
 
   }).catch(err => dispatch(
     returnErrors(err.response.data, err.response.status)
   ))
+
+
 
 
 

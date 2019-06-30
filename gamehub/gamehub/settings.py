@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'chat',
     'channels',
     'channels_redis',
-    'channels_redux'
+    'channels_redux',
+    'goofspiel'
 
 ]
 

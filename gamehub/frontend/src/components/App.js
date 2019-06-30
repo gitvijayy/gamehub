@@ -12,6 +12,8 @@ import Login from './accounts/Login'
 import Register from './accounts/Register'
 import PrivateRoute from './common/PrivateRoute'
 import Defaultgame from './games/Defaultgame'
+import Goofspiel from './games/goofspiel/Goofspiel'
+import Memory from './games/memory/Memory'
 import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import { Provider } from 'react-redux'
@@ -55,7 +57,8 @@ class App extends Component {
 
                   {/* <Route exact path="/loaders" component={Loaders} /> */}
 
-                  <Route exact path="/defaultgame" component={Defaultgame} />
+                  <Route exact path="/goofspiel" component={Goofspiel} />
+                  <Route exact path="/memory" component={Memory} />
                   {/* <Route exact path="/login" component={Login} /> */}
                 </Switch>
                 {/* <Dashboard /> */}
