@@ -12,7 +12,7 @@
 }
 
 .card-images {
-  margin-top: 4%;
+  /* margin-top: 4%; */
   height: 170px;
 }
 
@@ -141,6 +141,30 @@
   margin: 3%;
 }
 
+.titles-opponent {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player-icon {
+  height: 100px;
+}
+
+.opponent-deck-amount {
+  position: relative;
+  top: 35%;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.player-name {
+  position: relative;
+  top: 35%;
+  font-size: 25px;
+  font-weight: bolder;
+  right: 3%;
+}
+
 .playingcard img {
   width: 15%;
   box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
@@ -160,6 +184,18 @@
   flex-direction: column;
 }
 
+@keyframes fadeout {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.playingcard .sideCard{
+  /* opacity: 1;
+  background: red; */
+  /* border : 5px solid black; */
+  opacity: 0; 
+  animation:  fadeout 3s;
+}
 .cardsplayed {
   display: flex;
   flex-direction: row;
@@ -235,5 +271,13 @@
 .table-borderless td,
 .table-borderless th {
   border: 0;
+}
+
+.empty-card {
+  border: 2px solid black;
+  height: 200px;
+  width: 15%;
+  border-radius: 12px;
+
 }
 

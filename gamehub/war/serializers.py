@@ -101,8 +101,8 @@ def handleRound(round):
         # print('this is player1 deck: ' + player1.deck)
         str_deck = player1.deck
         arr_deck = stringToIntArray(str_deck)
-        arr_deck.append(turn1.action)
-        arr_deck.append(turn2.action)
+        arr_deck.insert(0,turn1.action)
+        arr_deck.insert(0,turn2.action)
         deck_length = len(arr_deck)
         str_deck_modified = ','.join(str(card) for card in arr_deck) 
         player1.deck = str_deck_modified
@@ -117,8 +117,8 @@ def handleRound(round):
         # print('this is player2 deck: ' + player2.deck)
         str_deck = player2.deck
         arr_deck = stringToIntArray(str_deck)
-        arr_deck.append(turn1.action)
-        arr_deck.append(turn2.action)
+        arr_deck.insert(0,turn1.action)
+        arr_deck.insert(0,turn2.action)
         deck_length = len(arr_deck)
         str_deck_modified = ','.join(str(card) for card in arr_deck) 
         player2.deck = str_deck_modified

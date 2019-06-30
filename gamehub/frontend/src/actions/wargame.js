@@ -35,7 +35,7 @@ export const getWarGamePlay = (gameId) => (dispatch, getState) => {
   
   }
 
-  export const addWarTurn = (round, game_id) => (dispatch, getState) => {
+  export const addWarTurn = (round,callback) => (dispatch, getState) => {
     console.log('I am inside the warTurn')
     console.log('this is the rounds : ' + round)
     axios.post(`/api/war/turns/`, {'round_id': round}, tokenConfig(getState)).then(res => {
@@ -45,8 +45,8 @@ export const getWarGamePlay = (gameId) => (dispatch, getState) => {
       //   payload: res.data
       // })
       console.log('made post request')
-  
-      axios.get(`/api/war/games/${game_id}/`, tokenConfig(getState)).then(res => {
+      callback()
+      // axios.get(`/api/war/games/${game_id}/`, tokenConfig(getState)).then(res => {
   
         // chatSocket.send(JSON.stringify({
         //   'message': res.data
@@ -58,14 +58,14 @@ export const getWarGamePlay = (gameId) => (dispatch, getState) => {
         //   var message = data['message'];
         //   console.log("in")
         // document.querySelector('#chat-log').value += (message + '\n');
-        dispatch({
-          type: GET_WAR_GAMEPLAY,
-          payload: res.data
-        })
+      //   dispatch({
+      //     type: GET_WAR_GAMEPLAY,
+      //     payload: res.data
+      //   })
 
-      }).catch(err => dispatch(
-        returnErrors(err.response.data, err.response.status)
-      ))
+      // }).catch(err => dispatch(
+      //   returnErrors(err.response.data, err.response.status)
+      // ))
   
     }).catch(err => dispatch(
       returnErrors(err.response.data, err.response.status)
