@@ -145,21 +145,7 @@ export class Memory extends Component {
 
               if (!faceupCards.includes(index)) {
 
-                // if (index == flipCards[0]) {
-                //   flipSource[0] = require(`../../images/cards/${action}.png`)
-                //   return <img onClick={(e) => {
-                //     playerSelection(e)
-                //   }} key={index} id={index} name={action} className={this.state.flip}
-                //     src={this.state.src[0]} style={this.state.style} />
-                // }
 
-                // if (index == flipCards[1]) {
-                //   flipSource[1] = require(`../../images/cards/${action}.png`)
-                //   return <img onClick={(e) => {
-                //     playerSelection(e)
-                //   }} key={index} id={index} name={action} className={this.state.flip}
-                //     src={this.state.src[1]} style={this.state.style} />
-                // }
 
                 if (index == flipCards[0] && this.props.animation && this.props.animation.flip) {
 
