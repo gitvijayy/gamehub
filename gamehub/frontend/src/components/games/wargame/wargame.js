@@ -74,6 +74,7 @@ export class WarGame extends Component {
         // console.log(this.props.gameplay)
         // console.log(this.props.gameplay)
         const game = this.props.gameplay.status ? this.props.gameplay : null
+        console.log(game)
         // console.log(this.props.gameplay.status)
         const getPlayers = (game) => {
             // console.log(game.playerswar)

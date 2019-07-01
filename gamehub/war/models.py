@@ -22,6 +22,7 @@ class Players(models.Model):
 class Rounds(models.Model):
     game_id = models.ForeignKey(
         Games, related_name="round", on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=200, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
 
 

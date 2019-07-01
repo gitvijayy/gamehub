@@ -193,8 +193,8 @@
   /* opacity: 1;
   background: red; */
   /* border : 5px solid black; */
-  opacity: 0; 
-  animation:  fadeout 3s;
+  /* opacity: 0; 
+  animation:  fadeout 3s; */
 }
 .cardsplayed {
   display: flex;
