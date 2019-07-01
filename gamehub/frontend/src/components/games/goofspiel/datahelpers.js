@@ -16,6 +16,7 @@ export const cards = () => {
 export const goofspielGamePlay = (payload) => {
 
   let gameplay = {
+    name: payload.name,
     gameid: payload.id,
     roundid: 0,
     prizeCard: 0,

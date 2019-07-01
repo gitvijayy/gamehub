@@ -125,7 +125,7 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Games
-        fields = ['id', 'status',  'game', 'rounds']
+        fields = ['id', 'name', 'status',  'game', 'rounds']
 
     # def create(self,  validated_data):
     #     def addGame():

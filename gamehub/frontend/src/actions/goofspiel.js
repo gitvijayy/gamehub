@@ -2,6 +2,7 @@ import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
 import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS } from './types'
 import { goofspielGamePlay, cards, getcookie } from '../components/games/goofspiel/datahelpers'
+import { memoryGamePlay } from '../components/games/memory/datahelpers'
 
 const tokenConfig = (getState) => {
   const token = getState().auth.token
@@ -21,14 +22,24 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
   let data;
   axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
 
-    data = goofspielGamePlay(res.data)
+    if (game == "goofspiel") {
+      console.log(1, "in")
+      data = goofspielGamePlay(res.data)
+    }
+
+    if (game == "memory") {
+      console.log(2, "in")
+      data = memoryGamePlay(res.data)
+    }
 
     dispatch({
+
       type: GET_GAMEPLAY,
       payload: data
     })
 
-    if (data.gameplay.animate) {
+    if (game == "goofspiel" && data.gameplay.animate) {
+      console.log(3, "in")
       dispatch({
         type: ANIMATION_STATUS,
         payload: true

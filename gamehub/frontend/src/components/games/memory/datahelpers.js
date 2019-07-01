@@ -108,6 +108,87 @@ export const styles = StyleSheet.create({
 
 })
 
+export const memoryGamePlay = (payload) => {
+  console.log(payload)
+  let cards;
+  let gameplay = {
+    name: payload.name,
+    gameid: payload.id,
+    roundid: 0,
+    playerdata: {},
+    faceupCards: [],
+    turnPlayer: [],
+    turns: [],
+    previous: [0, 0],
+    status: payload.status,
+    cards: []
+
+  }
+
+
+  let players = payload.game.map(value => {
+
+    gameplay.playerdata[value.player.username] = {
+      points: 0,
+      chances: 0
+    }
+    return value.player.username
+  })
+
+
+  if (payload.extras) {
+    cards = payload.extras.split("[")[1].split("]")[0].replace(/'/g, "").replace(/ /g, "").split(",")
+  }
+
+  if (payload.memoryrounds) {
+    payload.memoryrounds.forEach(round => {
+      gameplay.roundid = round.id
+      if (round.turns && round.turns[0]) {
+
+        gameplay.turns.push(round.turns[0].action)
+        if (round.turns[1]) {
+          gameplay.turns.push(round.turns[1].action)
+          console.log(cards[round.turns[1].action])
+          if (cards[round.turns[0].action] == cards[round.turns[1].action]) {
+            gameplay.faceupCards.push(round.turns[0].action)
+            gameplay.faceupCards.push(round.turns[1].action)
+          }
+        }
+
+        gameplay.turnPlayer.push(round.turns[0].player.username)
+      }
+
+    })
+  }
+
+  // if (gameplay.turns[0]) {
+  //   for (var i = 0; i < gameplay.turns.length; i += 2) {
+  //     console.log(i)
+
+  //     if (cards[gameplay.turns[i]] == cards[gameplay.turns[i + 1]]) {
+  //       gameplay.faceupCards.push(turns[i])
+  //       gameplay.faceupcards.push(turns[i + 1])
+  //     }
+  //     console.log(gameplay.faceupCards)
+  //   }
+
+  if (gameplay.turns.length % 2 == 1) {
+    gameplay.faceupCards.push(gameplay.turns[gameplay.turns.length - 1])
+  }
+
+
+  // }
+
+  console.log("cant get here")
+
+
+  gameplay.cards = cards
+  return {
+    gameplay
+  }
+
+}
+
 
 
 

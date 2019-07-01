@@ -24,12 +24,11 @@ var chatSocket = ""
 
 export class Goofspiel extends Component {
   state = {
-    gameplay: [],
-    loading: false,
-    name: 'goofspiel',
-    animate: false
+    // gameplay: [],
+    // loading: false,
+    name: 'goofspiel'
+    // animate: false
   }
-
 
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
@@ -78,6 +77,8 @@ export class Goofspiel extends Component {
 
     /////////////////////////////////////////////////////////////
     const data = this.props.gameplay
+
+
     const playercards = [], playerpoints = []
     let newprizecard = "", player1Name = "", player2Name = ""
     let roundid = 0;
