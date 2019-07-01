@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
-import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS } from './types'
+import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS, MEMORY_ANIMATION } from './types'
 import { goofspielGamePlay, cards, getcookie } from '../components/games/goofspiel/datahelpers'
 import { memoryGamePlay } from '../components/games/memory/datahelpers'
 
@@ -21,14 +21,14 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
 
   let data;
   axios.get(`/api/${game}/games/${gameid}/`, tokenConfig(getState)).then(res => {
-
+    console.log(res.data)
     if (game == "goofspiel") {
-      console.log(1, "in")
+
       data = goofspielGamePlay(res.data)
     }
 
     if (game == "memory") {
-      console.log(2, "in")
+
       data = memoryGamePlay(res.data)
     }
 
@@ -39,7 +39,7 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
     })
 
     if (game == "goofspiel" && data.gameplay.animate) {
-      console.log(3, "in")
+
       dispatch({
         type: ANIMATION_STATUS,
         payload: true
@@ -53,6 +53,27 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
         }
         ,
         2000
+      );
+    }
+
+    if (game == "memory" && data.gameplay.memoryAnimation.animate) {
+
+
+
+
+      dispatch({
+        type: MEMORY_ANIMATION,
+        payload: data.gameplay.memoryAnimation
+      })
+      setTimeout(
+        function () {
+          dispatch({
+            type: MEMORY_ANIMATION,
+            payload: data.gameplay.animationReturn
+          })
+        }
+        ,
+        800
       );
     }
 
@@ -84,7 +105,7 @@ export const getNewGame = (game, cbGameplay) => (dispatch, getState) => {
       type: GET_NEWGAME,
       payload: res.data
     })
-    console.log(res.data)
+
     cbGameplay(res.data.id)
 
   }).catch(err => dispatch(

@@ -236,7 +236,7 @@ export class Goofspiel extends Component {
       })
     }
 
-
+    console.log(this.props.gameplay)
     return (
 
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"

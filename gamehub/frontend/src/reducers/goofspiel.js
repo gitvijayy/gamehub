@@ -1,4 +1,4 @@
-import { GET_GAMEPLAY, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS } from '../actions/types'
+import { GET_GAMEPLAY, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS, MEMORY_ANIMATION } from '../actions/types'
 import { getNewGame } from '../actions/goofspiel.js';
 
 const initialState = {
@@ -7,7 +7,12 @@ const initialState = {
   newgame: [],
   name: "",
   activegames: [],
-  animate: false
+  animate: false,
+  memoryAnimation: {
+    flip: "",
+    src: [],
+
+  }
 }
 
 export default function (state = initialState, action) {
@@ -46,6 +51,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         animate: action.payload
+      }
+
+    case MEMORY_ANIMATION:
+      return {
+        ...state,
+        memoryAnimation: action.payload
       }
 
 

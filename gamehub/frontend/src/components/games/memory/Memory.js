@@ -25,19 +25,14 @@ import { cssAnimations } from '../goofspiel/datahelpers.js';
 var chatSocket = ""
 
 let flip = ""
-let mappedCards = ["1C", "1H", "1S", "1D", "2C", "2H", "2S", "2D", "3C", "3H", "3S", "3D", "4C", "4H", "4S",
-  "4D", "5C", "5H", "5S", "5D", "6C", "6H", "6S", "6D", "7C", "7H", "1C", "1H", "1S", "1D", "2C", "2H", "2S", "2D", "3C", "3H", "3S", "3D", "4C", "4H", "4S",
-  "4D", "5C", "5H", "5S", "5D", "6C", "6H", "6S", "6D", "7C", "7H"]
-let flipSource = [0, 0]
+
 
 
 export class Memory extends Component {
 
   state = {
-    name: 'memory',
-    turns: [],
-    flip: "",
-    src: [require(`../../images/blackBack.png`), require(`../../images/blackBack.png`)]
+    name: 'memory'
+
 
 
   }
@@ -54,72 +49,21 @@ export class Memory extends Component {
 
         this.props.getGamePlay(this.state.name, id)
       })
-      setTimeout(() => {
-        if (flipSource[0] != 0) {
-
-          // this.setState({
-
-          // })
-          this.setState({
-            flip: css(styles.flipInY),
-            src: [flipSource[0], flipSource[1]]
-
-          })
-          setTimeout(() => {
-            this.setState({
-              src: [require(`../../images/blackBack.png`), require(`../../images/blackBack.png`)],
-              flip: css(styles.zoomIn)
-            })
-          }, 500);
-        }
-      }, 500);
-
-    };
 
 
-
-
+    }
   }
-  // chatSocket.onmessage = (e) => {
-  //   // var data = JSON.parse(e.data);
-  //   // var message = data['message'];
-  //   getcookie((id) => {
-  //     // this.props.getActiveGames(this.state.name)
-  //     // this.props.getGamePlay(this.state.name, id)
-  //   })
-  // };
 
 
   componentDidMount() {
-
 
     getcookie((id) => {
       chatSocket = new WebSocket(
         'ws://' + window.location.host +
         `/ws/games/${id}/`);
       this.props.getGamePlay(this.state.name, id)
-      //this.props.getActiveGames(this.state.name)
     })
 
-    setTimeout(() => {
-
-      if (flipSource[0] != 0) {
-
-        this.setState({
-          flip: css(styles.flipInY)
-        })
-        this.setState({
-
-          src: [flipSource[0], flipSource[1]]
-        })
-        setTimeout(() => {
-          this.setState({
-            src: [require(`../../images/blackBack.png`), require(`../../images/blackBack.png`)],
-            flip: css(styles.zoomIn)
-          })
-        }, 500);
-      }
-    }, 500);
 
   }
 
@@ -138,6 +82,9 @@ export class Memory extends Component {
     let spinner = (<Spinner animation="border" role="status" style={{ marginRight: "7%" }}>
       <span className="sr-only">Loading...</span>
     </Spinner>)
+
+    let player1Spinner = ""
+    let player2Spinner = ""
 
     const setSocket = (id) => {
       chatSocket = new WebSocket(
@@ -174,7 +121,7 @@ export class Memory extends Component {
 
     }
 
-    let faceupCards = [0, 0]
+
 
     let data = this.props.gameplay
 
@@ -187,7 +134,6 @@ export class Memory extends Component {
       gameblock =
         (<div className="memorycard">
           {
-
             cards.map((action, index) => {
 
               let faceupCards = data.gameplay.faceupCards
@@ -199,26 +145,38 @@ export class Memory extends Component {
 
               if (!faceupCards.includes(index)) {
 
-                if (index == flipCards[0]) {
+                // if (index == flipCards[0]) {
+                //   flipSource[0] = require(`../../images/cards/${action}.png`)
+                //   return <img onClick={(e) => {
+                //     playerSelection(e)
+                //   }} key={index} id={index} name={action} className={this.state.flip}
+                //     src={this.state.src[0]} style={this.state.style} />
+                // }
 
-                  flipSource[0] = require(`../../images/cards/${action}.png`)
+                // if (index == flipCards[1]) {
+                //   flipSource[1] = require(`../../images/cards/${action}.png`)
+                //   return <img onClick={(e) => {
+                //     playerSelection(e)
+                //   }} key={index} id={index} name={action} className={this.state.flip}
+                //     src={this.state.src[1]} style={this.state.style} />
+                // }
 
+                if (index == flipCards[0] && this.props.animation && this.props.animation.flip) {
 
                   return <img onClick={(e) => {
                     playerSelection(e)
-                  }} key={index} id={index} name={action} className={this.state.flip}
-                    src={this.state.src[0]} />
+                  }} key={index} id={index} name={action} className={this.props.animation.flip}
+                    src={this.props.animation.src[0]} />
                 }
 
-                if (index == flipCards[1]) {
-
-                  flipSource[1] = require(`../../images/cards/${action}.png`)
+                if (index == flipCards[1] && this.props.animation && this.props.animation.flip) {
 
                   return <img onClick={(e) => {
                     playerSelection(e)
-                  }} key={index} id={index} name={action} className={this.state.flip}
-                    src={this.state.src[1]} />
+                  }} key={index} id={index} name={action} className={this.props.animation.flip}
+                    src={this.props.animation.src[1]} />
                 }
+
                 return <img onClick={(e) => {
                   playerSelection(e)
                 }} key={index} id={index} name={action} className={flip}
@@ -226,34 +184,24 @@ export class Memory extends Component {
 
               }
 
-
-
-
-
-
-
-
-
               if (faceupCards.includes(index)) {
 
                 if (index == flipCards[0] || index == flipCards[1]) {
                   return <img key={index} id={index} name={action} className={css(styles.flipInY)} src={require(`../../images/cards/${action}.png`)} />
                 }
 
-
-                // if (index == cards.length - 1 || index == cards.length - 2) {
-                //   return <img key={index} id={index} name={action} className={this.state.flip} src={this.state.src} />
-                // }
-                // if (faceupCards.indexOf(index) == faceupCards.length - 1) {
-                //   // flip = (cssAnimations.flipInY1)
-                //   return <img key={index} id={index} name={action} className={this.state.flip} src={this.state.src} />
-                // }
                 return <img key={index} id={index} name={action} className={"this.state.flip"} src={require(`../../images/cards/${action}.png`)} />
               }
             })
           }
 
-        </div>)
+        </div>
+
+
+
+
+
+        )
 
 
     }
@@ -272,7 +220,6 @@ export class Memory extends Component {
           {gameblock}
 
           <div className="playingcard middlebox">
-
             <div>
               <h3 className={css(styles.pointsMemory)}>2 Points</h3>
               <h5 className={css(styles.pointsMemory)}>15 Chances</h5>
@@ -289,14 +236,12 @@ export class Memory extends Component {
               <h3 className={css(styles.pointsMemory)}>2 Points</h3>
               <h5 className={css(styles.pointsMemory)}>15 Chances</h5>
               <button className="btn btn-danger btn-lg rules">{spinner}Yajiv</button>
-
             </div>
-
           </div>
 
+
+
         </div>
-
-
 
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
@@ -309,6 +254,8 @@ export class Memory extends Component {
             <button className="btn btn-danger btn-lg rules">Rules</button>
           </div>
         </div>
+
+
 
       </section >
     )
@@ -324,6 +271,7 @@ const mapStateToProps = state => ({
   gameplay: state.goofspiel.gameplay,
   user: state.auth,
   newgame: state.goofspiel.newgame[0],
+  animation: state.goofspiel.memoryAnimation
   // activegames: state.goofspiel.activegames,
   // animate: state.goofspiel.animate
   // gameid:getcookie()
