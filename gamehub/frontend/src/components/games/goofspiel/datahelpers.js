@@ -106,6 +106,18 @@ export const getcookie = (cb) => {
   })
 }
 
+export const getCookies = () => {
+  let cookies = {}
+  document.cookie.split(";").forEach(cookie => {
+    name = cookie.split("=")[0].trim()
+    cookies[name] = cookie.split("=")[1];
+    // if (name == "gameid") {
+    //   cb(cookie.split("=")[1])
+    // }
+  })
+  return cookies
+}
+
 const styles = StyleSheet.create({
 
   fadeOutLeft: {

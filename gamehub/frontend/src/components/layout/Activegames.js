@@ -12,6 +12,7 @@ class Activegames extends Component {
 
     const onClick = (id) => {
       document.cookie = `gameid=${id}`
+      this.props.setSocket(id)
       this.props.getGamePlay(this.props.gamename, id)
     }
 

@@ -42,12 +42,14 @@ INSTALLED_APPS = [
     'django_extensions',
     'knox',
     'accounts',
-    'defaultgame',
+    # 'defaultgame',
     'chat',
     'channels',
     'channels_redis',
     'channels_redux',
-    'goofspiel'
+    'goofspiel',
+    'games',
+    'memory'
 
 ]
 

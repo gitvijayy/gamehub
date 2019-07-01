@@ -63,7 +63,7 @@ class TurnSerializer(serializers.ModelSerializer):
         turncount = roundid.turns.count()
         gameid = roundid.game_id
         user = self.context['request'].user
-        print(gameid.id)
+        # print(gameid.id)
 
         if turncount == 0:
             players = Players.objects.filter(
@@ -112,10 +112,10 @@ class RoundSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
-    Games.objects.all().delete()
-    Turns.objects.all().delete()
-    Rounds.objects.all().delete()
-    Players.objects.all().delete()
+    # Games.objects.all().delete()
+    # Turns.objects.all().delete()
+    # Rounds.objects.all().delete()
+    # Players.objects.all().delete()
     # player = UserNameSerializer()
     rounds = RoundSerializer(many=True, read_only=True)
     players = PlayerNameSerializer(many=True, read_only=True)

@@ -21,15 +21,12 @@ import { styles } from './datahelpers'
 
 
 
-// var chatSocket = new WebSocket(
-//   'ws://' + window.location.host +
-//   '/ws/goofspiel/turns/');
+var chatSocket = ""
 
 let flip = ""
 let mappedCards = ["1C", "1H", "1S", "1D", "2C", "2H", "2S", "2D", "3C", "3H", "3S", "3D", "4C", "4H", "4S",
   "4D", "5C", "5H", "5S", "5D", "6C", "6H", "6S", "6D", "7C", "7H", "1C", "1H", "1S", "1D", "2C", "2H", "2S", "2D", "3C", "3H", "3S", "3D", "4C", "4H", "4S",
   "4D", "5C", "5H", "5S", "5D", "6C", "6H", "6S", "6D", "7C", "7H"]
-// memoryCards()
 
 export class Memory extends Component {
 
@@ -38,6 +35,30 @@ export class Memory extends Component {
     turns: [0, 51, 0, 26, 1, 27, 2, 27, 2, 28, 7],
     flip: "",
     src: ""
+  }
+
+
+  componentDidUpdate() {
+
+    chatSocket.onmessage = (message) => {
+      // var data = JSON.parse(e.data);
+      // var message = data['message'];
+      getcookie((id) => {
+        // this.props.getActiveGames(this.state.name)
+        // this.props.getGamePlay(this.state.name, id)
+      })
+
+      console.log("message")
+
+    };
+    // chatSocket.onmessage = (e) => {
+    //   // var data = JSON.parse(e.data);
+    //   // var message = data['message'];
+    //   getcookie((id) => {
+    //     // this.props.getActiveGames(this.state.name)
+    //     // this.props.getGamePlay(this.state.name, id)
+    //   })
+    // };
   }
 
   componentDidMount() {
@@ -54,14 +75,37 @@ export class Memory extends Component {
       })
     }, 1000);
 
+    getcookie((id) => {
+      chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        `/ws/games/${id}/`);
+      // this.props.getGamePlay(this.state.name, id)
+      // this.props.getActiveGames(this.state.name)
+    })
+
   }
 
 
+
+
+
+
   render() {
+    // console.log(memoryCards())
+
+    const setSocket = (id) => {
+      chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        `/ws/games/${id}/`);
+    }
 
     const playerSelection = (e) => {
       e.target.src = require(`../../images/cards/${mappedCards[e.target.id]}.png`)
       e.target.className = css(styles.flipInY)
+      chatSocket.send(JSON.stringify({
+        'message': "message"
+      }));
+
 
     }
 
@@ -80,22 +124,9 @@ export class Memory extends Component {
       faceupCards.push(this.state.turns[this.state.turns.length - 1])
     }
 
-
-    console.log(faceupCards)
     let spinner = (<Spinner animation="border" role="status" style={{ marginRight: "7%" }}>
-
       <span className="sr-only">Loading...</span>
     </Spinner>)
-
-    //console.log(mappedCards)
-
-
-
-    // let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    //   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    //   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
-    // let flip = ""
 
 
     const current =
@@ -118,35 +149,16 @@ export class Memory extends Component {
             }
 
             if (faceupCards.includes(index)) {
-
               if (faceupCards.indexOf(index) == faceupCards.length - 1) {
                 // flip = (cssAnimations.flipInY1)
-
-
                 return <img key={index} id={index} name={action} className={this.state.flip} src={this.state.src} />
               }
-
               return <img key={index} id={index} name={action} className={"this.state.flip"} src={require(`../../images/cards/${mappedCards[index]}.png`)} />
             }
-
-
-
-
-
-
           })
         }
 
-
-
       </div>)
-    ////////////
-
-
-    // playercards.push(current)
-
-
-
 
     return (
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"

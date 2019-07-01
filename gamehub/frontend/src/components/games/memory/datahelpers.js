@@ -13,22 +13,22 @@ export const cards = () => {
   }
 }
 
-// export const memoryCards = () => {
+export const memoryCards = () => {
 
-//   let cards1 = cards()
-//   let cardsMapped = []
-//   cards1.cardnumbers.forEach(card => {
-//     cardsMapped.push(`${card}${cards1.suits[0]}`)
-//     cardsMapped.push(`${card}${cards1.suits[1]}`)
-//     cardsMapped.push(`${card}${cards1.suits[2]}`)
-//     cardsMapped.push(`${card}${cards1.suits[3]}`)
-//   })
-//   // cards1.suits.forEach(suit => {
-//   //   cards1.cardnumbers.forEach(card => {
-//   //     cardsMapped.push(`${card}${suit}`)
-//   //   })
-//   return cardsMapped
-// }
+  let cards1 = cards()
+  let cardsMapped = []
+  cards1.cardnumbers.forEach(card => {
+    cardsMapped.push(`${card}${cards1.suits[0]}`)
+    cardsMapped.push(`${card}${cards1.suits[1]}`)
+    cardsMapped.push(`${card}${cards1.suits[2]}`)
+    cardsMapped.push(`${card}${cards1.suits[3]}`)
+  })
+  // cards1.suits.forEach(suit => {
+  //   cards1.cardnumbers.forEach(card => {
+  //     cardsMapped.push(`${card}${suit}`)
+  //   })
+  return cardsMapped
+}
 
 export const getcookie = (cb) => {
 

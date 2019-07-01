@@ -2,7 +2,7 @@ import React, { Component, Fragment, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getGamePlay, getNewGame, setGame, getActiveGames, addTurn } from '../../../actions/goofspiel.js'
-import { goofspielGamePlay, cards, getcookie, animate } from './datahelpers.js'
+import { goofspielGamePlay, cards, getcookie, animate, getCookies } from './datahelpers.js'
 // import { addTurn } from '../../actions/defaultgame'
 import Activeplayers from '../../layout/Activeplayers'
 import Activegames from '../../layout/Activegames'
@@ -19,9 +19,7 @@ import Loader from 'react-loader-spinner'
 
 
 
-var chatSocket = new WebSocket(
-  'ws://' + window.location.host +
-  '/ws/goofspiel/turns/');
+var chatSocket = ""
 
 
 export class Goofspiel extends Component {
@@ -31,6 +29,8 @@ export class Goofspiel extends Component {
     name: 'goofspiel',
     animate: false
   }
+
+
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
       // var data = JSON.parse(e.data);
@@ -41,13 +41,25 @@ export class Goofspiel extends Component {
       })
     };
   }
+
   componentDidMount() {
     getcookie((id) => {
+      chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        `/ws/games/${id}/`);
       this.props.getGamePlay(this.state.name, id)
       this.props.getActiveGames(this.state.name)
     })
   }
+
   render() {
+
+    const setSocket = (id) => {
+      chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        `/ws/games/${id}/`);
+    }
+
     const newGame = () => {
       this.props.getNewGame(this.state.name, (id) => {
         // console.log(this.props.newgame)
@@ -218,6 +230,8 @@ export class Goofspiel extends Component {
         }));
       })
     }
+
+
     return (
 
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
@@ -235,7 +249,7 @@ export class Goofspiel extends Component {
             display: "flex", flexDirection: "column",
             justifyContent: "space-evenly"
           }}>
-          <Activegames gamename={this.state.name} activegames={this.props.activegames} />
+          <Activegames gamename={this.state.name} activegames={this.props.activegames} setSocket={setSocket} />
           <div>
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
             <button className="btn btn-danger btn-lg rules">Rules</button>
@@ -253,5 +267,6 @@ const mapStateToProps = state => ({
   newgame: state.goofspiel.newgame[0],
   activegames: state.goofspiel.activegames,
   animate: state.goofspiel.animate
+  // gameid:getcookie()
 })
 export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Goofspiel)

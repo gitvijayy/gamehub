@@ -10,9 +10,9 @@ import Loaders from '../layout/Loaders'
 import Spinner from 'react-bootstrap/Spinner'
 import { ANIMATION_STATUS } from '../../actions/types'
 
-var chatSocket = new WebSocket(
-  'ws://' + window.location.host +
-  '/ws/defaultgame/turns/');
+// var chatSocket = new WebSocket(
+//   'ws://' + window.location.host +
+//   '/ws/defaultgame/turns/');
 
 export class Defaultgame extends Component {
 
@@ -51,16 +51,16 @@ export class Defaultgame extends Component {
 
 
   componentDidUpdate() {
-    chatSocket.onmessage = (e) => {
-      // var data = JSON.parse(e.data);
-      // var message = data['message'];
+    // chatSocket.onmessage = (e) => {
+    //   // var data = JSON.parse(e.data);
+    //   // var message = data['message'];
 
-      getcookie((id) => {
-        this.props.getActiveGames(this.state.name)
-        this.props.getGamePlay(this.state.name, id)
-      })
+    //   getcookie((id) => {
+    //     this.props.getActiveGames(this.state.name)
+    //     this.props.getGamePlay(this.state.name, id)
+    //   })
 
-    };
+    // };
   }
 
   componentDidMount() {
@@ -78,9 +78,9 @@ export class Defaultgame extends Component {
       this.props.getNewGame(this.state.name, () => {
         document.cookie = `gameid=${this.props.newgame.id}`
         // var lead = { "round_id": 13, "action": 99 }
-        chatSocket.send(JSON.stringify({
-          'message': "message"
-        }));
+        // chatSocket.send(JSON.stringify({
+        //   'message': "message"
+        // }));
       })
 
 
@@ -268,9 +268,9 @@ export class Defaultgame extends Component {
       }
       // console.log(turn)
       this.props.addTurn(this.state.name, turn, () => {
-        chatSocket.send(JSON.stringify({
-          'message': "message"
-        }));
+        // chatSocket.send(JSON.stringify({
+        //   'message': "message"
+        // }));
       })
 
     }
