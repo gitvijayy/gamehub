@@ -1,32 +1,22 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+
 from games.models import Games
 from games.models import Players
 from memory.models import Turns
+from memory.models import Rounds
 import random
-# import random
-# for x in range(10):
-#     print random.randint(1, 101)
 
 
-def prize_card_generator(gameid):
-    prize_cards = Rounds.objects.filter(game_id=gameid)
-    prize_cards_list = []
-    for card in prize_cards:
-        prize_cards_list.append(card.prizeCard)
-
-    if len(prize_cards_list) != 13:
-        random_card = random.randint(1, 13)
-        while prize_cards_list.count(random_card) == 1:
-            random_card = random.randint(1, 13)
-        return random_card
-    return 0
-
-
-def add_turn(roundid, action, player):
+def add_turn(roundid, action, player, turncount, gameid):
     newTurn = Turns.objects.create(
         round_id=roundid, player=player, action=action)
+    if turncount == 1:
+        newRound = Rounds.objects.create(
+            game_id=gameid)
+        newRound.save()
+
     return newTurn
 
 
@@ -61,44 +51,51 @@ class TurnSerializer(serializers.ModelSerializer):
         roundid = validated_data['round_id']
         turncount = roundid.turns.count()
         gameid = roundid.game_id
+        get_rounds = Rounds.objects.filter(game_id=gameid).order_by('-id')
         user = self.context['request'].user
-        print(gameid.id)
+        players = Players.objects.filter(game_id=gameid)
 
-        if turncount == 0:
-            players = Players.objects.filter(
-                game_id=gameid)
-            for player in players:
-                if player.player != user:
-                    raise serializers.ValidationError("Not Your Turn")
-                else:
-                    newturn = add_turn(roundid, validated_data['action'], user)
-                    return newturn
+        if turncount == 2:
+            raise serializers.ValidationError("Invalid Play")
 
-        if turncount >= 1:
-            player_valid_turn = Turns.objects.filter(
-                round_id=roundid, player=user)
-            prize_card = prize_card_generator(gameid)
-            if player_valid_turn and prize_card != 0:
-                raise serializers.ValidationError("Not Your Turn")
+        if (get_rounds.count() == 1) & (turncount < 2) & (players[0].player == user):
+            newturn = add_turn(
+                roundid, validated_data['action'], user, turncount, gameid)
+            return newturn
+        if (get_rounds.count() == 1) & (players[0].player != user):
+            raise serializers.ValidationError("Not Your Turn1")
 
-            # prize_card = prize_card_generator(gameid)
-            if prize_card == 0:
-                newturn = add_turn(roundid, validated_data['action'], user)
-                gameover = Games.objects.get(id=gameid.id)
-                gameover.status = "Game Over"
-                gameover.save()
-                return newturn
+        previous_round = get_rounds[1]
+        previous_round_player = ""
+        get_previous_turns = Turns.objects.filter(round_id=previous_round)
+        turn_array = []
+        for turn in get_previous_turns:
+            turn_array.append(turn.action)
+            previous_round_player = turn.player
 
-                # gameover = Games.objects.filter(id=)
-                # newturn = add_turn(roundid, validated_data['action'], user)
-                # newturn.save()
-                # raise serializers.ValidationError("Game Over")
-            else:
-                newturn = add_turn(roundid, validated_data['action'], user)
-                newRound = Rounds.objects.create(
-                    game_id=gameid, prizeCard=prize_card)
-                newRound.save()
-                return newturn
+        get_cards = Games.objects.get(id=gameid.id)
+        cards = get_cards.extras.split()
+        cards[0] = cards[0][1:7]
+        cards[-1] = cards[-1][0:4] + ","
+
+        if (cards[turn_array[0]] == cards[turn_array[1]]) & (previous_round_player != user):
+            raise serializers.ValidationError("Not Your Turn")
+
+        if (cards[turn_array[0]] != cards[turn_array[1]]) & (previous_round_player == user):
+            raise serializers.ValidationError("Not Your Turn")
+
+        newturn = add_turn(
+            roundid, validated_data['action'], user, turncount, gameid)
+
+        return newturn
+
+
+class RoundSerializer(serializers.ModelSerializer):
+    turns = TurnDataSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Rounds
+        fields = ['id', 'turns', 'status']
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -106,55 +103,10 @@ class GameSerializer(serializers.ModelSerializer):
     # Turns.objects.all().delete()
     # Rounds.objects.all().delete()
     # Players.objects.all().delete()
-    # player = UserNameSerializer()
-    players = PlayerNameSerializer(many=True, read_only=True)
+
+    memoryrounds = RoundSerializer(many=True, read_only=True)
+    game = PlayerNameSerializer(many=True, read_only=True)
 
     class Meta:
         model = Games
-        fields = ['id', 'status',  'players', 'rounds']
-
-    def create(self,  validated_data):
-        def addGame():
-            newGame = Games.objects.create(status="New")
-            newGame.save()
-            addPlayer(newGame)
-            return newGame
-
-        def addPlayer(game):
-            addPlayer = Players.objects.create(
-                game_id=game, player=self.context['request'].user)
-            addPlayer.save()
-        inactive_games = Games.objects.filter(status="New")
-        if inactive_games:
-            for game in inactive_games:
-                current_players = game.players.all()
-                for player in current_players:
-                    if player.player == self.context['request'].user:
-                        newGame = addGame()
-                        return newGame
-                    if current_players.count() == (game.no_of_players - 1):
-                        game.status = 'Active'
-                        game.save()
-                        addPlayer(game)
-                        prize_card = random.randint(1, 13)
-                        newRound = Rounds.objects.create(
-                            game_id=game, prizeCard=prize_card)
-                        newRound.save()
-                        return game
-        newGame = addGame()
-        return newGame
-
-
-class PlayerSerializer(serializers.ModelSerializer):
-    # game_id = GameSerializer()
-    class Meta:
-        model = Players
-        fields = ['game_id']
-        depth = 1
-
-
-class ActiveGameSerializer(serializers.ModelSerializer):
-    # game_id = GameSerializer()
-    class Meta:
-        model = Players
-        fields = ['game_id']
+        fields = ['id', 'status',  'game', 'memoryrounds', 'extras']

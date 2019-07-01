@@ -1,10 +1,13 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from goofspiel.models import Games
+
 from goofspiel.models import Rounds
-from goofspiel.models import Players
+# from goofspiel.models import Games
+# from goofspiel.models import Players
 from goofspiel.models import Turns
+from games.models import Games
+from games.models import Players
 import random
 # import random
 # for x in range(10):
@@ -118,42 +121,42 @@ class GameSerializer(serializers.ModelSerializer):
     # Players.objects.all().delete()
     # player = UserNameSerializer()
     rounds = RoundSerializer(many=True, read_only=True)
-    players = PlayerNameSerializer(many=True, read_only=True)
+    game = PlayerNameSerializer(many=True, read_only=True)
 
     class Meta:
         model = Games
-        fields = ['id', 'status',  'players', 'rounds']
+        fields = ['id', 'status',  'game', 'rounds']
 
-    def create(self,  validated_data):
-        def addGame():
-            newGame = Games.objects.create(status="New")
-            newGame.save()
-            addPlayer(newGame)
-            return newGame
+    # def create(self,  validated_data):
+    #     def addGame():
+    #         newGame = Games.objects.create(status="New")
+    #         newGame.save()
+    #         addPlayer(newGame)
+    #         return newGame
 
-        def addPlayer(game):
-            addPlayer = Players.objects.create(
-                game_id=game, player=self.context['request'].user)
-            addPlayer.save()
-        inactive_games = Games.objects.filter(status="New")
-        if inactive_games:
-            for game in inactive_games:
-                current_players = game.players.all()
-                for player in current_players:
-                    if player.player == self.context['request'].user:
-                        newGame = addGame()
-                        return newGame
-                    if current_players.count() == (game.no_of_players - 1):
-                        game.status = 'Active'
-                        game.save()
-                        addPlayer(game)
-                        prize_card = random.randint(1, 13)
-                        newRound = Rounds.objects.create(
-                            game_id=game, prizeCard=prize_card)
-                        newRound.save()
-                        return game
-        newGame = addGame()
-        return newGame
+    #     def addPlayer(game):
+    #         addPlayer = Players.objects.create(
+    #             game_id=game, player=self.context['request'].user)
+    #         addPlayer.save()
+    #     inactive_games = Games.objects.filter(status="New")
+    #     if inactive_games:
+    #         for game in inactive_games:
+    #             current_players = game.players.all()
+    #             for player in current_players:
+    #                 if player.player == self.context['request'].user:
+    #                     newGame = addGame()
+    #                     return newGame
+    #                 if current_players.count() == (game.no_of_players - 1):
+    #                     game.status = 'Active'
+    #                     game.save()
+    #                     addPlayer(game)
+    #                     prize_card = random.randint(1, 13)
+    #                     newRound = Rounds.objects.create(
+    #                         game_id=game, prizeCard=prize_card)
+    #                     newRound.save()
+    #                     return game
+    #     newGame = addGame()
+    #     return newGame
 
 
 class PlayerSerializer(serializers.ModelSerializer):

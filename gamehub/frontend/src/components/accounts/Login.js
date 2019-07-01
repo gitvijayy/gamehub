@@ -23,7 +23,7 @@ export class Login extends Component {
   render() {
 
     if (this.props.isauthenticated == "True") {
-      // return <Redirect to="/" />
+
       this.props.onHide
     }
     const { username, password } = this.state

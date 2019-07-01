@@ -53,7 +53,8 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
 
 export const getActiveGames = (game) => (dispatch, getState) => {
 
-  axios.get(`/api/${game}/activegames/`, tokenConfig(getState)).then(res => {
+  // axios.get(`/api/${game}/activegames/`, tokenConfig(getState)).then(res => {
+  axios.get(`/api/activegames/`, tokenConfig(getState)).then(res => {
 
     dispatch({
       type: GET_ACTIVEGAMES,
@@ -66,8 +67,8 @@ export const getActiveGames = (game) => (dispatch, getState) => {
 }
 
 export const getNewGame = (game, cbGameplay) => (dispatch, getState) => {
-  axios.post(`/api/${game}/games/`, null, tokenConfig(getState)).then(res => {
-
+  // axios.post(`/api/${game}/games/`, null, tokenConfig(getState)).then(res => {
+  axios.post(`/api/games/`, game, tokenConfig(getState)).then(res => {
     dispatch({
       type: GET_NEWGAME,
       payload: res.data

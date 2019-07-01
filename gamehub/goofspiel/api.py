@@ -14,7 +14,7 @@ from rest_framework import viewsets, permissions
 
 
 class GamesViewSet(viewsets.ModelViewSet):
-    queryset = Games.objects.all()
+    queryset = Games.objects.filter(name="Goofspiel")
     permission_classes = [
         permissions.AllowAny
     ]

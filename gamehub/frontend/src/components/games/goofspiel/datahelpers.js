@@ -29,7 +29,13 @@ export const goofspielGamePlay = (payload) => {
     status: payload.status
   }
 
-  let players = payload.players.map(value => {
+  // let players = payload.players.map(value => {
+  //   gameplay.players[value.player.username] = []
+  //   gameplay.playerpoints[value.player.username] = 0
+  //   return value.player.username
+  // })
+
+  let players = payload.game.map(value => {
     gameplay.players[value.player.username] = []
     gameplay.playerpoints[value.player.username] = 0
     return value.player.username
@@ -106,7 +112,7 @@ export const getcookie = (cb) => {
   })
 }
 
-export const getCookies = () => {
+export const getCookies = (cb) => {
   let cookies = {}
   document.cookie.split(";").forEach(cookie => {
     name = cookie.split("=")[0].trim()
@@ -115,7 +121,8 @@ export const getCookies = () => {
     //   cb(cookie.split("=")[1])
     // }
   })
-  return cookies
+  cb(cookies)
+  // return cookies
 }
 
 const styles = StyleSheet.create({

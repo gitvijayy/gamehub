@@ -48,7 +48,7 @@ export class Goofspiel extends Component {
         'ws://' + window.location.host +
         `/ws/games/${id}/`);
       this.props.getGamePlay(this.state.name, id)
-      this.props.getActiveGames(this.state.name)
+      this.props.getActiveGames()
     })
   }
 
@@ -61,7 +61,11 @@ export class Goofspiel extends Component {
     }
 
     const newGame = () => {
-      this.props.getNewGame(this.state.name, (id) => {
+      let game = {
+        "name": "Goofspiel"
+      }
+      this.props.getNewGame(game, (id) => {
+        // this.props.getNewGame(this.state.name, (id) => {
         // console.log(this.props.newgame)
         // id = this.props.newgame.id
         document.cookie = `gameid=${id}`
@@ -249,7 +253,7 @@ export class Goofspiel extends Component {
             display: "flex", flexDirection: "column",
             justifyContent: "space-evenly"
           }}>
-          <Activegames gamename={this.state.name} activegames={this.props.activegames} setSocket={setSocket} />
+          <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div>
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
             <button className="btn btn-danger btn-lg rules">Rules</button>
@@ -269,4 +273,5 @@ const mapStateToProps = state => ({
   animate: state.goofspiel.animate
   // gameid:getcookie()
 })
+
 export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Goofspiel)

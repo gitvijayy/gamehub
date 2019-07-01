@@ -31,7 +31,7 @@ let mappedCards = ["1C", "1H", "1S", "1D", "2C", "2H", "2S", "2D", "3C", "3H", "
 export class Memory extends Component {
 
   state = {
-    name: 'Memory',
+    name: 'memory',
     turns: [0, 51, 0, 26, 1, 27, 2, 27, 2, 28, 7],
     flip: "",
     src: ""
@@ -39,27 +39,24 @@ export class Memory extends Component {
 
 
   componentDidUpdate() {
-
-    chatSocket.onmessage = (message) => {
+    chatSocket.onmessage = (e) => {
       // var data = JSON.parse(e.data);
       // var message = data['message'];
       getcookie((id) => {
-        // this.props.getActiveGames(this.state.name)
-        // this.props.getGamePlay(this.state.name, id)
+        this.props.getActiveGames()
+        this.props.getGamePlay(this.state.name, id)
       })
-
-      console.log("message")
-
     };
-    // chatSocket.onmessage = (e) => {
-    //   // var data = JSON.parse(e.data);
-    //   // var message = data['message'];
-    //   getcookie((id) => {
-    //     // this.props.getActiveGames(this.state.name)
-    //     // this.props.getGamePlay(this.state.name, id)
-    //   })
-    // };
   }
+  // chatSocket.onmessage = (e) => {
+  //   // var data = JSON.parse(e.data);
+  //   // var message = data['message'];
+  //   getcookie((id) => {
+  //     // this.props.getActiveGames(this.state.name)
+  //     // this.props.getGamePlay(this.state.name, id)
+  //   })
+  // };
+
 
   componentDidMount() {
     this.setState({
@@ -79,8 +76,8 @@ export class Memory extends Component {
       chatSocket = new WebSocket(
         'ws://' + window.location.host +
         `/ws/games/${id}/`);
-      // this.props.getGamePlay(this.state.name, id)
-      // this.props.getActiveGames(this.state.name)
+      this.props.getGamePlay(this.state.name, id)
+      this.props.getActiveGames(this.state.name)
     })
 
   }
@@ -91,12 +88,26 @@ export class Memory extends Component {
 
 
   render() {
-    // console.log(memoryCards())
 
     const setSocket = (id) => {
       chatSocket = new WebSocket(
         'ws://' + window.location.host +
         `/ws/games/${id}/`);
+    }
+
+    const newGame = () => {
+      let game = {
+        "name": "Memory"
+      }
+      this.props.getNewGame(game, (id) => {
+        // this.props.getNewGame(this.state.name, (id) => {
+        // console.log(this.props.newgame)
+        // id = this.props.newgame.id
+        document.cookie = `gameid=${id}`
+        chatSocket.send(JSON.stringify({
+          'message': "message"
+        }));
+      })
     }
 
     const playerSelection = (e) => {
@@ -205,7 +216,7 @@ export class Memory extends Component {
             display: "flex", flexDirection: "column",
             justifyContent: "space-evenly"
           }}>
-          {/* <Activegames gamename={this.state.name} activegames={"this.props.activegames"} /> */}
+          <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div>
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
             <button className="btn btn-danger btn-lg rules">Rules</button>
@@ -228,5 +239,7 @@ const mapStateToProps = state => ({
   // newgame: state.goofspiel.newgame[0],
   // activegames: state.goofspiel.activegames,
   // animate: state.goofspiel.animate
+  // gameid:getcookie()
 })
-export default connect(mapStateToProps, { getNewGame })(Memory)
+
+export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Memory)

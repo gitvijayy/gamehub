@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from memory.models import Games
 from memory.models import Players
 from goofspiel.models import Rounds as GoofspielRounds
+from memory.models import Rounds as MemoryRounds
 
 import random
 # import random
@@ -23,20 +24,28 @@ def addPlayer(game, player):
 
 
 def addGame(name, player):
-    extras = ""
-
-    if(name == "Memory"):
-        random.shuffle(cardsArray)
-        extras = cardsArray
 
     newGame = Games.objects.create(
-        status="New", extras=extras, name=name)
+        status="New", name=name)
     newGame.save()
+    if(name == "Memory"):
+        random_number = random.randint(1, 13)
+        random.shuffle(cardsArray)
+        extras = cardsArray[random_number:random_number+26]
+        extras = extras + extras
+        random.shuffle(extras)
+        newGame.extras = extras
+        newGame.save()
+        newRound = MemoryRounds.objects.create(
+            game_id=newGame)
+        newRound.save()
 
     if(name == "Goofspiel"):
         prize_card = random.randint(1, 13)
+        print("here")
         newRound = GoofspielRounds.objects.create(
             game_id=newGame, prizeCard=prize_card)
+        print("coudnt get here")
         newRound.save()
 
     addPlayer(newGame, player)
@@ -44,6 +53,10 @@ def addGame(name, player):
 
 
 class GameSerializer(serializers.ModelSerializer):
+
+    # Games.objects.all().delete()
+
+    # Players.objects.all().delete()
 
     class Meta:
         model = Games
