@@ -18,4 +18,4 @@ channels_redux="*"
 
 
 [requires]
-python_version = "*"
+python_version = "3.6"
