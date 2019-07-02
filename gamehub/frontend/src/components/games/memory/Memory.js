@@ -32,9 +32,6 @@ export class Memory extends Component {
 
   state = {
     name: 'memory'
-
-
-
   }
 
 
