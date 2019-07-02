@@ -16,5 +16,7 @@ channels="*"
 channels_redis="*"
 channels_redux="*"
 
+
 [requires]
 python_version = "3.6"
+pipenv="11.9.0"
