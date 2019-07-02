@@ -16,11 +16,45 @@ var chatSocket = new WebSocket(
   
   
 export class WarGame extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            count : 0
+        }
+    }
+
     addTurn = (e) => {
+        e.preventDefault()
         const rounds = this.props.gameplay.round
-        const game_id= document.cookie.split('=')[1]
-        // console.log(rounds)
+        console.log('HE WILL TURN')
         const lastRound = rounds[rounds.length-1]
+        // console.log(this.props.count)
+        if (lastRound.status=== 'tie') {
+            if(this.state.count < 3) {
+                // console.log('You will not turn!!!!!')
+                // this.props.count = 1
+                // console.log(this.state.count)
+                this.setState({
+                    count: this.state.count + 1
+                })
+                // console.log(this.state.count)
+            }
+            // this.props.count = 3
+            else {
+                this.setState({
+                    count : 0
+                })
+            // this.props.count = 3
+            this.props.addWarTurn(lastRound.id,() => {
+                chatSocket.send(JSON.stringify({
+    
+                    'message': 'kkkkk'
+                    }))
+            }) 
+            }
+        }
+        else {
         // console.log(lastRound)
         this.props.addWarTurn(lastRound.id,() => {
             chatSocket.send(JSON.stringify({
@@ -28,6 +62,7 @@ export class WarGame extends Component {
                 'message': 'kkkkk'
               }))
         })
+    }
         // this.props.getWarGamePlay(game_id)
         
         // rounds = this.props.gameplay.round
@@ -50,6 +85,7 @@ export class WarGame extends Component {
     componentDidMount() {
         const game_id= document.cookie.split('=')[1]
         // const game_id = 54;
+        // console.log('I mounted')
         this.props.getWarGamePlay(game_id)
         this.props.getWarActivegames()
     }
@@ -58,8 +94,9 @@ export class WarGame extends Component {
         chatSocket.onmessage = (e) => {
           const game_id= document.cookie.split('=')[1]
           var data = JSON.parse(e.data);
-          var message = data['message'];
-          console.log(message)
+        //   var message = data['message'];
+          console.log('I UPDATED')
+        //   console.log(message)
         //   this.props.getActiveGames(this.state.name)
         this.props.getWarGamePlay(game_id)
         
@@ -73,6 +110,7 @@ export class WarGame extends Component {
     render() {
         // console.log(this.props.gameplay)
         // console.log(this.props.gameplay)
+        // console.log('I AM THE RENDER')
         const game = this.props.gameplay.status ? this.props.gameplay : null
         console.log(game)
         // console.log(this.props.gameplay.status)
@@ -96,7 +134,16 @@ export class WarGame extends Component {
         const decks = game ? getDecks(game) : 'Loading'
         // console.log(game.round)
         const round = game && game.round.length > 0 ? game.round[game.round.length-1]: 'Loading'
+        // const roundStatus = typeof round === 'string'? round.status : null
         const roundID = typeof round === 'string'? round: round.id
+        // if(roundStatus) {
+        //     if(roundStatus === 'tie'){
+
+        //     }
+        //     else {
+        //     turns = round.turns        
+        //     }
+        // }
         const turns = typeof round === 'string' ? round: round.turns
         const lastRound = game && game.round.length > 0 ? game.round[game.round.length-2]: null
         const lastTurns = lastRound ? lastRound.turns : 'Loading'
@@ -220,7 +267,8 @@ export class WarGame extends Component {
 const mapStateToProps = state => ({
     gameplay: state.wargame.gameplay,
     games: state.wargame.games,
-    user: state.auth.user
+    user: state.auth.user,
+    count : state.wargame.count
   })
   
   export default connect(mapStateToProps, { getWarGamePlay, addWarTurn, makeNewGame,getWarActivegames })(WarGame)

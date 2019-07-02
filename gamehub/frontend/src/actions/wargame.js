@@ -39,20 +39,20 @@ export const getWarGamePlay = (gameId) => (dispatch, getState) => {
     console.log('I am inside the warTurn')
     console.log('this is the rounds : ' + round)
     axios.post(`/api/war/turns/`, {'round_id': round}, tokenConfig(getState)).then(res => {
+      callback()
       // dispatch(createMessage({ leadAdded: "Lead Added" }))
       // dispatch({
       //   type: ADD_LEAD,
       //   payload: res.data
       // })
-      console.log('made post request')
-      callback()
+      // console.log('made post request')
       // axios.get(`/api/war/games/${game_id}/`, tokenConfig(getState)).then(res => {
   
         // chatSocket.send(JSON.stringify({
         //   'message': res.data
         // }));
   
-        console.log('made get request')
+        // console.log('made get request')
         // chatSocket.onmessage = function (e) {
         //   var data = JSON.parse(e.data);
         //   var message = data['message'];

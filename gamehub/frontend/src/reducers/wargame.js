@@ -3,7 +3,8 @@ import { GET_WAR_GAMEPLAY,MAKE_NEW_GAME, GET_WAR_ACTIVEGAMES } from '../actions/
 const initialState = {
 
   gameplay: [],
-  games:[]
+  games:[],
+  count:0
 }
 
 export default function (state = initialState, action) {
@@ -20,6 +21,13 @@ export default function (state = initialState, action) {
         ...state,
         games: action.payload
       }
+    case 'INCRASE_COUNT':
+
+    return {
+      ...state,
+      count: action.payload
+    }
+
     default:
       return state;
   }
