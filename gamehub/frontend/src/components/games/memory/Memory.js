@@ -71,21 +71,17 @@ export class Memory extends Component {
 
   }
 
-
-
-
-
-
   render() {
 
     let gameblock =
+      <Fragment>
+        <h1 className="logo" style={{ position: "absolute", top: "250px", left: "38%" }}>Waiting for player...</h1>
+        <Loaders />
+        <h1 className="logo" style={{ position: "absolute", top: "500px", left: "38%" }}>Waiting for player...</h1>
+      </Fragment>
 
-      <Loaders />
 
-
-    let spinner = (<Spinner animation="border" role="status" style={{ marginRight: "7%" }}>
-      <span className="sr-only">Loading...</span>
-    </Spinner>)
+    let spinner = (<Spinner animation="border" role="status" style={{ marginRight: "7%" }}> <span className="sr-only">Loading...</span></Spinner>)
 
     let player1Spinner = ""
     let player2Spinner = ""
@@ -99,9 +95,10 @@ export class Memory extends Component {
         `/ws/games/${id}/`);
     }
 
-    const newGame = () => {
+    const newGame = (total) => {
       let game = {
-        "name": "Memory"
+        "name": "Memory",
+        "no_of_players": total
       }
       this.props.getNewGame(game, (id) => {
 
@@ -129,91 +126,105 @@ export class Memory extends Component {
     }
 
 
-
     let data = this.props.gameplay
 
 
-    if (data && data.gameplay && data.gameplay.cards) {
+    if (data && data.gameplay && data.gameplay.cards && data.gameplay.status == "Active") {
       let cards = data.gameplay.cards
 
 
 
       gameblock =
-        (<div className="memorycard">
-          {
-            cards.map((action, index) => {
 
-              let faceupCards = data.gameplay.faceupCards
-              let turns = data.gameplay.turns
-              let flipCards = turns.length % 2 == 0 ? [turns[turns.length - 2], turns[turns.length - 1]] : [turns[turns.length - 1], -1]
+        (< Fragment >
+          <div className="memorycard" style={{ marginTop: "1%" }}>
+            {
+              cards.map((action, index) => {
 
+                let faceupCards = data.gameplay.faceupCards
+                let turns = data.gameplay.turns
+                let flipCards = turns.length % 2 == 0 ? [turns[turns.length - 2], turns[turns.length - 1]] : [turns[turns.length - 1], -1]
 
-              flip = ""
-              // Object.keys(data.gameplay.playerdata)[0] == 
-              // if (this.props.user && this.props.user.user
-              //   && this.props.user.user.username) {
-              //   let user = this.props.user.user.username
-              players = Object.keys(data.gameplay.playerdata)
-              // player1Name = Object.keys(data.gameplay.playerdata)[0]
-              // player2Name = Object.keys(data.gameplay.playerdata)[1]
+                flip = ""
+                players = Object.keys(data.gameplay.playerdata)
 
+                if (data.gameplay.playerdata[players[0]] && data.gameplay.playerdata[players[0]].turn) {
+                  player1Spinner = spinner
 
-              if (data.gameplay.playerdata[players[0]] && data.gameplay.playerdata[players[0]].turn) {
+                } else {
+                  player2Spinner = spinner
+                }
 
-                player1Spinner = spinner
+                if (!data.gameplay.turns.length) {
+                  player1Spinner = spinner
+                  player2Spinner = ""
+                }
 
-
-              } else {
-
-
-                player2Spinner = spinner
-
-              }
-
-              // }
-
-
-              if (!faceupCards.includes(index)) {
+                // }
+                if (!faceupCards.includes(index)) {
 
 
 
-                if (index == flipCards[0] && this.props.animation && this.props.animation.flip) {
+                  if (index == flipCards[0] && this.props.animation && this.props.animation.flip) {
+
+                    return <img onClick={(e) => {
+                      playerSelection(e)
+                    }} key={index} id={index} name={action} className={this.props.animation.flip}
+                      src={this.props.animation.src[0]} />
+                  }
+
+                  if (index == flipCards[1] && this.props.animation && this.props.animation.flip) {
+
+                    return <img onClick={(e) => {
+                      playerSelection(e)
+                    }} key={index} id={index} name={action} className={this.props.animation.flip}
+                      src={this.props.animation.src[1]} />
+                  }
 
                   return <img onClick={(e) => {
                     playerSelection(e)
-                  }} key={index} id={index} name={action} className={this.props.animation.flip}
-                    src={this.props.animation.src[0]} />
+                  }} key={index} id={index} name={action} className={flip}
+                    src={require(`../../images/blackBack.png`)} />
+
                 }
 
-                if (index == flipCards[1] && this.props.animation && this.props.animation.flip) {
+                if (faceupCards.includes(index)) {
 
-                  return <img onClick={(e) => {
-                    playerSelection(e)
-                  }} key={index} id={index} name={action} className={this.props.animation.flip}
-                    src={this.props.animation.src[1]} />
+                  if (index == flipCards[0] || index == flipCards[1]) {
+                    return <img key={index} id={index} name={action} className={css(styles.flipInY)} src={require(`../../images/cards/${action}.png`)} />
+                  }
+
+                  return <img key={index} id={index} name={action} className={"this.state.flip"} src={require(`../../images/cards/${action}.png`)} />
                 }
+              })
+            }
 
-                return <img onClick={(e) => {
-                  playerSelection(e)
-                }} key={index} id={index} name={action} className={flip}
-                  src={require(`../../images/blackBack.png`)} />
+          </div>
 
-              }
+          <div className="playingcard middlebox">
+            <div>
+              <h3 className={css(styles.pointsMemory)}>2 Points</h3>
+              <h5 className={css(styles.pointsMemory)}>15 Chances</h5>
+              <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
 
-              if (faceupCards.includes(index)) {
+            </div>
 
-                if (index == flipCards[0] || index == flipCards[1]) {
-                  return <img key={index} id={index} name={action} className={css(styles.flipInY)} src={require(`../../images/cards/${action}.png`)} />
-                }
-
-                return <img key={index} id={index} name={action} className={"this.state.flip"} src={require(`../../images/cards/${action}.png`)} />
-              }
-            })
-          }
-
-        </div>
+            <div>
+              <p className="logo">Memory</p>
 
 
+
+              {/* <img src={require(`../../images/memory-icon.png`)} /> */}
+            </div>
+
+            <div>
+              <h3 className={css(styles.pointsMemory)}>2 Points</h3>
+              <h5 className={css(styles.pointsMemory)}>15 Chanes</h5>
+              <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
+            </div>
+          </div>
+
+        </Fragment >
 
 
 
@@ -235,25 +246,7 @@ export class Memory extends Component {
 
           {gameblock}
 
-          <div className="playingcard middlebox">
-            <div>
-              <h3 className={css(styles.pointsMemory)}>2 Points</h3>
-              <h5 className={css(styles.pointsMemory)}>15 Chances</h5>
-              <button className="btn btn-danger btn-lg rules">{player1Spinner}{players[0]}</button>
 
-            </div>
-
-            <div>
-              <p className="logo">Memory</p>
-              {/* <img src={require(`../../images/memory-icon.png`)} /> */}
-            </div>
-
-            <div>
-              <h3 className={css(styles.pointsMemory)}>2 Points</h3>
-              <h5 className={css(styles.pointsMemory)}>15 Chanes</h5>
-              <button className="btn btn-danger btn-lg rules">{player2Spinner}{players[1]}</button>
-            </div>
-          </div>
 
 
 
@@ -266,7 +259,8 @@ export class Memory extends Component {
           }}>
           <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div>
-            <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
+            <button onClick={() => { newGame(2) }} className="btn btn-success btn-lg leader text-dark">2 Player Game</button>
+            <button onClick={() => { newGame(1) }} className="btn btn-success btn-lg leader text-dark">1 Player Game</button>
             <button className="btn btn-danger btn-lg rules">Rules</button>
           </div>
         </div>
@@ -288,19 +282,6 @@ const mapStateToProps = state => ({
   user: state.auth,
   newgame: state.goofspiel.newgame[0],
   animation: state.goofspiel.memoryAnimation
-  // activegames: state.goofspiel.activegames,
-  // animate: state.goofspiel.animate
-  // gameid:getcookie()
 })
 
 export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Memory)
-
-
-
-// if (this.props.user && this.props.user.user
-              //   && this.props.user.user.username
-              //   && player == this.props.user.user.username) {
-              //   return <img key={action + player} onClick={(e) => { addTurn(e) }}
-              //     id={action} src={require(`../../images//cards/${action}${data.gameplay.suits[suit]}.png`)} />
-              // } else {
-              // let value = index

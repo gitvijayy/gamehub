@@ -16,7 +16,7 @@ export default class Loaders extends Component {
       "display": "flex",
       "justifyContent": "center",
       "alignItems": "center",
-      "height": "900px",
+      "height": "500px",
     }
     return (
       <div className="container" style={styles}>

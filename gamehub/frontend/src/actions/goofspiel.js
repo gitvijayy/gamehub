@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
-import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS, MEMORY_ANIMATION } from './types'
+import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS, MEMORY_ANIMATION, GET_ACTIVEPLAYERS } from './types'
 import { goofspielGamePlay, cards, getcookie } from '../components/games/goofspiel/datahelpers'
 import { memoryGamePlay } from '../components/games/memory/datahelpers'
 
@@ -73,7 +73,7 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
           })
         }
         ,
-        800
+        1000
       );
     }
 
@@ -134,4 +134,31 @@ export const setGame = (game) => (dispatch, getState) => {
   })
 
 }
+
+
+export const logoutUserStatus = () => (dispatch, getState) => {
+  axios.post(`/api/activeplayers/`, null, tokenConfig(getState)).then(res => {
+
+  }).catch(err => dispatch(
+    returnErrors(err.response.data, err.response.status)
+  ))
+}
+
+
+
+export const getActivePlayers = () => (dispatch, getState) => {
+
+  // axios.get(`/api/${game}/activegames/`, tokenConfig(getState)).then(res => {
+  axios.get(`/api/activeplayers/`, tokenConfig(getState)).then(res => {
+
+    dispatch({
+      type: GET_ACTIVEPLAYERS,
+      payload: res.data
+    })
+  }).catch(err => dispatch(
+    returnErrors(err.response.data, err.response.status)
+  ))
+
+}
+
 

@@ -14,6 +14,14 @@ class Activegames extends Component {
     id: 0
   }
 
+
+
+  // componentDidUpdate() {
+  //   getcookie((id) => {
+  //     this.setState({ id: id })
+  //   })
+  // }
+
   componentDidMount() {
     getcookie((id) => {
       this.setState({ id: id })
@@ -51,12 +59,19 @@ class Activegames extends Component {
         if (game.game_id.status == "New") {
           gameclass = "col-12 alert-warning btn-lg"
         }
-        if (this.state.id == game.game_id.id) {
-          gameclass = "col-12 alert-dark btn-lg"
-        }
+        // getcif (this.state.id == game.game_id.id) {
+        //   gameclass = "col-12 alert-dark btn-lg"
+        // }
+
+        getcookie((id) => {
+          if (id == game.game_id.id) {
+            gameclass = "col-12 alert-dark btn-lg"
+          }
+
+        })
 
 
-        if (game.game_id.status != "Game Over") {
+        if (game.game_id.status != "Game Over" && game.game_id.name.toLowerCase() == this.props.gamename) {
           let name = `${game.game_id.name}  ${game.game_id.id}`
           return <button onClick={(e) => { onClick(e, game.game_id.id, game.game_id.name) }} key={game.game_id.id} className={gameclass}
             style={{ height: "60px", marginTop: "10%", fontSize: "medium" }}>{name}</button>
@@ -78,6 +93,7 @@ class Activegames extends Component {
 
 const mapStateToProps = state => ({
   activegames: state.goofspiel.activegames,
+
 })
 
 export default connect(mapStateToProps, { getActiveGames, getGamePlay })(Activegames)

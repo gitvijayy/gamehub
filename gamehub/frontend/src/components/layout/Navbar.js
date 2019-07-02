@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/auth.js';
+import { logoutUserStatus } from '../../actions/goofspiel'
 import { login } from '../../actions/auth'
 import Login from '../accounts/Login'
 import Button from 'react-bootstrap/Button'
@@ -18,7 +19,10 @@ class Navbar extends Component {
     let modalClose = () => this.setState({ modalShowLogin: false, modalShowRegister: false });
 
     let logout1 = () => {
+      this.props.logoutUserStatus()
       this.props.logout()
+
+
       this.setState({ modalShowLogin: false, modalShowRegister: false });
     }
 
@@ -66,5 +70,5 @@ const mapStateToProps = state => ({
   auth: state.auth,
 
 })
-export default connect(mapStateToProps, { logout })(Navbar)
+export default connect(mapStateToProps, { logout, logoutUserStatus })(Navbar)
 

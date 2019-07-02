@@ -52,6 +52,7 @@ class TurnSerializer(serializers.ModelSerializer):
         turncount = roundid.turns.count()
         gameid = roundid.game_id
         get_rounds = Rounds.objects.filter(game_id=gameid).order_by('-id')
+        no_of_players = Games.objects.get(id=gameid.id)
         user = self.context['request'].user
         players = Players.objects.filter(game_id=gameid)
 
@@ -63,7 +64,12 @@ class TurnSerializer(serializers.ModelSerializer):
                 roundid, validated_data['action'], user, turncount, gameid)
             return newturn
         if (get_rounds.count() == 1) & (players[0].player != user):
-            raise serializers.ValidationError("Not Your Turn1")
+            raise serializers.ValidationError("Not Your Turn")
+
+        if (no_of_players.no_of_players == 1):
+            newturn = add_turn(
+                roundid, validated_data['action'], user, turncount, gameid)
+            return newturn
 
         previous_round = get_rounds[1]
         previous_round_player = ""
@@ -109,4 +115,5 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Games
-        fields = ['id', 'name', 'status',  'game', 'memoryrounds', 'extras']
+        fields = ['id', 'name', 'status',  'game',
+                  'memoryrounds', 'extras', 'no_of_players']

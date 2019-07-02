@@ -21,3 +21,9 @@ class Players(models.Model):
         User, related_name="user", on_delete=models.CASCADE, null=True)
     # player = models.ManyToManyField(Games)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class OnlinePlayers(models.Model):
+    user = models.ForeignKey(
+        User, related_name="onlineuser", on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=500, blank=True)

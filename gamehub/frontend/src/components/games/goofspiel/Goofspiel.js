@@ -61,7 +61,8 @@ export class Goofspiel extends Component {
 
     const newGame = () => {
       let game = {
-        "name": "Goofspiel"
+        "name": "Goofspiel",
+        "no_of_players": 2
       }
       this.props.getNewGame(game, (id) => {
         // this.props.getNewGame(this.state.name, (id) => {
@@ -236,7 +237,7 @@ export class Goofspiel extends Component {
       })
     }
 
-    console.log(this.props.gameplay)
+
     return (
 
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"

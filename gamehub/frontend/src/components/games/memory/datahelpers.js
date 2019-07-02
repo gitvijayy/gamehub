@@ -131,7 +131,8 @@ export const memoryGamePlay = (payload) => {
       flip: css(styles.zoomIn),
       src: [require(`../../images/blackBack.png`), require(`../../images/blackBack.png`)],
       animate: false
-    },
+    }
+
 
     // style: { boxShadow: "none" }
 
@@ -191,7 +192,11 @@ export const memoryGamePlay = (payload) => {
         gameplay.playerdata[playerTurnCheck].turn = true
 
       } else if (players[0] == playerTurnCheck) {
-        gameplay.playerdata[players[1]].turn = true
+
+        if (payload.no_of_players > 1) {
+          gameplay.playerdata[players[1]].turn = true
+        }
+
       } else {
         gameplay.playerdata[players[0]].turn = true
       }
@@ -206,9 +211,12 @@ export const memoryGamePlay = (payload) => {
     }
   }
 
+  if (payload.no_of_players && payload.no_of_players == 1) {
+    console.log("am here")
+    gameplay.playerdata[players[0]].turn = true
+  }
 
-
-
+  console.log(gameplay)
   // console.log(gameplay.playerdata)
   gameplay.cards = cards
   return {
