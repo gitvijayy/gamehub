@@ -39,10 +39,13 @@ export class Memory extends Component {
 
 
   componentDidUpdate() {
+
     chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       var message = data['message'];
+
       getcookie((id) => {
+
         if (message == "new game") {
           this.props.getActiveGames()
         }
@@ -52,6 +55,7 @@ export class Memory extends Component {
 
 
     }
+
   }
 
 
@@ -85,6 +89,9 @@ export class Memory extends Component {
 
     let player1Spinner = ""
     let player2Spinner = ""
+    let player1Name = ""
+    let player2Name = ""
+    let players = []
 
     const setSocket = (id) => {
       chatSocket = new WebSocket(
@@ -142,6 +149,29 @@ export class Memory extends Component {
 
 
               flip = ""
+              // Object.keys(data.gameplay.playerdata)[0] == 
+              // if (this.props.user && this.props.user.user
+              //   && this.props.user.user.username) {
+              //   let user = this.props.user.user.username
+              players = Object.keys(data.gameplay.playerdata)
+              // player1Name = Object.keys(data.gameplay.playerdata)[0]
+              // player2Name = Object.keys(data.gameplay.playerdata)[1]
+
+
+              if (data.gameplay.playerdata[players[0]] && data.gameplay.playerdata[players[0]].turn) {
+
+                player1Spinner = spinner
+
+
+              } else {
+
+
+                player2Spinner = spinner
+
+              }
+
+              // }
+
 
               if (!faceupCards.includes(index)) {
 
@@ -209,7 +239,7 @@ export class Memory extends Component {
             <div>
               <h3 className={css(styles.pointsMemory)}>2 Points</h3>
               <h5 className={css(styles.pointsMemory)}>15 Chances</h5>
-              <button className="btn btn-danger btn-lg rules">{spinner}Vijay</button>
+              <button className="btn btn-danger btn-lg rules">{player1Spinner}{players[0]}</button>
 
             </div>
 
@@ -220,8 +250,8 @@ export class Memory extends Component {
 
             <div>
               <h3 className={css(styles.pointsMemory)}>2 Points</h3>
-              <h5 className={css(styles.pointsMemory)}>15 Chances</h5>
-              <button className="btn btn-danger btn-lg rules">{spinner}Yajiv</button>
+              <h5 className={css(styles.pointsMemory)}>15 Chanes</h5>
+              <button className="btn btn-danger btn-lg rules">{player2Spinner}{players[1]}</button>
             </div>
           </div>
 
