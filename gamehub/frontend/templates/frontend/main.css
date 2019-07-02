@@ -237,8 +237,20 @@
 .newgame {
   height: 60px;
   box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+}
+
+.newgame-war {
+  height: 60px;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.new-games-title {
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .leader {

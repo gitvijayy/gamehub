@@ -18,4 +18,4 @@ export const MAKE_NEW_GAME = "MAKE_NEW_GAME"
 export const GET_WAR_ACTIVEGAMES = "GET_WAR_ACTIVEGAMES"
 export const GET_NEWGAME = "GET_NEWGAME"
 export const GET_ACTIVEGAMES = "GET_ACTIVEGAMES"
-
+export const SET_GAME = "SET_GAME"

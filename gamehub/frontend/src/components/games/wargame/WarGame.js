@@ -164,10 +164,10 @@ export class WarGame extends Component {
         const lastOpponentTurn = typeof lastTurns === 'string'? lastTurns : lastTurns.filter(turn => {
             return turn.player.username !== this.props.user.username
         })
-        const userturn = typeof turns === 'string'? turns: turns.filter(turn => {
+        const userturn = typeof turns === 'string'? []: turns.filter(turn => {
             return turn.player.username === this.props.user.username
         })
-        const opponentturn = typeof turns === 'string'? turns: turns.filter(turn => {
+        const opponentturn = typeof turns === 'string'? []: turns.filter(turn => {
             return turn.player.username !== this.props.user.username
         })
         const user = game ? game.playerswar.filter(player => {
@@ -177,6 +177,8 @@ export class WarGame extends Component {
         const opponent = game ? game.playerswar.filter(player => {
             return player.player.username !== this.props.user.username
         }): []
+
+        console.log(opponent)
 
         // console.log(userturn)
         // console.log(opponentturn)
@@ -199,6 +201,7 @@ export class WarGame extends Component {
                 <p>Winner is the player who took all the cards in the deck</p>  
             </section>
         }
+
         return(
             <Fragment>
         <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
@@ -217,9 +220,9 @@ export class WarGame extends Component {
             <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
             
             <div className='titles-opponent'>
-                <p className='opponent-deck-amount'> Cards Left : {opponent.length>0? opponent[0].deck_length : 'Waiting player to join'}</p>
+                <p className='opponent-deck-amount'> Cards Left : {opponent.length>0? opponent[0].deck_length : ''}</p>
                 {/* <button className="btn btn-danger btn-lg rules">Cards Left : 27</button> */}
-                <p className='player-name'>{opponent.length>0? opponent[0].player.username : 'Waiting for player to join'} : {opponentturn.length === 0?'Playing':'Waiting'}</p>
+                <p className='player-name'>{opponent.length>0? opponent[0].player.username : 'Waiting for player to join'} {opponent.length > 0? opponentturn.length>0? ':Played, waiting':':Thinking':''}</p>
                 <img src={require('../../images/male.png') } className='player-icon'/>
             </div>
             
@@ -253,7 +256,7 @@ export class WarGame extends Component {
            
            <div className='titles-opponent'>
                 <p className='opponent-deck-amount'> Cards Left : {user.length>0? user[0].deck_length : 'Loading'}</p>
-                <p className='player-name'>{user.length>0? user[0].player.username : 'Loading'} : { userturn.length === 0?'Your Turn':'Waiting for other player'}</p>
+                <p className='player-name'>{user.length>0? user[0].player.username : 'Loading'} : { userturn.length === 0?'Your Turn':'Waiting for opponent'}</p>
                 <img src={require('../../images/male.png') } className='player-icon'/>
             </div>
             </div>
@@ -261,15 +264,16 @@ export class WarGame extends Component {
             <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
             display: "flex", flexDirection: "column",
-            justifyContent: "space-evenly"
+            justifyContent: "space-around"
           }}>
             {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
+            <p className='new-games-title'>New Games:</p>
             <div className='container pre-scrollable'>
             {typeof games === 'string'? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button>: 
             games.map(game => {
                 // {/* // console.log(game.game_id) */}
                 return(
-                    <button className=" btn btn-dark btn-lg newgame text-white" onClick={this.goToGame} id={game.game_id.id}>{games.indexOf(game) + 1}</button>
+                    <button className=" btn btn-dark btn-lg newgame-war text-white" onClick={this.goToGame} id={game.game_id.id}>{games.indexOf(game) + 1}</button>
             )
                 //  return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment> 
             })}
