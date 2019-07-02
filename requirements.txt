@@ -1,11 +1,12 @@
-django 
-djangorestframework 
-django-rest-knox 
+django
+djangorestframework
+django-rest-knox
 django-extensions
 channels
 channels_redis
 channels_redux
 gunicorn
 django-heroku
+python
 
 
