@@ -15,7 +15,8 @@ django-extensions="*"
 channels="*"
 channels_redis="*"
 channels_redux="*"
-
+gunicorn="*"
+django_heroku="*"
 
 [requires]
 python_version = "3.6.8"
