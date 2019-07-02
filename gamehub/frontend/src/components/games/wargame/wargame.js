@@ -6,8 +6,8 @@ import { convertNumberToCard, fetchDeckImage } from './wargameHelpers'
 // import { defaultgame } from './datahelpers.js'
 // import { addWarTurn } from '../../../actions/wargame'
 import { getWarGamePlay, addWarTurn, makeNewGame,getWarActivegames } from '../../../actions/wargame'
-import auth from '../../../reducers/auth';
-import { type } from 'os';
+import { Activegames  } from '../../layout/Activegames'
+import { Activeplayers } from '../../layout/Activeplayers'
 // import auth from '../../../reducers/auth';
 
 var chatSocket = new WebSocket(
@@ -70,12 +70,22 @@ export class WarGame extends Component {
         // console.log(rounds)
         
     }
-    startNewGame = (e) => {
+    addNewGame = (e) => {
         this.props.makeNewGame(()=>{
             this.props.getWarActivegames()
         })
-        document.cookie `gameid = ${e.target.id}`
+        // document.cookie `gameid = ${e.target.id}`
     }
+
+    // startNewGame = (e) => {
+    //     this.props.makeNewGame(()=>{
+    //         this.props.getWarActivegames()
+    //     }).then(
+    //         document.cookie `gameid = ${}`
+    //     )
+    //     document.cookie `gameid = ${e.target.id}`
+    // }
+
     goToGame = (e) => {
         // console.log(e.target.id)
         this.props.getWarGamePlay(e.target.id)
@@ -84,8 +94,6 @@ export class WarGame extends Component {
 
     componentDidMount() {
         const game_id= document.cookie.split('=')[1]
-        // const game_id = 54;
-        // console.log('I mounted')
         this.props.getWarGamePlay(game_id)
         this.props.getWarActivegames()
     }
@@ -124,18 +132,19 @@ export class WarGame extends Component {
             // console.log(player)
             return players
         }
-        const getDecks = (game) => {
-            const decks = game.playerswar.map(player => {
-                return player.deck_length
-            })
-            return decks
-        }
-        const users = game ? getPlayers(game) : 'Loading'
-        const decks = game ? getDecks(game) : 'Loading'
+        const cookie_id= document.cookie.split('=')[1]
+        // const getDecks = (game) => {
+        //     const decks = game.playerswar.map(player => {
+        //         return player.deck_length
+        //     })
+        //     return decks
+        // }
+        // const users = game ? getPlayers(game) : 'Loading'
+        // const decks = game ? getDecks(game) : 'Loading'
         // console.log(game.round)
         const round = game && game.round.length > 0 ? game.round[game.round.length-1]: 'Loading'
         // const roundStatus = typeof round === 'string'? round.status : null
-        const roundID = typeof round === 'string'? round: round.id
+        // const roundID = typeof round === 'string'? round: round.id
         // if(roundStatus) {
         //     if(roundStatus === 'tie'){
 
@@ -163,69 +172,64 @@ export class WarGame extends Component {
         })
         const user = game ? game.playerswar.filter(player => {
             return player.player.username === this.props.user.username
-        }): null
+        }): []
 
         const opponent = game ? game.playerswar.filter(player => {
             return player.player.username !== this.props.user.username
-        }): null
+        }): []
 
-        console.log(user)
-        console.log(opponent)
-        
         // console.log(userturn)
         // console.log(opponentturn)
         // console.log(turns);
         // const round = game && game.round.length === 0 ? game.round: 'Loading'
         // console.log(round.length)
-        const player1 = game? `${game.playerswar[0].player.username} and he has ${game.playerswar[0].deck_length} cards left`: 'Loading'
-        const player2statues = game? game.playerswar[1]:null
-        const player2 = player2statues? `${game.playerswar[1].player.username} and he has ${game.playerswar[1].deck_length} cards left`: 'Loading'
+        // const player1 = game? `${game.playerswar[0].player.username} and he has ${game.playerswar[0].deck_length} cards left`: 'Loading'
+        // const player2statues = game? game.playerswar[1]:null
+        // const player2 = player2statues? `${game.playerswar[1].player.username} and he has ${game.playerswar[1].deck_length} cards left`: 'Loading'
         // console.log(users)
         const games = this.props.games.length > 0 ? this.props.games : 'Loading'
         // const gamestest = 'Loading'
         // console.log(games)
+
+        const loadRules = () => {
+            <section className='rules'>
+                <p> Welcome To War!!</p>
+                <p> Dealing: The deck is divided evenly, with each player receiving 26 cards, dealt one at a time, face down. Anyone may deal first. Each player places their stack of cards face down, in front of them.</p>
+                <p>Each player turns up a card at the same time and the player with the higher card takes both cards and puts them, face down, on the bottom of his stack.</p>
+                <p>Winner is the player who took all the cards in the deck</p>  
+            </section>
+        }
         return(
             <Fragment>
-                {/* <h1> War Game is Here</h1> */}
-                {/* <button onClick={this.addTurn}>Click to create a turn </button> */}
-                <button onClick={this.startNewGame}>Click to start a new game</button>
-                {/* <p> Game Statues: {this.props.gameplay.status}</p> */}
-                {/* <p> Round: {roundID}</p> */}
-                {/* <p> This is my users : {users}</p> */}
-                {/* <p> This is their deck: {decks}</p>  */}
-                <p> this is player1: {player1} </p>
-                <p> this is player2: {player2} </p>
-                {typeof games === 'string'? <p>{games}</p>: 
-            games.map(game => {
-                // {/* // console.log(game.game_id) */}
-                 return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment> 
-            })} 
-            {/* {typeof lastTurns === 'string'? <p>Turns: {lastTurns}</p>: */}
-            {/* lastTurns.map(turn => { */}
-                {/* return <p>LastTurns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p> */}
-            {/* }) */}
-        {/* } */}
-            {/* {typeof turns === 'string'? <p>Turns: {turns}</p>: */}
-            {/* turns.map(turn => { */}
-                {/* return <p>Turns: {turn.player.username} played the card {convertNumberToCard(turn.action)}</p> */}
-            {/* }) */}
-        {/* } */}
-            <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+        <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
+        style={{ height: "57em" }} >
+        <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2">
+          {/* <Activeplayers /> */}
+          <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
+          <button className="btn btn-success btn-lg leader text-dark">Archive</button>
+        </div>  
+
+
+
+
+        {cookie_id === '0'? <button className = "col-12 col-md-10 bg-alternate-2 beggining-button"onClick={this.addNewGame}>New Game</button> : 
+        // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
+            <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
             
             <div className='titles-opponent'>
-                <p className='opponent-deck-amount'> Cards Left : {opponent? opponent[0].deck_length : 'Loading'}</p>
+                <p className='opponent-deck-amount'> Cards Left : {opponent.length>0? opponent[0].deck_length : 'Waiting player to join'}</p>
                 {/* <button className="btn btn-danger btn-lg rules">Cards Left : 27</button> */}
-                <p className='player-name'>{opponent? opponent[0].player.username : 'Loading'}</p>
+                <p className='player-name'>{opponent.length>0? opponent[0].player.username : 'Waiting for player to join'} : {opponentturn.length === 0?'Playing':'Waiting'}</p>
                 <img src={require('../../images/male.png') } className='player-icon'/>
             </div>
-
+            
             <div className="playingcard">
                     
                     
                     <img src={fetchDeckImage('red')}/>
                     
                     {opponentturn[0]? <img src={convertNumberToCard(opponentturn[0].action)}/>:<div className='empty-card'/>}
-                    {lastOpponentTurn[0]? <img src={convertNumberToCard(lastOpponentTurn[0].action)} className='sideCard'/>:<div className='empty-card'/>}
+                    {lastOpponentTurn[0].action? <img src={convertNumberToCard(lastOpponentTurn[0].action)} className='sideCard'/>:<div className='empty-card'/>}
             </div>
             
   
@@ -243,23 +247,39 @@ export class WarGame extends Component {
 
             <div className="playingcard">
               <img src={fetchDeckImage('green')} onClick={(e)=>{this.addTurn(e)}}/>
-              {userturn[0]?<img src={convertNumberToCard(userturn[0].action)}/>:<div className='empty-card'/>}
-              {lastuserTurn[0]? <img src={convertNumberToCard(lastuserTurn[0].action)} className='sideCard'/>:<div className='empty-card'/>}
+              {userturn.length>0?<img src={convertNumberToCard(userturn[0].action)}/>:<div className='empty-card'/>}
+              {lastuserTurn[0].action? <img src={convertNumberToCard(lastuserTurn[0].action)} className='sideCard'/>:<div className='empty-card'/>}
            </div>
            
            <div className='titles-opponent'>
-                <p className='opponent-deck-amount'> Cards Left : {user? user[0].deck_length : 'Loading'}</p>
-                <p className='player-name'>{user? user[0].player.username : 'Loading'}</p>
+                <p className='opponent-deck-amount'> Cards Left : {user.length>0? user[0].deck_length : 'Loading'}</p>
+                <p className='player-name'>{user.length>0? user[0].player.username : 'Loading'} : { userturn.length === 0?'Your Turn':'Waiting for other player'}</p>
                 <img src={require('../../images/male.png') } className='player-icon'/>
             </div>
-
             </div>
-        
-        {/* {convertNumberToCard(2)} */}
-        {/* <img src='../../images/cards/1C.png'></img> */}
-        {/* <img src={require('../../images/cards/green_back.png')} /> */}
-        {/* {fetchDeckImage('green')} */}
-        {/* {fetchDeckImage('red')} */}
+        }
+            <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
+          style={{
+            display: "flex", flexDirection: "column",
+            justifyContent: "space-evenly"
+          }}>
+            {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
+            <div className='container pre-scrollable'>
+            {typeof games === 'string'? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button>: 
+            games.map(game => {
+                // {/* // console.log(game.game_id) */}
+                return(
+                    <button className=" btn btn-dark btn-lg newgame text-white" onClick={this.goToGame} id={game.game_id.id}>{games.indexOf(game) + 1}</button>
+            )
+                //  return <Fragment><p> the status for this game is : {game.game_id.status}</p> <button onClick={this.goToGame} id = {game.game_id.id}> {game.game_id.id} </button></Fragment> 
+            })}
+            </div>
+            <div>
+            <button onClick={this.addNewGame} className="btn btn-success btn-lg leader text-dark">New Game</button>
+            <button className="btn btn-danger btn-lg rules" >Rules</button>
+          </div>
+        </div>
+      </section >
             </Fragment>
         )
     }

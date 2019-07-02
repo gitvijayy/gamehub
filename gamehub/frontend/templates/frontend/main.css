@@ -137,6 +137,10 @@
   }
 }
 
+.beggining-button {
+  font-size: 7rem;
+  text-align: -webkit-center;
+}
 .user-block {
   margin: 3%;
 }
@@ -233,6 +237,8 @@
 .newgame {
   height: 60px;
   box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .leader {

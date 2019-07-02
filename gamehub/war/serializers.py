@@ -19,10 +19,10 @@ def generateHalfDeck():
     card_list = []
     while(len(card_list) < 26):
         # print(card_list)
-        card_list.append(1) # <----------------------- change this to new card
-        # random_card = random.randint(1,52);
-        # if(not (random_card in card_list)):
-        #     card_list.append(random_card)
+        # card_list.append(1) # <----------------------- change this to new card
+        random_card = random.randint(1,52);
+        if(not (random_card in card_list)):
+            card_list.append(random_card)
     return card_list
 
 def generateSecondHalfDeck(opponent):
@@ -30,12 +30,12 @@ def generateSecondHalfDeck(opponent):
     opponent_deck_string = opponent[0].deck
     # opponent_deck_string_inarray = opponent_deck_string.split(',') 
     # opponent_deck = list(map(int, opponent_deck_string_inarray))
-    # opponent_deck = stringToIntArray(opponent_deck_string)
+    opponent_deck = stringToIntArray(opponent_deck_string)
     for card in range(1,53):
-    #     if(not (card in opponent_deck)) :
-    #         card_list.append(card)
-    # random.shuffle(card_list)
-        card_list.append(1)
+        if(not (card in opponent_deck)) :
+            card_list.append(card)
+    random.shuffle(card_list)
+        # card_list.append(1)
     return card_list
 
 def fetchCards(round,game,user_id):
@@ -81,12 +81,12 @@ def handleWin(player,turns,round):
     arr_deck = stringToIntArray(str_deck)
     # arr_deck.insert(0,turn2.action)
     # arr_deck.insert(0,turn1.action)
-    arr_deck=[]
+    arr_deck_new=[]
     for turn in turns:
-        arr_deck.append(turn.action)
-
-    deck_length = len(arr_deck)
-    str_deck_modified = ','.join(str(card) for card in arr_deck) 
+        arr_deck_new.append(turn.action)
+    arr_deck_new.extend(arr_deck)
+    deck_length = len(arr_deck_new)
+    str_deck_modified = ','.join(str(card) for card in arr_deck_new) 
     player.deck = str_deck_modified
     player.deck_length = deck_length
     round.status = '#{player.username}'
@@ -141,7 +141,7 @@ def handleRound(round):
     if ((cardplayed1[len(cardplayed1)-1] % 13) > (cardplayed2[len(cardplayed2)-1] % 13)):
         handleWin(player1,turns,round)
         return True
-    elif((cardplayed1[len(cardplayed1)-1] % 13) < (cardplayed2[len(cardplayed2)-1] % 13)):
+    elif((cardplayed1[len(cardplayed1)-1] % 13) <= (cardplayed2[len(cardplayed2)-1] % 13)): #<-------------- bug needs fixing, tie is not handled
         handleWin(player2,turns,round)
         return True
     else:
@@ -206,8 +206,8 @@ class TurnSerializer(serializers.ModelSerializer):
                     player=self.context['request'].user, 
                     action=card
                     )
-                newTurn.save()
-                print('new Turn saved')
+                # newTurn.save()
+                # print('new Turn saved')
             if(handleRound(validated_data['round_id'])):
                 newRound = Rounds.objects.create(game_id=validated_data['round_id'].game_id)
                 newRound.save()
