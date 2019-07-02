@@ -1,1 +1,1 @@
-web: gunicorn gamehub.wsgi.py --chdir=/home/vijaysrinivasan/Desktop/Projects/gamehub/gamehub/ --log-file -
+web: gunicorn --log-file=- ./gamehub/gamehub.wsgi:application
