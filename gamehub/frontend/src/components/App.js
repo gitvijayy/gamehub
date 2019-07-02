@@ -19,6 +19,7 @@ import AlertTemplate from 'react-alert-template-basic'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { loadUser } from '../actions/auth'
+import WarGame  from './games/wargame/wargame'
 import Gamelist from './layout/Gamelist'
 import Activegames from './layout/Activegames'
 import Activeplayers from './layout/Activeplayers'
@@ -39,6 +40,8 @@ class App extends Component {
   render() {
 
     return (
+        // {/* <h1>Hello there how are you</h1> */}
+    
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
@@ -60,6 +63,9 @@ class App extends Component {
                   <Route exact path="/goofspiel" component={Goofspiel} />
                   <Route exact path="/memory" component={Memory} />
                   {/* <Route exact path="/login" component={Login} /> */}
+                  <Route exact path="/defaultgame" component={Defaultgame} />
+                  {/* <Route exact path="/login" component={Login} /> */} 
+                  <Route exact path="/war" component={WarGame}/>
                 </Switch>
                 {/* <Dashboard /> */}
                 {/* <Defaultgame /> */}
@@ -74,7 +80,6 @@ class App extends Component {
           </Router>
         </AlertProvider>
       </Provider>
-
 
     )
   }

@@ -12,7 +12,7 @@
 }
 
 .card-images {
-  margin-top: 4%;
+  /* margin-top: 4%; */
   height: 170px;
 }
 
@@ -173,15 +173,73 @@
   }
 }
 
+.beggining-button {
+  font-size: 7rem;
+  text-align: -webkit-center;
+}
 .user-block {
   margin: 3%;
 }
 
+.titles-opponent {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player-icon {
+  height: 100px;
+}
+
+.opponent-deck-amount {
+  position: relative;
+  top: 35%;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.player-name {
+  position: relative;
+  top: 35%;
+  font-size: 25px;
+  font-weight: bolder;
+  right: 3%;
+}
+
 .playingcard img {
-  width: 7%;
+  width: 15%;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+  height: 200px;
+}
+
+.playingcard.middle img {
+  width: 10%;
   box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
   border-radius: 5px;
   height: 120px;
+}
+
+.playingcard .middle {
+  display:flex;
+  flex-direction: column;
+}
+
+@keyframes fadeout {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.playingcard .sideCard{
+  /* opacity: 1;
+  background: red; */
+  /* border : 5px solid black; */
+  /* opacity: 0; 
+  animation:  fadeout 3s; */
+}
+.cardsplayed {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .playingcard img:hover {
@@ -239,6 +297,8 @@
 .newgame {
   height: 60px;
   box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .leader {
@@ -278,3 +338,12 @@
 .table-borderless th {
   border: 0;
 }
+
+.empty-card {
+  border: 2px solid black;
+  height: 200px;
+  width: 15%;
+  border-radius: 12px;
+
+}
+

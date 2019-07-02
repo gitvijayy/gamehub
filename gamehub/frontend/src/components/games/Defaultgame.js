@@ -49,18 +49,12 @@ export class Defaultgame extends Component {
   // }
 
 
+  componentDidMount() {
+    let gameid = document.cookie.split("=")[1]
 
-  componentDidUpdate() {
-    // chatSocket.onmessage = (e) => {
-    //   // var data = JSON.parse(e.data);
-    //   // var message = data['message'];
-
-    //   getcookie((id) => {
-    //     this.props.getActiveGames(this.state.name)
-    //     this.props.getGamePlay(this.state.name, id)
-    //   })
-
-    // };
+    this.props.getGamePlay(this.state.name, gameid)
+    // this.props.setGame(this.state.name)
+    this.props.getActiveGames(this.state.name)
   }
 
   componentDidMount() {
@@ -313,5 +307,5 @@ const mapStateToProps = state => ({
   animate: state.defaultgame.animate
 })
 
-export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Defaultgame)
+export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn,  getActiveGames })(Defaultgame)
 

@@ -5,6 +5,7 @@ import chat.routing
 import defaultgame.routing
 import goofspiel.routing
 import games.routing
+import war.routing
 
 application = ProtocolTypeRouter({
     # (http->django views is added by default)
@@ -27,5 +28,16 @@ application = ProtocolTypeRouter({
         URLRouter(
             games.routing.websocket_urlpatterns
         )
-    )
+    ),
+    
+    'websocket': AuthMiddlewareStack(
+        URLRouter(
+            defaultgame.routing.websocket_urlpatterns
+        )
+    ),
+        'websocket': AuthMiddlewareStack(
+        URLRouter(
+            war.routing.websocket_urlpatterns
+        )
+    ),
 })

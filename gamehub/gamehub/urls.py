@@ -26,6 +26,8 @@ urlpatterns = [
     path('', include('memory.urls')),
     path('', include('goofspiel.urls')),
     path('', include('games.urls')),
+    path('', include('defaultgame.urls')),
+    path('', include('war.urls')),
     path('admin/', admin.site.urls),
     url(r'^chat/', include('chat.urls')),
     # url(r'^ws/socket/', include('defaultgame.urls'))

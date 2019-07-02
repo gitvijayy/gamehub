@@ -15,8 +15,14 @@ export const REGISTER_FAIL = "REGISTER_FAIL"
 
 
 export const GET_GAMEPLAY = "GET_GAMEPLAY"
+export const GET_WAR_GAMEPLAY = "GET_WAR_GAMEPLAY"
+export const MAKE_NEW_GAME = "MAKE_NEW_GAME"
+export const GET_WAR_ACTIVEGAMES = "GET_WAR_ACTIVEGAMES"
 export const GET_NEWGAME = "GET_NEWGAME"
-export const SET_GAME = "SET_GAME"
 export const GET_ACTIVEGAMES = "GET_ACTIVEGAMES"
+<<<<<<< HEAD
 export const ANIMATION_STATUS = "ANIMATION_STATUS"
 export const MEMORY_ANIMATION = "MEMORY_ANIMATION"
+=======
+
+>>>>>>> 95775d6ece4c8d34386e58aa56dccdb31f7a8798

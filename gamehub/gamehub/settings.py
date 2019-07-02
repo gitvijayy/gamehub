@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # 'defaultgame',
     'chat',
     'channels',
+    'war',
     'channels_redis',
     'channels_redux',
     'goofspiel',
