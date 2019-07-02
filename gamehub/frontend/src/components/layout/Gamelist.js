@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
-import { setGame } from '../../actions/defaultgame'
+import { setGame } from '../../actions/goofspiel'
 import { connect } from 'react-redux'
+import { cssAnimations } from '../games/goofspiel/datahelpers'
 class Gamelist extends Component {
 
   state = {
     gamelist: [{
-      url: "/defaultgame",
-      name: "defaultgame",
+      url: "/rummy",
+      name: "Rummy",
       img: require("../images/rummy.jpeg"),
       description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
 
@@ -59,33 +60,36 @@ class Gamelist extends Component {
     // return e
     // <Link to={e.target.name}>Register</Link>
     document.cookie = `gameid=0`
-    // this.props.setGame(e)
+    document.cookie = `gamename=${e}`
+    this.props.setGame(e)
   }
 
   render() {
-
+    const styles = { borderRadius: "5px" }
     const { gamelist } = this.state
     const loadgamelist = gamelist.map(game => {
 
       return (
+
         <div key={game.url} className="card col-12 col-md-3 bg-common game-top-div game-cards">
           <img className="card-img-top card-images game-images" src={game.img} alt="Card image cap" />
-          <div className="card-body ">
+          <div className="card-body text-white">
             <h4 className="card-title  ">{game.name}</h4>
             <p className="card-text ">{game.description}asdad</p>
             <article className="d-flex justify-content-between">
-              <Link onClick={() => {
+              <Link style={styles} onClick={() => {
                 this.onClick(game.name)
-              }} className="btn btn-dark btn-lg" to={game.url}>PLAY</Link>
+              }} className="btn btn-warning btn-lg text-dark " to={game.url}>PLAY</Link>
               {/* {this.state.loading && <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
               </Spinner>} */}
               {/* <button  className="btn btn-dark btn-lg">PLAY</button></Link> */}
 
-              < button className=" btn btn-dark btn-lg">Rules</button>
+              < button style={styles} className=" btn btn-warning btn-lg text-dark">Rules</button>
             </article>
           </div>
         </div>
+
 
       )
     })
@@ -102,7 +106,7 @@ class Gamelist extends Component {
 
 
 const mapStateToProps = state => ({
-  gamename: state.defaultgame.name
+  gamename: state.goofspiel.name
 })
 
 export default connect(mapStateToProps, { setGame })(Gamelist)

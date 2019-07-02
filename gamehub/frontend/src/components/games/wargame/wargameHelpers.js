@@ -71,3 +71,12 @@ const DeckDictionary = {
     red : require('../../images/cards/red_back.png'),
 }
 
+export const getcookie = (cb) => {
+    document.cookie.split(";").forEach(cookie => {
+      name = cookie.split("=")[0].trim()
+      if (name == "gameid") {
+        cb(cookie.split("=")[1])
+      }
+    })
+  }
+

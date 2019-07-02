@@ -10,9 +10,9 @@ import { Activegames  } from '../../layout/Activegames'
 import { Activeplayers } from '../../layout/Activeplayers'
 // import auth from '../../../reducers/auth';
 
-var chatSocket = new WebSocket(
+const chatSocket = new WebSocket(
     'ws://' + window.location.host +
-    '/ws/war/turns/');
+    '/ws/games/turns/');
   
   
 export class WarGame extends Component {

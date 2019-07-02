@@ -25,7 +25,7 @@ SECRET_KEY = 'e8=77xsk52zoh2qdzkzhp!y(_@v9rmn-2r5z13^4k4!9@m&nq_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.75', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -42,12 +42,16 @@ INSTALLED_APPS = [
     'django_extensions',
     'knox',
     'accounts',
-    'defaultgame',
+    # 'defaultgame',
     'chat',
     'channels',
     'war',
     'channels_redis',
-    'channels_redux'
+    'channels_redux',
+    'goofspiel',
+    'games',
+    'memory',
+    'online_users'
 
 ]
 
@@ -63,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'online_users.middleware.OnlineNowMiddleware',
 ]
 
 ROOT_URLCONF = 'gamehub.urls'
@@ -109,6 +114,17 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('DB_NAME', 'gamehub'),
+#         'USER': os.environ.get('DB_USER', 'admin'),
+#         'PASSWORD': os.environ.get('DB_PASS', 'admin'),
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -141,7 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Vancouver'
 
 USE_I18N = True
 

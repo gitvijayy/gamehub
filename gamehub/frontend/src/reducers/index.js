@@ -6,12 +6,14 @@ import auth from './auth'
 import defaultgame from './defaultgame'
 import wargame from './wargame'
 
+import goofspiel from './goofspiel'
 export default combineReducers({
   // leads,
   errors,
   messages,
   auth,
   defaultgame,
-  wargame
+  wargame,
+  goofspiel
 })
 

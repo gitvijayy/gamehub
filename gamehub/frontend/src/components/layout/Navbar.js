@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/auth.js';
+import { logoutUserStatus } from '../../actions/goofspiel'
 import { login } from '../../actions/auth'
 import Login from '../accounts/Login'
 import Button from 'react-bootstrap/Button'
@@ -18,7 +19,10 @@ class Navbar extends Component {
     let modalClose = () => this.setState({ modalShowLogin: false, modalShowRegister: false });
 
     let logout1 = () => {
+      this.props.logoutUserStatus()
       this.props.logout()
+
+
       this.setState({ modalShowLogin: false, modalShowRegister: false });
     }
 
@@ -26,7 +30,7 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
         <li className="row" style={{ display: "grid" }}>
-          <strong className="mr-2" style={{ marginTop: "4%" }}>{user ? `Welcome ${user.username}` : ""}</strong>
+          <strong className="mr-2 text-white" style={{ marginTop: "4%" }}>{user ? `Welcome ${user.username}` : ""}</strong>
           <button onClick={logout1} className="mr-1 btn btn-danger btn-sm text-dark logout">Logout</button>
         </li>
       </ul>
@@ -48,7 +52,7 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-common" >
-        <a className="logo navbar-brand col-3 col-md-11" href="#"><img src={require('../images/aces.png')} />GameHub</a>
+        <a className="logo navbar-brand col-3 col-md-11 text-white" href="#"><img src={require('../images/aces.png')} />GameHub</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -66,5 +70,5 @@ const mapStateToProps = state => ({
   auth: state.auth,
 
 })
-export default connect(mapStateToProps, { logout })(Navbar)
+export default connect(mapStateToProps, { logout, logoutUserStatus })(Navbar)
 
