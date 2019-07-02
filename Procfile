@@ -1,1 +1,1 @@
-web: gunicorn lhlgamehub.wsgi --log-file -
+web: gunicorn gamehub.wsgi --log-file -

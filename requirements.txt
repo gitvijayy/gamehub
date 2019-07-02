@@ -9,6 +9,7 @@ django-extensions
 channels
 channels_redis
 channels_redux
-
+gunicorn
+django_heroku
 
 
