@@ -8,13 +8,13 @@ export class NewGameWar extends Component {
             <p className='logo' style={{
                     position: 'absolute',
                     top:'250px',
-                    left:'43%'
+                    left:'37%'
                 }}>Select Active Game...</p>
                 <Loaders />
                 <h1 className='logo' style={{
                     position: 'absolute',
                     top:'500px',
-                    left:'43%'
+                    left:'37%'
                 }}> Start New Game... </h1>
             </div>
         )

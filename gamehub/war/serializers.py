@@ -12,6 +12,8 @@ import json
 
 
 def stringToIntArray(string_deck) :
+    if(string_deck == ''):
+        return []
     string_deck_inarray = string_deck.split(',') 
     return list(map(int, string_deck_inarray))
 
@@ -82,12 +84,16 @@ def handleWin(player,turns,round):
     arr_deck = stringToIntArray(str_deck)
     # arr_deck.insert(0,turn2.action)
     # arr_deck.insert(0,turn1.action)
+    print('just passed arr_deck')
     arr_deck_new=[]
     for turn in turns:
         arr_deck_new.append(turn.action)
+    print('just passed array in arrays')
     arr_deck_new.extend(arr_deck)
     deck_length = len(arr_deck_new)
+    print('this is the new deck')
     str_deck_modified = ','.join(str(card) for card in arr_deck_new) 
+    print('passed modified deck' + str_deck_modified)
     player.deck = str_deck_modified
     player.deck_length = deck_length
     # round.status = player
@@ -209,7 +215,7 @@ class TurnSerializer(serializers.ModelSerializer):
             # if validated_data['round_id'].status == 'tie':
             #     cards = fetchCards(validated_data['round_id'], self.context['request'].user)
             cards = fetchCards(validated_data['round_id'], validated_data['round_id'].game_id, self.context['request'].user)
-            print(cards)
+            # print(cards)
             for card in cards: 
                 newTurn = Turns.objects.create(
                     round_id=validated_data['round_id'], 
@@ -219,6 +225,7 @@ class TurnSerializer(serializers.ModelSerializer):
                 # newTurn.save()
                 # print('new Turn saved')
             if(handleRound(validated_data['round_id'])):
+                print('passed the handle Rounds')
                 newRound = Rounds.objects.create(game_id=validated_data['round_id'].game_id)
                 newRound.save()
                 return newTurn

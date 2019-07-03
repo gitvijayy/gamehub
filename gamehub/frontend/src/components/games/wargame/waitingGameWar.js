@@ -9,13 +9,13 @@ export class WaitingGameWar extends Component {
                 <p className='logo' style={{
                     position: 'absolute',
                     top:'250px',
-                    left:'43%'
+                    left:'38%'
                 }}>Waiting for player...</p>
                 <Loaders/>
                 <h1 className='logo' style={{
                     position: 'absolute',
                     top:'500px',
-                    left:'43%'
+                    left:'38%'
                 }}>Waiting for player...</h1>
 
             </div>

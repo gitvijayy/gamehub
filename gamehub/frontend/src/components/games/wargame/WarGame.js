@@ -79,13 +79,13 @@ export class WarGame extends Component {
     }
     addNewGame = (e) => {
         this.props.makeNewGame(() => {
-            this.props.getWarActivegames(() => {
-                chatSocket.send(JSON.stringify({
-                    'message': 'kkkkk'
-                }))
+                this.props.getWarActivegames(() => {
+                    chatSocket.send(JSON.stringify({
+                        'message': 'kkkkk'
+                    }))
+                })
             })
-        })
-        document.cookie`gameid = ${e.target.id}`
+        // document.cookie`gameid = ${e.target.id}`
     }
 
     // startNewGame = (e) => {
@@ -284,10 +284,10 @@ export class WarGame extends Component {
                     <div className="col-12 col-md-2 bg-common game-top-div-war game-cards  bg-alternate-2"
                         style={{
                             display: "flex", flexDirection: "column",
-                            justifyContent: "space-evenly"
+                            justifyContent: "space-around"
                         }}>
                         {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
-                        <div>
+                        
                             <button className='btn btn-dark btn-lg newgame text-white'>Active Games</button>
                             <div className='container pre-scrollable'>
                                 {typeof games === 'string' ? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button> :
@@ -298,7 +298,7 @@ export class WarGame extends Component {
                                         )
                                     })}
                             </div>
-                        </div>
+                        
                         {/* <Activegames gamename={this.state.name} setSocket={setSocket}/> */}
                         <div>
                             <button onClick={this.addNewGame} className="btn btn-success btn-lg leader text-dark">New Game</button>
