@@ -274,6 +274,10 @@
   box-shadow: inset 0px -10px 25px snow, 0px 5px 5px black;
 }
 
+.chat-shadow {
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px white;
+}
+
 .table-borderless td,
 .table-borderless th {
   border: 0;

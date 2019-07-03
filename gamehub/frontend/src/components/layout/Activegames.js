@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { getActiveGames, getGamePlay } from '../../actions/goofspiel'
+import { getActiveGames, getGamePlay, getActivePlayers } from '../../actions/goofspiel'
 import { connect } from 'react-redux'
 import { cssAnimations, getCookies } from '../games/goofspiel/datahelpers'
 import { Link, Redirect } from 'react-router-dom'
@@ -47,7 +47,7 @@ class Activegames extends Component {
         this.setState({ redirect: true, route: redirect })
         return
       }
-
+      this.props.getActivePlayers()
       this.props.getGamePlay(this.props.gamename, id)
     }
 
@@ -82,9 +82,9 @@ class Activegames extends Component {
       })
     }
     let blockStyle = {
-      maxHeight: "470px!important",
-      height: "470px",
-      marginTop: "50%"
+      maxHeight: "520px!important",
+      height: "520px",
+      marginTop: "20%"
     }
     return (
       <div >
@@ -103,7 +103,7 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { getActiveGames, getGamePlay })(Activegames)
+export default connect(mapStateToProps, { getActiveGames, getGamePlay, getActivePlayers })(Activegames)
 
 
 

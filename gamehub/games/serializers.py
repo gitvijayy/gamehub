@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from games.models import Games
 from games.models import Players
-from games.models import OnlinePlayers
+from games.models import Usersonline
 from goofspiel.models import Rounds as GoofspielRounds
 from memory.models import Rounds as MemoryRounds
-from datetime import timedelta
+# from games.models import Leaderboard
+# from datetime import timedelta
 import random
 # import random
 # for x in range(10):
@@ -59,7 +60,7 @@ def addGame(name, player, total_player):
 class GameSerializer(serializers.ModelSerializer):
 
     # Games.objects.all().delete()
-
+    # OnlinePlayers.objects.all().delete()
     # Players.objects.all().delete()
 
     class Meta:
@@ -114,20 +115,31 @@ class ActiveGamesSerializer(serializers.ModelSerializer):
 class ActivePlayersSerializer(serializers.ModelSerializer):
 
     # game_id = GameSerializer()
-    # OnlinePlayers.objects.all().delete()
+
     # Games.objects.all().delete()
     # Players.objects.all().delete()
 
     class Meta:
-        model = OnlinePlayers
+        model = Usersonline
         fields = '__all__'
         depth = 1
 
     def create(self,  validated_data):
-        get_user = OnlinePlayers.objects.get(user=self.context['request'].user)
+        get_user = Usersonline.objects.get(user=self.context['request'].user)
         get_user.status = "logout"
         get_user.save()
         return get_user
+
+
+# class LeaderboardSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Players
+#         fields = '__all__'
+
+#     def update(self, validated_data):
+#         print(validated_data)
+#         return validated_data
 
 
 # class DeleteAllSerializer(serializers.ModelSerializer):

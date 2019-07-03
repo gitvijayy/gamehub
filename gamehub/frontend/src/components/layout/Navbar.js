@@ -20,7 +20,12 @@ class Navbar extends Component {
 
     let logout1 = () => {
       this.props.logoutUserStatus()
-      this.props.logout()
+
+      console.log("logging out")
+      setTimeout(() => {
+        this.props.logout()
+      }, 1000);
+
 
 
       this.setState({ modalShowLogin: false, modalShowRegister: false });
@@ -31,7 +36,9 @@ class Navbar extends Component {
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
         <li className="row" style={{ display: "grid" }}>
           <strong className="mr-2 text-white" style={{ marginTop: "4%" }}>{user ? `Welcome ${user.username}` : ""}</strong>
-          <button onClick={logout1} className="mr-1 btn btn-danger btn-sm text-dark logout">Logout</button>
+          {/* <button onClick={logout1} className="mr-1 btn btn-danger btn-sm text-dark logout">Logout</button> */}
+
+          <Link onClick={logout1} to="/" className="mr-1 btn btn-danger btn-sm text-dark logout">Logout</Link>
         </li>
       </ul>
     )

@@ -115,11 +115,14 @@ class RoundSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
+
     # Games.objects.all().delete()
     # Turns.objects.all().delete()
     # Rounds.objects.all().delete()
     # Players.objects.all().delete()
+    # User.objects.all().delete()
     # player = UserNameSerializer()
+
     rounds = RoundSerializer(many=True, read_only=True)
     game = PlayerNameSerializer(many=True, read_only=True)
 

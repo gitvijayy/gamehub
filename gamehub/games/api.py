@@ -5,11 +5,13 @@ from rest_framework.response import Response
 from .serializers import GameSerializer
 from .serializers import ActiveGamesSerializer
 from .serializers import ActivePlayersSerializer
+# from .serializers import LeaderboardSerializer
 # from .serializers import DeleteAllSerializer
 from games.models import Games
 from games.models import Players
-from games.models import OnlinePlayers
-from datetime import timedelta
+from games.models import Usersonline
+# from games.models import Leaderboard
+# from datetime import timedelta
 
 from rest_framework import viewsets, permissions
 
@@ -34,11 +36,19 @@ class PlayersViewSet(viewsets.ModelViewSet):
 
 
 class ActivePlayersViewSet(viewsets.ModelViewSet):
-    queryset = OnlinePlayers.objects.filter(status="online")
+    queryset = Usersonline.objects.filter(status="online")
     permission_classes = [
         permissions.AllowAny
     ]
     serializer_class = ActivePlayersSerializer
+
+
+# class LeaderboardViewSet(viewsets.ModelViewSet):
+#     queryset = Players.objects.all()
+#     permission_classes = [
+#         permissions.AllowAny
+#     ]
+#     serializer_class = LeaderboardSerializer
 
 
 # class DeleteViewSet(viewsets.ModelViewSet):

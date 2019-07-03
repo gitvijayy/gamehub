@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,8 +51,8 @@ INSTALLED_APPS = [
     'channels_redux',
     'goofspiel',
     'games',
-    'memory',
-    'online_users'
+    'memory'
+    # 'online_users'
 
 ]
 
@@ -66,8 +67,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'online_users.middleware.OnlineNowMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    # 'online_users.middleware.OnlineNowMiddleware',
 ]
 
 ROOT_URLCONF = 'gamehub.urls'

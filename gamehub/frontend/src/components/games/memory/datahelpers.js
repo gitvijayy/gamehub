@@ -192,7 +192,9 @@ export const memoryGamePlay = (payload) => {
     })
   }
 
-
+  if (!gameplay.turns.length) {
+    gameplay.memoryAnimation.animate = "startgame"
+  }
   if (gameplay.turns.length) {
     let playerTurnCheck = gameplay.turnPlayer[gameplay.turnPlayer.length - 1]
     let lastTurn = [gameplay.turns[gameplay.turns.length - 2], gameplay.turns[gameplay.turns.length - 1]]
@@ -222,7 +224,7 @@ export const memoryGamePlay = (payload) => {
         gameplay.memoryAnimation.flip = css(styles.flipInY)
         gameplay.memoryAnimation.src[0] = require(`../../images/cards/${cards[lastTurn[0]]}.png`)
         gameplay.memoryAnimation.src[1] = require(`../../images/cards/${cards[lastTurn[1]]}.png`)
-        gameplay.memoryAnimation.animate = true
+        gameplay.memoryAnimation.animate = "turn"
       }
 
     }

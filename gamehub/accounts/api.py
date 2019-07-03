@@ -2,7 +2,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
-from .models import PlayerOnline
+# from .models import PlayerOnline
 from rest_framework import viewsets, permissions
 # Register Api
 
