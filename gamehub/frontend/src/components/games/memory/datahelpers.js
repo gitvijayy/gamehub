@@ -1,5 +1,5 @@
 import { StyleSheet, css } from 'aphrodite';
-import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight, zoomIn, zoomOut, flipInY, flipOutY } from 'react-animations'
+import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight, zoomIn, zoomOut, flipInY, flipOutY, bounceInLeft } from 'react-animations'
 import { delay } from 'q';
 
 export const cards = () => {
@@ -103,8 +103,22 @@ export const styles = StyleSheet.create({
   pointsMemory: {
     marginLeft: "19%",
     fontWeight: "bold",
+  },
+  bounceInLeft: {
+    animationName: bounceInLeft,
+    animationDuration: '2s'
 
-  }
+  },
+  // },boun: {
+  //   animationName: zoomIn,
+  //   animationDuration: '2s'
+
+  // },
+  // zoomOutOnly: {
+  //   animationName: zoomIn,
+  //   animationDuration: '2s'
+
+  // },
 
 })
 
@@ -116,6 +130,7 @@ export const memoryGamePlay = (payload) => {
     gameid: payload.id,
     roundid: 0,
     playerdata: {},
+    faceupPlayer: [],
     faceupCards: [],
     turnPlayer: [],
     turns: [],
@@ -131,7 +146,8 @@ export const memoryGamePlay = (payload) => {
       flip: css(styles.zoomIn),
       src: [require(`../../images/blackBack.png`), require(`../../images/blackBack.png`)],
       animate: false
-    }
+    },
+
 
 
     // style: { boxShadow: "none" }
@@ -163,6 +179,7 @@ export const memoryGamePlay = (payload) => {
           if (cards[round.turns[0].action] == cards[round.turns[1].action]) {
             gameplay.faceupCards.push(round.turns[0].action)
             gameplay.faceupCards.push(round.turns[1].action)
+            gameplay.faceupPlayer.push(round.turns[0].player.username)
           }
         }
         gameplay.turnPlayer.push(round.turns[0].player.username)
@@ -212,13 +229,23 @@ export const memoryGamePlay = (payload) => {
   }
 
   if (payload.no_of_players && payload.no_of_players == 1) {
-    console.log("am here")
+
     gameplay.playerdata[players[0]].turn = true
   }
 
-  console.log(gameplay)
+  gameplay.turnPlayer.forEach((value, index) => {
+    if (gameplay.faceupPlayer[index]) {
+      gameplay.playerdata[value].points += 1
+    }
+    gameplay.playerdata[value].chances += 1
+  })
+
+
   // console.log(gameplay.playerdata)
   gameplay.cards = cards
+
+
+  console.log(gameplay)
   return {
     gameplay
   }

@@ -36,12 +36,12 @@ export class Login extends Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton style={{ background: "tan", color: "black" }}>
+        <Modal.Header closeButton className="bg-dark text-white logo">
           <Modal.Title id="contained-modal-title-vcenter">
             Login
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-dark text-white">
+        <Modal.Body className="bg-light text-dark">
 
           {/* <div className="card card-body mt-4 mb-4"> */}
           <form onSubmit={this.onSubmit}>

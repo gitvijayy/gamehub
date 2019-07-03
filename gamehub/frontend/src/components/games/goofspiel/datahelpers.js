@@ -27,7 +27,8 @@ export const goofspielGamePlay = (payload) => {
     suits: [],
     //player1 player2 prizecard
     previous: [0, 0, 0],
-    status: payload.status
+    status: payload.status,
+    winner: ""
   }
 
   // let players = payload.players.map(value => {
@@ -77,6 +78,18 @@ export const goofspielGamePlay = (payload) => {
         gameplay.playerpoints[players[1]] += value.prizeCard
       }
 
+      if (gameplay.playerpoints[players[0]] > gameplay.playerpoints[players[1]]) {
+        gameplay.winner = players[0] + " Won"
+      }
+
+      if (gameplay.playerpoints[players[1]] > gameplay.playerpoints[players[0]]) {
+        gameplay.winner = players[1] + " Won"
+      }
+
+      if (gameplay.playerpoints[players[0]] == gameplay.playerpoints[players[1]]) {
+        gameplay.winner = "Its A Draw"
+      }
+
       if (index == (payload.rounds.length - 1)) {
         gameplay.current[0] = player1action
         gameplay.current[1] = player2action
@@ -97,7 +110,7 @@ export const goofspielGamePlay = (payload) => {
   gameplay.players[players[0]] ? gameplay.players[players[0]].push(cards1.cardnumbers) : false
   gameplay.players[players[1]] ? gameplay.players[players[1]].push(cards2.cardnumbers) : false
   gameplay.gameid = payload.id
-
+  console.log(gameplay)
   return {
     gameplay
 
@@ -126,7 +139,7 @@ export const getCookies = (cb) => {
   // return cookies
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 
   fadeOutLeft: {
     animationName: fadeOutLeft,
@@ -181,6 +194,15 @@ const styles = StyleSheet.create({
     animationDuration: '2s',
 
   },
+
+  bounceInUp1: {
+    animationName: bounceInUp,
+    animationDuration: '2s'
+  },
+  bounceInDown1: {
+    animationName: bounceInDown,
+    animationDuration: '2s'
+  }
 
 })
 

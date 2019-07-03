@@ -1,52 +1,83 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 import { setGame } from '../../actions/goofspiel'
 import { connect } from 'react-redux'
 import { cssAnimations } from '../games/goofspiel/datahelpers'
+import Login from '../accounts/Login'
+import Rules from '../layout/Rules'
 class Gamelist extends Component {
 
-  state = {
-    gamelist: [{
-      url: "/rummy",
-      name: "Rummy",
-      img: require("../images/rummy.jpeg"),
-      description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
+  constructor(...args) {
+    super(...args);
 
-    }, {
-      url: "/war",
-      name: "War",
-      img: require("../images/war.png"),
-      description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
+    this.state = {
+      gamelist: [
+        {
+          url: "/goofspiel",
+          name: "Goofspiel",
+          img: require("../images/goofspiel.jpeg"),
+          description: "Also known as The Game of Pure Strategy or GOPS, is a card game for two players. Rules are quite simple, but endless number of possibilities for strategy during play of each hand",
+          status: "Active",
+          rules: [1, 2, 3]
+        },
+        {
+          url: "/war",
+          name: "War",
+          img: require("../images/war.png"),
+          description: "A simple card game for two players. Much like real war it's incredibly long game to play. Can be played by any age group and the play relies exclusively on luck of the random draw",
+          status: "Active",
+          rules: []
+        },
+        {
+          url: "/memory",
+          name: "Memory",
+          img: require("../images/memory.jpg"),
+          description: "Also known as Match Match, Concentration, or simply Pairs, is a card game in which all cards are face down . The object of the game is to turn over pairs of matching cards each round",
+          status: "Active",
+          rules: []
+        },
 
-    }, {
-      url: "/idiot",
-      name: "Idiot",
-      img: require("../images/idiot.png"),
-      description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
 
-    }, {
-      url: "/memory",
-      name: "Memory",
-      img: require("../images/memory.jpg"),
-      description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
+        {
+          url: "/rummy",
+          name: "Rummy",
+          img: require("../images/rummy.jpeg"),
+          description: "Inidan Rummy is a cross between Rummy 500 and gin, Goal is to make valid sets of 13 cards that are distributed",
+          status: "Inactive",
+          rules: []
 
-    }, {
-      url: "/hearts",
-      name: "Hearts",
-      img: require("../images/hearts.png"),
-      description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
+        }, {
+          url: "/idiot",
+          name: "Idiot",
+          img: require("../images/idiot.png"),
+          description: "The object of the game which is to lose all of one's cards, with the final player being crowned the idiot",
+          status: "Inactive",
+          rules: []
+        },
+        {
+          url: "/hearts",
+          name: "Hearts",
+          img: require("../images/hearts.png"),
+          description: "An evasion-type trick-taking playing card game for four players. The objective is to be with the fewest points.",
+          status: "Inactive",
+          rules: []
+        }],
 
-    },
-    {
-      url: "/goofspiel",
-      name: "Goofspiel",
-      img: require("../images/goofspiel.jpeg"),
-      description: "Some quick example text to build on the card title and make up the bulk ofthecard's content."
+      loading: false,
+      modalShowLogin: false,
+      modalShowRules: false
+    }
 
-    }],
-    loading: false
+
+
+
   }
+
+
+
+
+
 
   onClick = (e) => {
     // this.setState({ loading: true });
@@ -65,27 +96,70 @@ class Gamelist extends Component {
   }
 
   render() {
+
+    const { isAuthenticated, user } = this.props.auth
+    let modalClose = () => this.setState({ modalShowLogin: false, modalShowRules: false });
+
+
     const styles = { borderRadius: "5px" }
     const { gamelist } = this.state
+    let activeBlock = ""
     const loadgamelist = gamelist.map(game => {
+
+      if (game.status == "Active") {
+        console.log(game.name)
+        activeBlock =
+          <Fragment>
+
+            {isAuthenticated ? <Link style={styles} onClick={() => {
+              this.onClick(game.name)
+            }} className="btn btn-warning btn-lg text-dark " to={game.url}>PLAY</Link>
+              :
+              // <Link style={styles} onClick={() => this.setState({ modalShowLogin: true })}
+              //   className="btn btn-warning btn-lg text-dark " to={game.url}>PLAY</Link>
+
+              <button role="button" onClick={() => this.setState({ modalShowLogin: true })}
+                className="btn btn-warning btn-lg text-dark">Play
+
+              </button>
+
+
+            }
+
+            {/* < button style={styles} className=" btn btn-warning btn-lg text-dark">Rules</button> */}
+            <button role="button" onClick={() => this.setState({ modalShowRules: true })}
+              className="btn btn-warning btn-lg text-dark">Rules
+
+              </button>
+
+
+            <Login show={this.state.modalShowLogin} onHide={modalClose} />
+            <Rules show={this.state.modalShowRules} onHide={modalClose} />
+
+
+          </Fragment>
+      }
+
+
+
+
+      if (game.status == "Inactive") {
+        activeBlock = <img className="construction" src={require("../images/construction.png")} alt="Card image cap" />
+      }
+
 
       return (
 
+
         <div key={game.url} className="card col-12 col-md-3 bg-common game-top-div game-cards">
+
           <img className="card-img-top card-images game-images" src={game.img} alt="Card image cap" />
           <div className="card-body text-white">
             <h4 className="card-title  ">{game.name}</h4>
-            <p className="card-text ">{game.description}asdad</p>
-            <article className="d-flex justify-content-between">
-              <Link style={styles} onClick={() => {
-                this.onClick(game.name)
-              }} className="btn btn-warning btn-lg text-dark " to={game.url}>PLAY</Link>
-              {/* {this.state.loading && <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-              </Spinner>} */}
-              {/* <button  className="btn btn-dark btn-lg">PLAY</button></Link> */}
 
-              < button style={styles} className=" btn btn-warning btn-lg text-dark">Rules</button>
+            <p className="card-text ">{game.description}</p>
+            <article className="d-flex justify-content-between">
+              {activeBlock}
             </article>
           </div>
         </div>
@@ -106,7 +180,8 @@ class Gamelist extends Component {
 
 
 const mapStateToProps = state => ({
-  gamename: state.goofspiel.name
+  gamename: state.goofspiel.name,
+  auth: state.auth,
 })
 
 export default connect(mapStateToProps, { setGame })(Gamelist)

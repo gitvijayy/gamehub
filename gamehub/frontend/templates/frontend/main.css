@@ -366,6 +366,9 @@
   height: 200px;
   width: 15%;
   border-radius: 12px;
-
 }
 
+.construction {
+  height: 120px;
+  margin-left: 20%;
+}
