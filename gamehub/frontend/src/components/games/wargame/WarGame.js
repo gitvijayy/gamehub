@@ -288,7 +288,7 @@ export class WarGame extends Component {
                         }}>
                         {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
                         
-                            <button className='btn btn-dark btn-lg newgame text-white'>Active Games</button>
+                            <button className='btn btn-dark btn-lg text-white'>Active Games</button>
                             <div className='container pre-scrollable'>
                                 {typeof games === 'string' ? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button> :
                                     games.map(game => {
