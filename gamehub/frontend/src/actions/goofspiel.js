@@ -3,6 +3,7 @@ import { createMessage, returnErrors } from './messages'
 import { GET_GAMEPLAY, ADD_TURN, GET_NEWGAME, SET_GAME, GET_ACTIVEGAMES, ANIMATION_STATUS, MEMORY_ANIMATION, GET_ACTIVEPLAYERS } from './types'
 import { goofspielGamePlay, cards, getcookie } from '../components/games/goofspiel/datahelpers'
 import { memoryGamePlay } from '../components/games/memory/datahelpers'
+import { logout } from './auth'
 
 const tokenConfig = (getState) => {
   const token = getState().auth.token
@@ -42,7 +43,7 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
 
       dispatch({
         type: ANIMATION_STATUS,
-        payload: true
+        payload: data.gameplay.animate
       })
       setTimeout(
         function () {
@@ -60,21 +61,46 @@ export const getGamePlay = (game, gameid, cb) => (dispatch, getState) => {
 
 
 
+      if (data.gameplay.memoryAnimation.animate == "turn") {
+        console.log("in turn")
 
-      dispatch({
-        type: MEMORY_ANIMATION,
-        payload: data.gameplay.memoryAnimation
-      })
-      setTimeout(
-        function () {
-          dispatch({
-            type: MEMORY_ANIMATION,
-            payload: data.gameplay.animationReturn
-          })
-        }
-        ,
-        1000
-      );
+        dispatch({
+          type: MEMORY_ANIMATION,
+          payload: data.gameplay.memoryAnimation
+        })
+        setTimeout(
+          function () {
+            dispatch({
+              type: MEMORY_ANIMATION,
+              payload: data.gameplay.animationReturn
+            })
+          }
+          ,
+          1000
+        );
+
+      }
+
+      if (data.gameplay.memoryAnimation.animate == "startgame") {
+        console.log("in start game")
+
+        dispatch({
+          type: MEMORY_ANIMATION,
+          payload: data.gameplay.memoryAnimation
+        })
+        setTimeout(
+          function () {
+            dispatch({
+              type: MEMORY_ANIMATION,
+              payload: data.gameplay.animationReturn
+            })
+          }
+          ,
+          1000
+        );
+      }
+
+
     }
 
   }).catch(err => dispatch(

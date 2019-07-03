@@ -1,7 +1,7 @@
 import React, { Component, Fragment, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { getGamePlay, getNewGame, setGame, getActiveGames, addTurn } from '../../../actions/goofspiel.js'
+import { getGamePlay, getNewGame, setGame, getActiveGames, addTurn, getActivePlayers } from '../../../actions/goofspiel.js'
 import { goofspielGamePlay, cards, getcookie, animate, getCookies } from './datahelpers.js'
 // import { addTurn } from '../../actions/defaultgame'
 import Activeplayers from '../../layout/Activeplayers'
@@ -15,6 +15,8 @@ import { ANIMATION_STATUS } from '../../../actions/types'
 // import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight } from 'react-animations'
 // import { styles } from './datahelpers'
 import { cssAnimations } from './datahelpers'
+import Rules from '../../layout/Rules'
+import Chat from '../../layout/Chat'
 import Loader from 'react-loader-spinner'
 import { css } from 'aphrodite';
 // import { styles } from 'react-animations/lib/swing';
@@ -25,25 +27,55 @@ var chatSocket = ""
 
 
 export class Goofspiel extends Component {
-  state = {
-    // gameplay: [],
-    // loading: false,
-    name: 'goofspiel'
-    // animate: false
+
+
+  constructor(...args) {
+    super(...args);
+
+    this.state = {
+      name: 'goofspiel',
+
+      modalShowRules: false,
+      gamename: 'Goofspiel',
+      rules: ["Each player receives a suit of 13 cards to play against each other",
+        "A third suit of cards is designated as the prize cards players have to bid for",
+        "Each card is worth their face value. A's are worth 1 point, J's are worth 11 points, Q's are worth 12 points, K's are worth 13 points",
+        "On each turn, a prize card is revealed from the prize suit",
+        "Each player then play a card to bid for the prize card. The player with the higher bidding card collects the prize card",
+        "The game ends when there are no more prize cards available for bidding",
+        "When the game ends, the player with the highest number of prize cards points wins"],
+      messages: []
+
+
+    }
+
+
   }
+
+
 
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
-      // var data = JSON.parse(e.data);
-      // var message = data['message'];
+      var data = JSON.parse(e.data);
+      var message = data['message'];
       getcookie((id) => {
+        this.props.getActivePlayers()
         this.props.getActiveGames(this.state.name)
         this.props.getGamePlay(this.state.name, id)
       })
+
+      if (message.type == "Chat") {
+        this.setState({
+          messages: [...this.state.messages, message]
+        })
+      }
+
+
     };
   }
 
   componentDidMount() {
+
     getcookie((id) => {
       chatSocket = new WebSocket(
         'ws://' + window.location.host +
@@ -54,6 +86,13 @@ export class Goofspiel extends Component {
   }
 
   render() {
+
+    let user1;
+    if (this.props.user && this.props.user.user && this.props.user.user.username) {
+      user1 = this.props.user.username
+    }
+
+
 
     const setSocket = (id) => {
       chatSocket = new WebSocket(
@@ -80,6 +119,23 @@ export class Goofspiel extends Component {
       })
     }
 
+    let onKeyDown = (e, user) => {
+
+      if (e.keyCode == 13) {
+        let message = {
+          "name": user,
+          "message": e.target.value,
+          "type": "Chat"
+        }
+
+        e.target.value = ""
+        chatSocket.send(JSON.stringify({
+          'message': message
+        }));
+
+      }
+
+    }
 
     /////////////////////////////////////////////////////////////
     const data = this.props.gameplay
@@ -204,7 +260,7 @@ export class Goofspiel extends Component {
         }
 
         roundid = Object.keys(data.gameplay.players)[0].length
-        if (this.props.animate) {
+        if (this.props.animate && this.props.animate == "turn") {
           let anime = ""
           roundid = Object.keys(data.gameplay.players)[0].length - 1
           if (data.gameplay.previous[0] > data.gameplay.previous[1]) {
@@ -228,11 +284,6 @@ export class Goofspiel extends Component {
               src={require(`../../images/cards/${data.gameplay.previous[2]}D.png`)} />
           }
         }
-
-
-
-
-
 
 
         if (Object.keys(data.gameplay.players).length > 1 && data.gameplay.status != "Game Over") {
@@ -295,22 +346,24 @@ export class Goofspiel extends Component {
       })
     }
 
+    if (this.props.animate && this.props.animate == "startgame") {
 
+      gameblock =
+        <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+          <h1 className="logo" style={{ position: "absolute", top: "250px", left: "38%" }}>Player Connected...</h1>
+          <Loaders />
+          <h1 className="logo" style={{ position: "absolute", top: "500px", left: "38%" }}>Starting New Game...</h1>
+        </div>
+
+    }
+
+    let modalClose = () => this.setState({ modalShowLogin: false, modalShowRules: false });
     return (
 
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
+
         style={{ height: "57em" }} >
 
-        <div key="{game.url}jm" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
-          <Activeplayers />
-          <div style={{ marginTop: "20%" }}>
-            <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
-            <button className="btn btn-success btn-lg leader text-dark">Archive</button>
-          </div>
-        </div>
-        {player1Name}
-        {gameblock}
-        {player2Name}
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
             display: "flex", flexDirection: "column",
@@ -319,10 +372,35 @@ export class Goofspiel extends Component {
           <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div style={{ marginTop: "10%" }}>
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
-            <button className="btn btn-danger btn-lg rules">Rules</button>
+            <button role="button" onClick={() => this.setState({ modalShowRules: true })}
+              className="btn btn-danger btn-lg rules">Rules</button>
+
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+        {player1Name}
+        {gameblock}
+        {player2Name}
+        <div key="{game.url}jm" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
+          <Activeplayers />
+          <div style={{ marginTop: "20%" }}>
+            {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
+            <button className="btn btn-success btn-lg leader text-dark">Archive</button> */}
+            <Chat messages={this.state.messages} onKeyDown={onKeyDown} />
           </div>
         </div>
 
+
+        <Rules show={this.state.modalShowRules} onHide={modalClose} gamename={this.state.gamename} rules={this.state.rules} />
       </section >
 
     )
@@ -337,4 +415,4 @@ const mapStateToProps = state => ({
   // gameid:getcookie()
 })
 
-export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Goofspiel)
+export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames, getActivePlayers })(Goofspiel)

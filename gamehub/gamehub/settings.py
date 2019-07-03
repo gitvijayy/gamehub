@@ -51,8 +51,8 @@ INSTALLED_APPS = [
     'channels_redux',
     'goofspiel',
     'games',
-    'memory',
-    'online_users'
+    'memory'
+    # 'online_users'
 
 ]
 
@@ -67,8 +67,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'online_users.middleware.OnlineNowMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    # 'online_users.middleware.OnlineNowMiddleware',
 ]
 
 ROOT_URLCONF = 'gamehub.urls'

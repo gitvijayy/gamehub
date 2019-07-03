@@ -14,7 +14,7 @@ export const cards = () => {
 }
 
 export const goofspielGamePlay = (payload) => {
-
+  console.log(payload)
   let gameplay = {
     name: payload.name,
     gameid: payload.id,
@@ -47,6 +47,9 @@ export const goofspielGamePlay = (payload) => {
   let cards2 = cards()
   gameplay.suits = cards1.suits
 
+
+
+
   if (payload.rounds) {
     payload.rounds.forEach((value, index) => {
       let player1action = 0
@@ -69,7 +72,7 @@ export const goofspielGamePlay = (payload) => {
           cards2.cardnumbers.splice(cardPlayed, 1)
         }
         player2action = value.turns[1].action
-        gameplay.animate = true
+        gameplay.animate = "turn"
       }
 
       if (player1action > player2action && player2action) {
@@ -110,6 +113,13 @@ export const goofspielGamePlay = (payload) => {
   gameplay.players[players[0]] ? gameplay.players[players[0]].push(cards1.cardnumbers) : false
   gameplay.players[players[1]] ? gameplay.players[players[1]].push(cards2.cardnumbers) : false
   gameplay.gameid = payload.id
+
+
+  if (payload.rounds && payload.rounds[0].turns && !payload.rounds[0].turns.length && payload.status == "Active") {
+    gameplay.animate = "startgame"
+  }
+
+
   console.log(gameplay)
   return {
     gameplay

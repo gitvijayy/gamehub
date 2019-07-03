@@ -3,46 +3,34 @@ import { getActivePlayers } from '../../actions/goofspiel'
 import { connect } from 'react-redux'
 class Activeplayers extends Component {
 
+
   componentDidMount() {
 
-    // this.props.getActivePlayers()
+    this.props.getActivePlayers()
 
-
-    // setInterval(() => {
-    //   this.props.getActivePlayers()
-    // }, 10000);
 
   }
 
-
-
-
   render() {
-
-
 
 
     const male = require("../images/male.png")
     // const { players } = this.state
 
-
     let loadplayers;
-
-
-
 
     // if (this.props.activeplayers && this.props.activeplayers[0] && this) {
     //   console.log(this.props.activeplayers[0].user)
     // }
 
     let blockStyle = {
-      maxHeight: "470px!important",
-      height: "470px",
+      maxHeight: "380px!important",
+      height: "380px",
       marginTop: "10%"
     }
 
     if (this.props.activeplayers) {
-      console.log(this.props.activeplayers)
+      console.log(1, this.props.activeplayers)
       console.log("in")
       loadplayers =
 
@@ -54,7 +42,7 @@ class Activeplayers extends Component {
 
               if (player.user && player.user.username && player.status == "online") {
                 return (
-                  <h5 key={index} className="text-center font-weight-bold user-block">
+                  <h5 key={index} className="col-12 text-center font-weight-bold user-block">
                     <img className="user" src={male} />{player.user.username}
                   </h5>
                 )
@@ -70,7 +58,7 @@ class Activeplayers extends Component {
     return (
       // <section className=" text-dark side-containers active-users">
       <Fragment>
-        <button className="btn btn-dark btn-lg  text-white bg-dark">Players Online</button>
+        <button style={{ marginTop: "5%" }} className="btn btn-dark btn-lg  text-white bg-dark">Players</button>
 
         {loadplayers}
       </Fragment>

@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-# from games.models import OnlinePlayers
-from .models import PlayerOnline
+from games.models import Usersonline
+# from .models import PlayerOnline
 # User Serial
 
 
@@ -23,6 +23,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['username'], validated_data['email'], validated_data['password'])
+        # user.save()
+        new_user = Usersonline.objects.create(user=user, status="online")
+        print(new_user)
+        new_user.save()
         return user
 
 # Login Serial
@@ -37,13 +41,9 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             # get_user = OnlinePlayers.objects.filter(user=user)
             # if get_user:
-            #     get_user = OnlinePlayers.objects.get(user=user)
-            #     get_user.status = "online"
-            #     get_user.save()
-            # else:
-            #     new_user = OnlinePlayers.objects.create(
-            #         user=user, status="online")
-            #     new_user.save()
+            get_user = Usersonline.objects.get(user=user)
+            get_user.status = "online"
+            get_user.save()
 
             return user
         raise serializers.ValidationError("Incorrect Credentials")

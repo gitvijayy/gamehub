@@ -20,7 +20,12 @@ class Navbar extends Component {
 
     let logout1 = () => {
       this.props.logoutUserStatus()
-      this.props.logout()
+
+      console.log("logging out")
+      setTimeout(() => {
+        this.props.logout()
+      }, 1000);
+
 
 
       this.setState({ modalShowLogin: false, modalShowRegister: false });
