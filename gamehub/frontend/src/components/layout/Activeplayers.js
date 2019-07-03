@@ -26,7 +26,7 @@ class Activeplayers extends Component {
 
 
     let loadplayers;
-    console.log("in")
+
 
 
 
@@ -34,13 +34,17 @@ class Activeplayers extends Component {
     //   console.log(this.props.activeplayers[0].user)
     // }
 
-
+    let blockStyle = {
+      maxHeight: "470px!important",
+      height: "470px",
+      marginTop: "10%"
+    }
 
     if (this.props.activeplayers) {
       console.log("in")
       loadplayers =
 
-        <div className="container pre-scrollable ">
+        <div style={blockStyle} className="container pre-scrollable ">
 
           {
 
@@ -64,7 +68,7 @@ class Activeplayers extends Component {
     return (
       // <section className=" text-dark side-containers active-users">
       <Fragment>
-        <button className=" btn btn-dark btn-lg newgame text-white">Players Online</button>
+        <button className="btn btn-dark btn-lg  text-white bg-dark">Players Online</button>
 
         {loadplayers}
       </Fragment>

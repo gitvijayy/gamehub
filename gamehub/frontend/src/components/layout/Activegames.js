@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { cssAnimations, getCookies } from '../games/goofspiel/datahelpers'
 import { Link, Redirect } from 'react-router-dom'
 import { getcookie } from '../games/memory/datahelpers';
+import { StyleSheet, css } from 'aphrodite';
+import { styles } from '../games/memory/datahelpers'
+import { bounceInLeft } from 'react-animations'
 // import { getActiveGames } from '../../actions/goofspiel'
 
 class Activegames extends Component {
@@ -78,11 +81,15 @@ class Activegames extends Component {
         }
       })
     }
-
+    let blockStyle = {
+      maxHeight: "470px!important",
+      height: "470px",
+      marginTop: "50%"
+    }
     return (
       <div >
-        <button className=" btn btn-dark btn-lg newgame text-white">Active Games</button>
-        <div className="container pre-scrollable ">
+        <button className=" btn btn-dark btn-lg  text-white bg-dark">Active Games</button>
+        <div style={blockStyle} className="container pre-scrollable ">
           {loadgames}
         </div>
       </div >
