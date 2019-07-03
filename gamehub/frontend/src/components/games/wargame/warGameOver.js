@@ -12,13 +12,13 @@ export class WarGameOver extends Component {
             <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
                 <p className='logo' style={{
                     position: 'absolute',
-                    top:'500px',
+                    top:'250px',
                     left:'43%'
                 }}>{winner} won !</p>
                 {/* <p >{winner} won!</p> */}
                 <h1 className='logo' style={{
                     position: 'absolute',
-                    top:'250px',
+                    top:'500px',
                     left:'43%'
                 }}> Game Over! </h1>
                 {/* <h1 > Game Over</h1> */}

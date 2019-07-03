@@ -271,7 +271,7 @@ export class WarGame extends Component {
                                     games.map(game => {
                                         return (
                                             game.game_id.status === 'New' ? <button className="col-12 alert-warning btn-lg game-top-div" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War {games.indexOf(game) + 1}</button> :
-                                                <button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
+                                            game.game_id.status === 'Game Over' ? null:<button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
                                         )
                                     })}
                             </div>
