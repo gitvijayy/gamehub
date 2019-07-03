@@ -11,6 +11,8 @@ import Activeplayers from '../../layout/Activeplayers'
 import { getcookie } from '../../games/goofspiel/datahelpers'
 import WarRules from './warRules'
 import WarGameOver from './warGameOver'
+import { async } from 'q';
+import NewGameWar from './newGameWar'
 // import auth from '../../../reducers/auth';
 
 const chatSocket = new WebSocket(
@@ -25,7 +27,8 @@ export class WarGame extends Component {
         this.state = {
             count: 0,
             name: 'war',
-            rules: false
+            rules: false,
+            cookie: ''
         }
     }
 
@@ -131,12 +134,30 @@ export class WarGame extends Component {
     }
     render() {
         const game = this.props.gameplay.status ? this.props.gameplay : null
+        const game_id = document.cookie.split(';')[0].split('=')[1]
+        console.log('this is the cookie' + game_id)
         // const activeUsers = this.props.activeplayers
         // console.log(activeUsers)
         // console.log(game)
         const gameStatus = game? game.status:null
         console.log('this is the game status: ' + gameStatus)
-        const cookie_id = document.cookie.split('=')[2]
+        // const myCookies ={}
+        //  const getcookies = () =>{
+        //     let cookies = {}
+        //     document.cookie.split(";").forEach(cookie => {
+        //     name = cookie.split("=")[0].trim()
+        //     cookies[name] = cookie.split("=")[1];
+        //     console.log(cookies)
+        //     return cookies
+        // })
+    // }
+        // const cookies = getcookies()
+        // const cookies = document.cookies.split(';').forEach(cookie =>{
+        //     name = cookie.split("=")[0].trim();
+        //     cookies[name] = cookie.split("=")[1];
+        // })
+        // const cookie = cookies ? cookies[0].gameid: 'no'
+        // console.log('this is cookie inside war' + cookie)
         let modalClose = () => this.setState({ rules: false });
         // const getDecks = (game) => {
         //     const decks = game.playerswar.map(player => {
@@ -197,7 +218,7 @@ export class WarGame extends Component {
         const games = this.props.games.length > 0 ? this.props.games : 'Loading'
         // const gamestest = 'Loading'
         // console.log(games)
-
+        // console.log('this is the cookie_id ' + cookie_id);
         return (
             <Fragment>
                 <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
@@ -211,7 +232,7 @@ export class WarGame extends Component {
 
 
 
-                    {cookie_id === '0' ? <button className="col-12 col-md-10 bg-alternate-2 beggining-button" onClick={this.addNewGame}>New Game</button> :
+                    {game_id === '0' ? <NewGameWar /> :
                      gameStatus === 'Game Over'? <WarGameOver user={user} opponent={opponent}/>:
                         // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
                         <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
@@ -229,7 +250,7 @@ export class WarGame extends Component {
                                 <img src={fetchDeckImage('red')} />
 
                                 {opponentturn[0] ? <img src={convertNumberToCard(opponentturn[0].action - 1)} key={opponentturn[0].id} /> : <div className='empty-cardwar' />}
-                                {lastOpponentTurn[0].action ? <img src={convertNumberToCard(lastOpponentTurn[0].action - 1)} key={lastOpponentTurn[0].id} className='sideCard' /> : <div className='empty-cardwar' />}
+                                {lastOpponentTurn[0].action ? <img src={convertNumberToCard(lastOpponentTurn[0].action - 1)} key={lastOpponentTurn[0].id} className='sideCardWar' /> : <div className='empty-cardwar' />}
                             </div>
 
 
@@ -248,7 +269,7 @@ export class WarGame extends Component {
                             <div className="playingcardwar">
                                 <img src={fetchDeckImage('green')} onClick={(e) => { this.addTurn(e) }} />
                                 {userturn.length > 0 ? <img src={convertNumberToCard(userturn[0].action - 1)} /> : <div className='empty-cardwar' />}
-                                {lastuserTurn[0].action ? <img src={convertNumberToCard(lastuserTurn[0].action - 1)} className='sideCard' /> : <div className='empty-cardwar' />}
+                                {lastuserTurn[0].action ? <img src={convertNumberToCard(lastuserTurn[0].action - 1)} className='sideCardWar' /> : <div className='empty-cardwar' />}
                             </div>
 
                             <div className='titles-opponent'>

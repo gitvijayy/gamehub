@@ -17,7 +17,7 @@ def stringToIntArray(string_deck) :
 
 def generateHalfDeck():
     card_list = []
-    while(len(card_list) < 26):
+    while(len(card_list) < 4):
         # print(card_list)
         # card_list.append(1) # <----------------------- change this to new card
         random_card = random.randint(1,52);
@@ -31,7 +31,7 @@ def generateSecondHalfDeck(opponent):
     # opponent_deck_string_inarray = opponent_deck_string.split(',') 
     # opponent_deck = list(map(int, opponent_deck_string_inarray))
     opponent_deck = stringToIntArray(opponent_deck_string)
-    for card in range(1,53):
+    for card in range(1,5):
         if(not (card in opponent_deck)) :
             card_list.append(card)
     random.shuffle(card_list)
@@ -146,11 +146,11 @@ def handleRound(round):
             print('Error: no names were matched')
 
 
-    if ((cardplayed1[len(cardplayed1)-1] % 13) > (cardplayed2[len(cardplayed2)-1] % 13)):
+    if ((cardplayed1[len(cardplayed1)-1] % 13) >= (cardplayed2[len(cardplayed2)-1] % 13)):
         handleWin(player1,turns,round)
         checkLoser(player2,round)
         return True
-    elif((cardplayed1[len(cardplayed1)-1] % 13) <= (cardplayed2[len(cardplayed2)-1] % 13)): #<-------------- bug needs fixing, tie is not handled
+    elif((cardplayed1[len(cardplayed1)-1] % 13) < (cardplayed2[len(cardplayed2)-1] % 13)): #<-------------- bug needs fixing, tie is not handled
         handleWin(player2,turns,round)
         checkLoser(player1,round)
         return True

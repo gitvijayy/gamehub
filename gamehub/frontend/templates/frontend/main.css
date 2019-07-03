@@ -375,3 +375,17 @@
 .playingcardwar img:hover {
   cursor: pointer;
 }
+
+@keyframes fadeout {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+/* @keyframes fade {
+  from
+} */
+
+.sideCardWar{
+  /* opacity: 0; 
+  animation:  fadeout 3s; */
+}

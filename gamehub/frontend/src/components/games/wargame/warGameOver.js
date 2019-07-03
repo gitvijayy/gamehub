@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import Loaders from '../../layout/Loaders'
 export class WarGameOver extends Component {
     
     render(){
@@ -13,15 +13,14 @@ export class WarGameOver extends Component {
                 <p className='logo' style={{
                     position: 'absolute',
                     top:'250px',
-                    left:'43%'
+                    left:'40%'
                 }}>{winner} won !</p>
-                {/* <p >{winner} won!</p> */}
+                <Loaders/>
                 <h1 className='logo' style={{
                     position: 'absolute',
                     top:'500px',
-                    left:'43%'
+                    left:'40%'
                 }}> Game Over! </h1>
-                {/* <h1 > Game Over</h1> */}
 
             </div>
         )
