@@ -112,7 +112,7 @@ export class WarGame extends Component {
     componentDidUpdate() {
         chatSocket.onmessage = (e) => {
             //   const game_id= document.cookie.split('=')[1]
-            var data = JSON.parse(e.data);
+            // var data = JSON.parse(e.data);
             //   var message = data['message'];
             //   console.log('I UPDATED')
             //   console.log(message)
@@ -130,9 +130,9 @@ export class WarGame extends Component {
     }
     render() {
         const game = this.props.gameplay.status ? this.props.gameplay : null
-        const activeUsers = this.props.activeplayers
-        console.log(activeUsers)
-        console.log(game)
+        // const activeUsers = this.props.activeplayers
+        // console.log(activeUsers)
+        // console.log(game)
         const cookie_id = document.cookie.split('=')[2]
         let modalClose = () => this.setState({ rules: false });
         // const getDecks = (game) => {
@@ -159,24 +159,25 @@ export class WarGame extends Component {
         const lastRound = game && game.round.length > 0 ? game.round[game.round.length - 2] : null
         const lastTurns = lastRound ? lastRound.turns : 'Loading'
         // console.log(lastRound)
-        console.log(round)
-        const lastuserTurn = typeof lastTurns === 'string' ? lastTurns : lastTurns.filter(turn => {
-            return turn.player.username === this.props.user.username
-        })
-        const lastOpponentTurn = typeof lastTurns === 'string' ? lastTurns : lastTurns.filter(turn => {
+        // console.log(round)
+        console.log(lastTurns)
+        const lastuserTurn = this.props.user && typeof lastTurns !== 'string' ? lastTurns.filter(turn => {
+            return turn.player.username === this.props.user.username 
+        }) : lastTurns
+        const lastOpponentTurn = this.props.user && typeof lastTurns !== 'string' ?  lastTurns.filter(turn => {
             return turn.player.username !== this.props.user.username
-        })
-        const userturn = typeof turns === 'string' ? [] : turns.filter(turn => {
+        }) : lastTurns
+        const userturn = this.props.user && typeof turns !== 'string' ? turns.filter(turn => {
             return turn.player.username === this.props.user.username
-        })
-        const opponentturn = typeof turns === 'string' ? [] : turns.filter(turn => {
+        }): []
+        const opponentturn = this.props.user && typeof turns !== 'string' ? turns.filter(turn => {
             return turn.player.username !== this.props.user.username
-        })
-        const user = game ? game.playerswar.filter(player => {
+        }) : []
+        const user = game && this.props.user ?  game.playerswar.filter(player => {
             return player.player.username === this.props.user.username
         }) : []
 
-        const opponent = game ? game.playerswar.filter(player => {
+        const opponent = game && this.props.user?  game.playerswar.filter(player => {
             return player.player.username !== this.props.user.username
         }) : []
 
@@ -193,15 +194,6 @@ export class WarGame extends Component {
         const games = this.props.games.length > 0 ? this.props.games : 'Loading'
         // const gamestest = 'Loading'
         // console.log(games)
-
-        const loadRules = () => {
-            <section className='rules'>
-                <p> Welcome To War!! </p>
-                <p> Dealing: The deck is divided evenly, with each player receiving 26 cards, dealt one at a time, face down. Anyone may deal first. Each player places their stack of cards face down, in front of them. </p>
-                <p> Each player turns up a card at the same time and the player with the higher card takes both cards and puts them, face down, on the bottom of his stack. </p>
-                <p> Winner is the player who took all the cards in the deck </p>
-            </section>
-        }
 
         return (
             <Fragment>

@@ -89,7 +89,7 @@ def handleWin(player,turns,round):
     str_deck_modified = ','.join(str(card) for card in arr_deck_new) 
     player.deck = str_deck_modified
     player.deck_length = deck_length
-    # round.status = player.username
+    # round.status = player
     print('everything worked so far')
     player.save()
 

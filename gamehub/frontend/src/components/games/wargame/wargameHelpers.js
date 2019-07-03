@@ -9,7 +9,6 @@ export const fetchDeckImage = (color) => {
 }
 
 const PictureDictionary = [
-    require('../../images/cards/1C.png'),
     require('../../images/cards/2C.png'),
     require('../../images/cards/3C.png'),
     require('../../images/cards/4C.png'),
@@ -22,7 +21,7 @@ const PictureDictionary = [
     require('../../images/cards/11C.png'),
     require('../../images/cards/12C.png'),
     require('../../images/cards/13C.png'),
-    require('../../images/cards/1D.png'),
+    require('../../images/cards/1C.png'),
     require('../../images/cards/2D.png'),
     require('../../images/cards/3D.png'),
     require('../../images/cards/4D.png'),
@@ -35,7 +34,7 @@ const PictureDictionary = [
     require('../../images/cards/11D.png'),
     require('../../images/cards/12D.png'),
     require('../../images/cards/13D.png'),
-    require('../../images/cards/1H.png'),
+    require('../../images/cards/1D.png'),
     require('../../images/cards/2H.png'),
     require('../../images/cards/3H.png'),
     require('../../images/cards/4H.png'),
@@ -48,7 +47,7 @@ const PictureDictionary = [
     require('../../images/cards/11H.png'),
     require('../../images/cards/12H.png'),
     require('../../images/cards/13H.png'),
-    require('../../images/cards/1S.png'),
+    require('../../images/cards/1H.png'),
     require('../../images/cards/2S.png'),
     require('../../images/cards/3S.png'),
     require('../../images/cards/4S.png'),
@@ -61,6 +60,7 @@ const PictureDictionary = [
     require('../../images/cards/11S.png'),
     require('../../images/cards/12S.png'),
     require('../../images/cards/13S.png'),
+    require('../../images/cards/1S.png'),
 
 ]
 
