@@ -13,6 +13,7 @@ import WarRules from './warRules'
 import WarGameOver from './warGameOver'
 import { async } from 'q';
 import NewGameWar from './newGameWar'
+import WatingGameWar from './waitingGameWar'
 // import auth from '../../../reducers/auth';
 
 const chatSocket = new WebSocket(
@@ -234,6 +235,7 @@ export class WarGame extends Component {
 
                     {game_id === '0' ? <NewGameWar /> :
                      gameStatus === 'Game Over'? <WarGameOver user={user} opponent={opponent}/>:
+                     gameStatus === 'New'? <WatingGameWar />:
                         // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
                         <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
 

@@ -13,13 +13,13 @@ export class WarGameOver extends Component {
                 <p className='logo' style={{
                     position: 'absolute',
                     top:'250px',
-                    left:'40%'
+                    left:'43%'
                 }}>{winner} won !</p>
                 <Loaders/>
                 <h1 className='logo' style={{
                     position: 'absolute',
                     top:'500px',
-                    left:'40%'
+                    left:'43%'
                 }}> Game Over! </h1>
 
             </div>
