@@ -67,6 +67,7 @@ def fetchCards(round,game,user_id):
             # print('this is the modified deck: ' + modified_deck_string)
             player.deck = modified_deck_string
             player.deck_length = array_deck_length
+            # player.deck_length = 0
             print('still did not crash')
             print(modified_deck_string)
             print(array_deck_length)
@@ -100,8 +101,7 @@ def handleTie(round):
 
 def checkLoser(player, round):
     if(player.deck_length == 0):
-        game_id = round.game_id
-        game = Games.objects.get(game_id=game_id)
+        game = round.game_id
         game.status = 'Game Over'
         game.save()
     
@@ -270,6 +270,7 @@ class GameSerializer(serializers.ModelSerializer):
         def addFirstPlayer(game):
             deck = generateHalfDeck()
             deck_length = len(deck)
+            # deck_length = 1 #<====================== Introduced a bug
             stringDeck = ','.join(str(card) for card in deck) 
             # print('got into the game')
             addPlayer = Players.objects.create(
@@ -282,6 +283,7 @@ class GameSerializer(serializers.ModelSerializer):
         def addSecondPlayer(game,opponent):
             deck = generateSecondHalfDeck(opponent)
             deck_length = len(deck)
+            # deck_length =  1 #<====================== Introduced a bug
             stringDeck = ','.join(str(card) for card in deck) 
             addPlayer = Players.objects.create(
                 game_id=game, 

@@ -10,6 +10,7 @@ import { Activegames } from '../../layout/Activegames'
 import Activeplayers from '../../layout/Activeplayers'
 import { getcookie } from '../../games/goofspiel/datahelpers'
 import WarRules from './warRules'
+import WarGameOver from './warGameOver'
 // import auth from '../../../reducers/auth';
 
 const chatSocket = new WebSocket(
@@ -133,6 +134,8 @@ export class WarGame extends Component {
         // const activeUsers = this.props.activeplayers
         // console.log(activeUsers)
         // console.log(game)
+        const gameStatus = game? game.status:null
+        console.log('this is the game status: ' + gameStatus)
         const cookie_id = document.cookie.split('=')[2]
         let modalClose = () => this.setState({ rules: false });
         // const getDecks = (game) => {
@@ -200,15 +203,6 @@ export class WarGame extends Component {
                 <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
                     style={{ height: "57em" }} >
                     <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2">
-                        {/* <Activeplayers /> */}
-                        {/* <button className='btn btn-dark btn-lg newgame text-white'>Players Online</button> */}
-                        {/* <div className='container pre-scrollable'>
-                {activeUsers.map(user => {
-                    return(
-                        <button className=" btn btn-dark btn-lg newgame-war text-white" onClick={this.goToGame} key={user.id}>{user.user.username}</button>
-                )
-                })}
-            </div> */}
                         <Activeplayers />
                         <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
                         <button className="btn btn-success btn-lg leader text-dark">Archive</button>
@@ -218,6 +212,7 @@ export class WarGame extends Component {
 
 
                     {cookie_id === '0' ? <button className="col-12 col-md-10 bg-alternate-2 beggining-button" onClick={this.addNewGame}>New Game</button> :
+                     gameStatus === 'Game Over'? <WarGameOver user={user} opponent={opponent}/>:
                         // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
                         <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
 
