@@ -3,6 +3,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 import chat.routing
 import defaultgame.routing
+import war.routing
 import goofspiel.routing
 import games.routing
 

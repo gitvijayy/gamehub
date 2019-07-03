@@ -283,3 +283,95 @@
   height: 120px;
   margin-left: 20%;
 }
+
+/* sssssssssssssssssssssssssssssssssssssssssssssssss */
+
+.playingcardwar img {
+  width: 15%;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+  height: 200px;
+}
+
+.playingcardwar.middle img {
+  width: 10%;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  border-radius: 5px;
+  height: 120px;
+}
+
+.playingcardwar .middle {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardsplayedwar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.newgame-war {
+  height: 60px;
+  box-shadow: inset 0px -10px 25px black, 0px 5px 5px black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.new-games-titlewar {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.empty-cardwar {
+  border: 2px solid black;
+  height: 200px;
+  width: 15%;
+  border-radius: 12px;
+}
+
+.beggining-button {
+  font-size: 7rem;
+  text-align: -webkit-center;
+}
+
+.titles-opponent {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player-icon {
+  height: 100px;
+}
+
+.opponent-deck-amount {
+  position: relative;
+  top: 35%;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.player-name {
+  position: relative;
+  top: 35%;
+  font-size: 25px;
+  font-weight: bolder;
+  right: 3%;
+}
+
+.game-top-div-war button {
+  border-radius: 5px;
+  margin-bottom: 10%;
+  margin-right: -3%;
+}
+
+.playingcardwar {
+  justify-content: space-around;
+  display: flex;
+}
+
+.playingcardwar img:hover {
+  cursor: pointer;
+}

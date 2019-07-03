@@ -4,6 +4,8 @@ import errors from './errors'
 import messages from './messages'
 import auth from './auth'
 import defaultgame from './defaultgame'
+import wargame from './wargame'
+
 import goofspiel from './goofspiel'
 export default combineReducers({
   // leads,
@@ -11,6 +13,7 @@ export default combineReducers({
   messages,
   auth,
   defaultgame,
+  wargame,
   goofspiel
 })
 

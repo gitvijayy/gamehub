@@ -313,5 +313,5 @@ const mapStateToProps = state => ({
   animate: state.defaultgame.animate
 })
 
-export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames })(Defaultgame)
+export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn,  getActiveGames })(Defaultgame)
 

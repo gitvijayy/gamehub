@@ -8,6 +8,7 @@ import { StyleSheet, css } from 'aphrodite';
 import { styles } from '../games/memory/datahelpers'
 import { bounceInLeft } from 'react-animations'
 // import { getActiveGames } from '../../actions/goofspiel'
+import { Activeplayers } from '../layout/Activeplayers'
 
 class Activegames extends Component {
 
@@ -70,7 +71,6 @@ class Activegames extends Component {
           if (id == game.game_id.id) {
             gameclass = "col-12 alert-dark btn-lg"
           }
-
         })
 
 

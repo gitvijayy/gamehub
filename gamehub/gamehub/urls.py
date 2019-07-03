@@ -23,6 +23,8 @@ from django.conf.urls import include as include1, url
 urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
+    # path('', include('defaultgame.urls')),
+    path('', include('war.urls')),
     path('', include('memory.urls')),
     path('', include('goofspiel.urls')),
     path('', include('games.urls')),
