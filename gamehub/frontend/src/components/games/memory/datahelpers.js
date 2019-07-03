@@ -234,11 +234,15 @@ export const memoryGamePlay = (payload) => {
   }
 
   gameplay.turnPlayer.forEach((value, index) => {
-    if (gameplay.faceupPlayer[index]) {
-      gameplay.playerdata[value].points += 1
-    }
+
     gameplay.playerdata[value].chances += 1
   })
+
+  gameplay.faceupPlayer.forEach((value => {
+
+    gameplay.playerdata[value].points += 1
+
+  }))
 
 
   // console.log(gameplay.playerdata)

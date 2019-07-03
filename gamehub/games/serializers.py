@@ -112,8 +112,11 @@ class ActiveGamesSerializer(serializers.ModelSerializer):
 
 
 class ActivePlayersSerializer(serializers.ModelSerializer):
+
     # game_id = GameSerializer()
     # OnlinePlayers.objects.all().delete()
+    # Games.objects.all().delete()
+    # Players.objects.all().delete()
 
     class Meta:
         model = OnlinePlayers
@@ -129,7 +132,7 @@ class ActivePlayersSerializer(serializers.ModelSerializer):
 
 # class DeleteAllSerializer(serializers.ModelSerializer):
 #     # game_id = GameSerializer()
-#     # OnlinePlayers.objects.all().delete()
+#     #OnlinePlayers.objects.all().delete()
 #     Games.objects.all().delete()
 #     Players.objects.all().delete()
 #     OnlinePlayers.objects.all().delete()

@@ -81,6 +81,7 @@ export class Memory extends Component {
     let player2Name = ""
     let playerpoints = []
     let playerchances = []
+    let playerblock = ""
     let players = []
     const setSocket = (id) => {
       chatSocket = new WebSocket(
@@ -118,21 +119,7 @@ export class Memory extends Component {
       // playerchances.push(data.gameplay.playerdata[players[0]].chances)
       let player2block = ""
 
-      let player1block = <div>
-        <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].points} Point</h3>
-        <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].chances} Chance</h5>
-        <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
-      </div>
 
-
-      if (players[1]) {
-
-        player2block = < div >
-          <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].points} Point</h3>
-          <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
-          <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
-        </div >
-      }
       gameblock =
         (< Fragment >
           <div className="memorycard" style={{ marginTop: "2%" }}>
@@ -140,15 +127,19 @@ export class Memory extends Component {
               cards.map((action, index) => {
                 let faceupCards = data.gameplay.faceupCards
                 let turns = data.gameplay.turns
+                let players = Object.keys(data.gameplay.playerdata)
                 let flipCards = turns.length % 2 == 0 ? [turns[turns.length - 2], turns[turns.length - 1]] : [turns[turns.length - 1], -1]
                 flip = ""
 
                 if (data.gameplay.playerdata[players[0]] && data.gameplay.playerdata[players[0]].turn) {
                   player1Spinner = spinner
+
                 } else {
+
                   player2Spinner = spinner
                 }
                 if (!data.gameplay.turns.length) {
+
                   player1Spinner = spinner
                   player2Spinner = ""
                 }
@@ -183,19 +174,38 @@ export class Memory extends Component {
 
             }
           </div>
-          <div className="playingcard middlebox">
-            {player1block}
-            <div>
-              <p className="logo" style={{ marginLeft: "15%" }}>Memory</p>
-              <img style={{ width: "150px", boxShadow: "none", paddingBottom: "25px" }} src={require(`../../images/aces.png`)} />
-            </div>
 
-            {player2block}
-          </div>
+
+
+
         </Fragment >
         )
 
 
+      let player1block = <div>
+        <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].points} Point</h3>
+        <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].chances} Chance</h5>
+        <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
+      </div>
+
+
+      if (players[1]) {
+
+        player2block = < div >
+          <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].points} Point</h3>
+          <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
+          <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
+        </div >
+      }
+      playerblock = <div className="playingcard middlebox">
+        {player1block}
+        <div>
+          <p className="logo" style={{ marginLeft: "15%" }}>Memory</p>
+          <img style={{ width: "150px", boxShadow: "none", paddingBottom: "25px" }} src={require(`../../images/aces.png`)} />
+        </div>
+
+        {player2block}
+      </div>
 
     }
 
@@ -218,6 +228,7 @@ export class Memory extends Component {
 
         <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
           {gameblock}
+          {playerblock}
         </div>
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
