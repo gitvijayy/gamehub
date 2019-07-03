@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
-import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ERRORS, GET_GAMEPLAY, ADD_TURN, GET_WAR_GAMEPLAY, MAKE_NEW_GAME,GET_WAR_ACTIVEGAMES } from './types'
+import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ERRORS, GET_GAMEPLAY, ADD_TURN, GET_WAR_GAMEPLAY, MAKE_NEW_GAME,GET_WAR_ACTIVEGAMES, GET_ACTIVEPLAYERS } from './types'
 
 const tokenConfig = (getState) => {
     const token = getState().auth.token
@@ -102,7 +102,19 @@ export const getWarActivegames = (state) => (dispatch, getState) => {
   }).catch(err => dispatch(
     returnErrors(err.response.data, err.response.status)
   ))
+}
 
-  
+export const getActivePlayers = () => (dispatch, getState) => {
+
+  // axios.get(`/api/${game}/activegames/`, tokenConfig(getState)).then(res => {
+  axios.get(`/api/activeplayers/`, tokenConfig(getState)).then(res => {
+
+    dispatch({
+      type: GET_ACTIVEPLAYERS,
+      payload: res.data
+    })
+  }).catch(err => dispatch(
+    returnErrors(err.response.data, err.response.status)
+  ))
 
 }

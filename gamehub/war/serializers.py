@@ -76,7 +76,7 @@ def fetchCards(round,game,user_id):
     return 'error: no player found'
 
 def handleWin(player,turns,round):
-    print("#{player.username} won!!!!")
+    # print("#{player.username} won!!!!")
     str_deck = player.deck
     arr_deck = stringToIntArray(str_deck)
     # arr_deck.insert(0,turn2.action)
@@ -97,6 +97,12 @@ def handleTie(round):
     print('I AM INSIDE THE HANDLE TIE')
     round.status = 'tie'
     round.save()
+
+def checkLosert(player, round):
+    if(player.deck_length == 0):
+        game_id = round.game_id
+        game = Games.objects.filter(game_id=game_id)
+    
 
 def handleRound(round):
     # print(round.status)
@@ -140,9 +146,11 @@ def handleRound(round):
 
     if ((cardplayed1[len(cardplayed1)-1] % 13) > (cardplayed2[len(cardplayed2)-1] % 13)):
         handleWin(player1,turns,round)
+        checkLoser(player2,round)
         return True
     elif((cardplayed1[len(cardplayed1)-1] % 13) <= (cardplayed2[len(cardplayed2)-1] % 13)): #<-------------- bug needs fixing, tie is not handled
         handleWin(player2,turns,round)
+        checkLoser(player1,round)
         return True
     else:
         handleTie(round)
@@ -167,7 +175,7 @@ class PlayerNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Players
-        fields = ['player','deck','deck_length']
+        fields = ['player','deck_length']
         # fields = '__all__'
         # depth = 5
         # depth = 2
