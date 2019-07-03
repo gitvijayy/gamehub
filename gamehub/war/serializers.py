@@ -89,7 +89,7 @@ def handleWin(player,turns,round):
     str_deck_modified = ','.join(str(card) for card in arr_deck_new) 
     player.deck = str_deck_modified
     player.deck_length = deck_length
-    round.status = '#{player.username}'
+    round.status = player.username
     print('everything worked so far')
     player.save()
 
@@ -98,7 +98,7 @@ def handleTie(round):
     round.status = 'tie'
     round.save()
 
-def checkLosert(player, round):
+def checkLoser(player, round):
     if(player.deck_length == 0):
         game_id = round.game_id
         game = Games.objects.filter(game_id=game_id)
