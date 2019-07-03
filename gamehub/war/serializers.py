@@ -101,7 +101,9 @@ def handleTie(round):
 def checkLoser(player, round):
     if(player.deck_length == 0):
         game_id = round.game_id
-        game = Games.objects.filter(game_id=game_id)
+        game = Games.objects.get(game_id=game_id)
+        game.status = 'Game Over'
+        game.save()
     
 
 def handleRound(round):

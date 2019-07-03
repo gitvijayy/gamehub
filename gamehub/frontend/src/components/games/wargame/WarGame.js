@@ -29,7 +29,6 @@ export class WarGame extends Component {
     }
 
     addTurn = (e) => {
-        // e.preventDefault()
         const rounds = this.props.gameplay.round
         // console.log('HE WILL TURN')
         const lastRound = rounds[rounds.length-1]
@@ -62,7 +61,6 @@ export class WarGame extends Component {
         // console.log(lastRound)
         this.props.addWarTurn(lastRound.id,() => {
             chatSocket.send(JSON.stringify({
-
                 'message': 'kkkkk'
               }))
         })
@@ -76,7 +74,11 @@ export class WarGame extends Component {
     }
     addNewGame = (e) => {
         this.props.makeNewGame(()=>{
-            this.props.getWarActivegames()
+            this.props.getWarActivegames(() => {
+                chatSocket.send(JSON.stringify({
+                    'message': 'kkkkk'
+                    }))
+            })
         })
         document.cookie `gameid = ${e.target.id}`
     }
@@ -117,7 +119,7 @@ export class WarGame extends Component {
         //   this.props.getActiveGames(this.state.name)
         getcookie((id)=>{
             this.props.getWarGamePlay(id)
-            // this.props.getWarActivegames()
+            this.props.getWarActivegames()
         })
     };
 

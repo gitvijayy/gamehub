@@ -86,8 +86,6 @@ export const makeNewGame = (state) => (dispatch,getState) => {
   }).catch(err => dispatch(
   returnErrors(err.response.data, err.response.status)
     ))
-
-    
 }
 
 export const getWarActivegames = (state) => (dispatch, getState) => {
@@ -98,7 +96,7 @@ export const getWarActivegames = (state) => (dispatch, getState) => {
       type: GET_WAR_ACTIVEGAMES,
       payload: res.data
     })
-    
+    state()
   }).catch(err => dispatch(
     returnErrors(err.response.data, err.response.status)
   ))
