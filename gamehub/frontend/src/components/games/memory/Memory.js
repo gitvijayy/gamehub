@@ -37,21 +37,34 @@ export class Memory extends Component {
         "A players turn is not over until they are unable to make a matching pair.",
         "The game continues in this fashion until all the cards are played.",
         "The game is over when all the cards have been matched.",
-        "The player with the most matches wins."]
+        "The player with the most matches wins."],
+      messages: []
     }
+
   }
 
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       var message = data['message'];
-      getcookie((id) => {
-        if (message == "new game") {
-          this.props.getActiveGames()
-        }
-        this.props.getActivePlayers()
-        this.props.getGamePlay(this.state.name, id)
-      })
+
+
+      if (message.type == "Chat") {
+        this.setState({
+          messages: [...this.state.messages, message]
+        })
+      }
+
+      if (message.type != "Chat") {
+
+        getcookie((id) => {
+          if (message == "new game") {
+            this.props.getActiveGames()
+          }
+          this.props.getActivePlayers()
+          this.props.getGamePlay(this.state.name, id)
+        })
+      }
     }
   }
 
@@ -65,6 +78,25 @@ export class Memory extends Component {
   }
 
   render() {
+
+    let onKeyDown = (e, user) => {
+
+      if (e.keyCode == 13) {
+        let message = {
+          "name": user,
+          "message": e.target.value,
+          "type": "Chat"
+        }
+
+        e.target.value = ""
+        chatSocket.send(JSON.stringify({
+          'message': message
+        }));
+
+      }
+
+    }
+
 
     let gameblock;
 
@@ -268,6 +300,7 @@ export class Memory extends Component {
       //   {player2block}
       // </div>
 
+
     }
     let modalClose = () => this.setState({ modalShowLogin: false, modalShowRules: false });
 
@@ -301,7 +334,7 @@ export class Memory extends Component {
         <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
           <div style={{ marginTop: "10%" }}>
-            <Chat />
+            <Chat messages={this.state.messages} onKeyDown={onKeyDown} />
           </div>
         </div>
 

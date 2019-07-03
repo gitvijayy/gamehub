@@ -58,11 +58,16 @@ export class Goofspiel extends Component {
     chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       var message = data['message'];
-      getcookie((id) => {
-        this.props.getActivePlayers()
-        this.props.getActiveGames(this.state.name)
-        this.props.getGamePlay(this.state.name, id)
-      })
+
+      if (message.type != "Chat") {
+
+        getcookie((id) => {
+          this.props.getActivePlayers()
+          this.props.getActiveGames(this.state.name)
+          this.props.getGamePlay(this.state.name, id)
+        })
+
+      }
 
       if (message.type == "Chat") {
         this.setState({
