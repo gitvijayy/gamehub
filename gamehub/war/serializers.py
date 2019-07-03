@@ -11,34 +11,37 @@ import random
 import json
 
 
-def stringToIntArray(string_deck) :
-    string_deck_inarray = string_deck.split(',') 
+def stringToIntArray(string_deck):
+    string_deck_inarray = string_deck.split(',')
     return list(map(int, string_deck_inarray))
+
 
 def generateHalfDeck():
     card_list = []
     while(len(card_list) < 26):
         # print(card_list)
         # card_list.append(1) # <----------------------- change this to new card
-        random_card = random.randint(1,52);
+        random_card = random.randint(1, 52)
         if(not (random_card in card_list)):
             card_list.append(random_card)
     return card_list
 
+
 def generateSecondHalfDeck(opponent):
     card_list = []
     opponent_deck_string = opponent[0].deck
-    # opponent_deck_string_inarray = opponent_deck_string.split(',') 
+    # opponent_deck_string_inarray = opponent_deck_string.split(',')
     # opponent_deck = list(map(int, opponent_deck_string_inarray))
     opponent_deck = stringToIntArray(opponent_deck_string)
-    for card in range(1,53):
-        if(not (card in opponent_deck)) :
+    for card in range(1, 53):
+        if(not (card in opponent_deck)):
             card_list.append(card)
     random.shuffle(card_list)
-        # card_list.append(1)
+    # card_list.append(1)
     return card_list
 
-def fetchCards(round,game,user_id):
+
+def fetchCards(round, game, user_id):
     # print('this is the target' + user_id)
     # json.dump(games)
     # print('this is the taget game ' + game.playerswar)
@@ -62,7 +65,7 @@ def fetchCards(round,game,user_id):
                 cards.append(array_deck.pop())
             # card_back = cards[len(cards)-1]
             array_deck_length = len(array_deck)
-            modified_deck_string = ','.join(str(card) for card in array_deck) 
+            modified_deck_string = ','.join(str(card) for card in array_deck)
             # print('this is the card back: ' + str(card_back))
             # print('this is the modified deck: ' + modified_deck_string)
             player.deck = modified_deck_string
@@ -75,28 +78,31 @@ def fetchCards(round,game,user_id):
             return cards
     return 'error: no player found'
 
-def handleWin(player,turns,round):
+
+def handleWin(player, turns, round):
     # print("#{player.username} won!!!!")
     str_deck = player.deck
     arr_deck = stringToIntArray(str_deck)
     # arr_deck.insert(0,turn2.action)
     # arr_deck.insert(0,turn1.action)
-    arr_deck_new=[]
+    arr_deck_new = []
     for turn in turns:
         arr_deck_new.append(turn.action)
     arr_deck_new.extend(arr_deck)
     deck_length = len(arr_deck_new)
-    str_deck_modified = ','.join(str(card) for card in arr_deck_new) 
+    str_deck_modified = ','.join(str(card) for card in arr_deck_new)
     player.deck = str_deck_modified
     player.deck_length = deck_length
     # round.status = player.username
     print('everything worked so far')
     player.save()
 
+
 def handleTie(round):
     print('I AM INSIDE THE HANDLE TIE')
     round.status = 'tie'
     round.save()
+
 
 def checkLoser(player, round):
     if(player.deck_length == 0):
@@ -104,7 +110,7 @@ def checkLoser(player, round):
         game = Games.objects.get(game_id=game_id)
         game.status = 'Game Over'
         game.save()
-    
+
 
 def handleRound(round):
     # print(round.status)
@@ -122,9 +128,9 @@ def handleRound(round):
     # elif(turn1.player.username == player2.player.username):
     #     cardplayed1 = turn2.action
     #     cardplayed2 = turn1.action
-    # else: 
+    # else:
     #     print('Error: no names were matched')
-    
+
     # for turn in turns:
     #     if(turn.player.username == player1.player.username):
     #         cardplayed1.insert(turn.action)
@@ -145,25 +151,25 @@ def handleRound(round):
         else:
             print('Error: no names were matched')
 
-
     if ((cardplayed1[len(cardplayed1)-1] % 13) > (cardplayed2[len(cardplayed2)-1] % 13)):
-        handleWin(player1,turns,round)
-        checkLoser(player2,round)
+        handleWin(player1, turns, round)
+        checkLoser(player2, round)
         return True
-    elif((cardplayed1[len(cardplayed1)-1] % 13) <= (cardplayed2[len(cardplayed2)-1] % 13)): #<-------------- bug needs fixing, tie is not handled
-        handleWin(player2,turns,round)
-        checkLoser(player1,round)
+    # <-------------- bug needs fixing, tie is not handled
+    elif((cardplayed1[len(cardplayed1)-1] % 13) <= (cardplayed2[len(cardplayed2)-1] % 13)):
+        handleWin(player2, turns, round)
+        checkLoser(player1, round)
         return True
     else:
         handleTie(round)
         return False
 
 
-    
 class UserNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username',)
+
 
 class PlayerSerializer(serializers.ModelSerializer):
     # game_id = GameSerializer()
@@ -172,15 +178,17 @@ class PlayerSerializer(serializers.ModelSerializer):
         fields = ['game_id']
         depth = 1
 
+
 class PlayerNameSerializer(serializers.ModelSerializer):
     player = UserNameSerializer()
 
     class Meta:
         model = Players
-        fields = ['player','deck_length']
+        fields = ['player', 'deck_length']
         # fields = '__all__'
         # depth = 5
         # depth = 2
+
 
 class TurnDataSerializer(serializers.ModelSerializer):
     player = UserNameSerializer()
@@ -197,7 +205,7 @@ class TurnSerializer(serializers.ModelSerializer):
 
     def create(self,  validated_data):
         if validated_data['round_id'].turns.count() >= 1:
-            
+
             print('got into the the validation phase')
             # raise serializers.ValidationError(
             #     validated_data['round_id'], validated_data['round_id'].turns.count())
@@ -208,41 +216,46 @@ class TurnSerializer(serializers.ModelSerializer):
             # cards = []
             # if validated_data['round_id'].status == 'tie':
             #     cards = fetchCards(validated_data['round_id'], self.context['request'].user)
-            cards = fetchCards(validated_data['round_id'], validated_data['round_id'].game_id, self.context['request'].user)
+            cards = fetchCards(
+                validated_data['round_id'], validated_data['round_id'].game_id, self.context['request'].user)
             print(cards)
-            for card in cards: 
+            for card in cards:
                 newTurn = Turns.objects.create(
-                    round_id=validated_data['round_id'], 
-                    player=self.context['request'].user, 
+                    round_id=validated_data['round_id'],
+                    player=self.context['request'].user,
                     action=card
-                    )
+                )
                 # newTurn.save()
                 # print('new Turn saved')
             if(handleRound(validated_data['round_id'])):
-                newRound = Rounds.objects.create(game_id=validated_data['round_id'].game_id)
+                newRound = Rounds.objects.create(
+                    game_id=validated_data['round_id'].game_id)
                 newRound.save()
                 return newTurn
             else:
-                return validated_data['round_id'];
+                return validated_data['round_id']
 
-        cards = fetchCards(validated_data['round_id'],validated_data['round_id'].game_id, self.context['request'].user)
+        cards = fetchCards(
+            validated_data['round_id'], validated_data['round_id'].game_id, self.context['request'].user)
         # print('back in the TurnSerializer and the card back is:' + str(cards))
         newTurn = Turns.objects.create(
-            round_id=validated_data['round_id'], 
-            player=self.context['request'].user, 
+            round_id=validated_data['round_id'],
+            player=self.context['request'].user,
             action=cards[0]
-            )
+        )
         return newTurn
-        
+
+
 class RoundSerializer(serializers.ModelSerializer):
     turns = TurnDataSerializer(many=True, read_only=True)
 
     class Meta:
         model = Rounds
-        fields = ['id', 'turns','status']
+        fields = ['id', 'turns', 'status']
 
         def update(self, validated_data):
             validTurn = Turns.object.select()
+
 
 class GameSerializer(serializers.ModelSerializer):
     # Games.objects.all().delete()
@@ -255,7 +268,7 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Games
-        fields = ['id', 'status',  'playerswar','round']
+        fields = ['id', 'status',  'playerswar', 'round']
         # fields = '__all__'
         # depth = 5 # needs rounds
 
@@ -270,25 +283,25 @@ class GameSerializer(serializers.ModelSerializer):
         def addFirstPlayer(game):
             deck = generateHalfDeck()
             deck_length = len(deck)
-            stringDeck = ','.join(str(card) for card in deck) 
+            stringDeck = ','.join(str(card) for card in deck)
             # print('got into the game')
             addPlayer = Players.objects.create(
-                game_id=game, 
-                player=self.context['request'].user, 
+                game_id=game,
+                player=self.context['request'].user,
                 deck=stringDeck,
                 deck_length=deck_length)
             addPlayer.save()
 
-        def addSecondPlayer(game,opponent):
+        def addSecondPlayer(game, opponent):
             deck = generateSecondHalfDeck(opponent)
             deck_length = len(deck)
-            stringDeck = ','.join(str(card) for card in deck) 
+            stringDeck = ','.join(str(card) for card in deck)
             addPlayer = Players.objects.create(
-                game_id=game, 
-                player=self.context['request'].user, 
+                game_id=game,
+                player=self.context['request'].user,
                 deck=stringDeck,
                 deck_length=deck_length
-                )
+            )
             addPlayer.save()
 
         inactive_games = Games.objects.filter(status="New")
@@ -302,7 +315,7 @@ class GameSerializer(serializers.ModelSerializer):
                     if current_players.count() == (game.no_of_players - 1):
                         game.status = 'Active'
                         game.save()
-                        addSecondPlayer(game,current_players)
+                        addSecondPlayer(game, current_players)
                         newRound = Rounds.objects.create(
                             game_id=game,)
                         newRound.save()

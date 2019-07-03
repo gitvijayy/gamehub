@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from games.models import Games
 from games.models import Players
-from games.models import OnlinePlayers
+# from games.models import OnlinePlayers
 from goofspiel.models import Rounds as GoofspielRounds
 from memory.models import Rounds as MemoryRounds
 from datetime import timedelta
@@ -59,7 +59,7 @@ def addGame(name, player, total_player):
 class GameSerializer(serializers.ModelSerializer):
 
     # Games.objects.all().delete()
-
+    # OnlinePlayers.objects.all().delete()
     # Players.objects.all().delete()
 
     class Meta:
@@ -111,23 +111,23 @@ class ActiveGamesSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class ActivePlayersSerializer(serializers.ModelSerializer):
+# class ActivePlayersSerializer(serializers.ModelSerializer):
 
-    # game_id = GameSerializer()
-    # OnlinePlayers.objects.all().delete()
-    # Games.objects.all().delete()
-    # Players.objects.all().delete()
+#     # game_id = GameSerializer()
 
-    class Meta:
-        model = OnlinePlayers
-        fields = '__all__'
-        depth = 1
+#     # Games.objects.all().delete()
+#     # Players.objects.all().delete()
 
-    def create(self,  validated_data):
-        get_user = OnlinePlayers.objects.get(user=self.context['request'].user)
-        get_user.status = "logout"
-        get_user.save()
-        return get_user
+#     class Meta:
+#         model = OnlinePlayers
+#         fields = '__all__'
+#         depth = 1
+
+#     def create(self,  validated_data):
+#         get_user = OnlinePlayers.objects.get(user=self.context['request'].user)
+#         get_user.status = "logout"
+#         get_user.save()
+#         return get_user
 
 
 # class DeleteAllSerializer(serializers.ModelSerializer):

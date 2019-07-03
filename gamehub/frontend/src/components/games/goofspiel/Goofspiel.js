@@ -70,6 +70,9 @@ export class Goofspiel extends Component {
         // this.props.getNewGame(this.state.name, (id) => {
         // console.log(this.props.newgame)
         // id = this.props.newgame.id
+        // chatSocket = new WebSocket(
+        //   'ws://' + window.location.host +
+        //   `/ws/games/${id}/`);
         document.cookie = `gameid=${id}`
         chatSocket.send(JSON.stringify({
           'message': "message"
@@ -169,10 +172,10 @@ export class Goofspiel extends Component {
                   && this.props.user.user.username
                   && player == this.props.user.user.username) {
                   return <img key={action + player} onClick={(e) => { addTurn(e) }}
-                    id={action} src={require(`../../images//cards/${action}${data.gameplay.suits[suit]}.png`)} />
+                    id={action} src={require(`../../images/cards/${action}${data.gameplay.suits[suit]}.png`)} />
                 } else {
                   return <img key={action + player}
-                    src={require(`../../images//blackBack.png`)} />
+                    src={require(`../../images/blackBack.png`)} />
                 }
               })}
           </div>)
@@ -211,12 +214,19 @@ export class Goofspiel extends Component {
           } else {
             anime = cssAnimations.zoomOut
           }
-          player1bet = <img className={cssAnimations.flipInY} key={"p1"}
-            src={require(`../../images//cards/${data.gameplay.previous[0]}H.png`)} />
-          player2bet = <img className={cssAnimations.bounceInUp} key={"p2"}
-            src={require(`../../images//cards/${data.gameplay.previous[1]}C.png`)} />
-          newprizecard = <img className={anime} key={data.gameplay.prizeCard}
-            src={require(`../../images/cards/${data.gameplay.previous[2]}D.png`)} />
+          if (data.gameplay.previous[0]) {
+            player1bet = <img className={cssAnimations.flipInY} key={"p1"}
+              src={require(`../../images/cards/${data.gameplay.previous[0]}H.png`)} />
+          }
+
+          if (data.gameplay.previous[1]) {
+            player2bet = <img className={cssAnimations.bounceInUp} key={"p2"}
+              src={require(`../../images/cards/${data.gameplay.previous[1]}C.png`)} />
+          }
+          if (data.gameplay.previous[2]) {
+            newprizecard = <img className={anime} key={data.gameplay.prizeCard}
+              src={require(`../../images/cards/${data.gameplay.previous[2]}D.png`)} />
+          }
         }
 
 

@@ -5,7 +5,8 @@ class Activeplayers extends Component {
 
   componentDidMount() {
 
-    this.props.getActivePlayers()
+    // this.props.getActivePlayers()
+
 
     // setInterval(() => {
     //   this.props.getActivePlayers()
@@ -41,6 +42,7 @@ class Activeplayers extends Component {
     }
 
     if (this.props.activeplayers) {
+      console.log(this.props.activeplayers)
       console.log("in")
       loadplayers =
 

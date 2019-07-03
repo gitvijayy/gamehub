@@ -23,7 +23,7 @@ class Players(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class OnlinePlayers(models.Model):
-    user = models.ForeignKey(
-        User, related_name="onlineuser", on_delete=models.CASCADE, null=True)
-    status = models.CharField(max_length=500, blank=True)
+# class OnlinePlayers(models.Model):
+#     user = models.ForeignKey(
+#         User, related_name="onlineuser", on_delete=models.CASCADE, null=True)
+#     status = models.CharField(max_length=500, blank=True)
