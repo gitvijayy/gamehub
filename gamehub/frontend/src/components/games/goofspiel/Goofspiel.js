@@ -16,8 +16,10 @@ import { ANIMATION_STATUS } from '../../../actions/types'
 // import { styles } from './datahelpers'
 import { cssAnimations } from './datahelpers'
 import Loader from 'react-loader-spinner'
+import { css } from 'aphrodite';
+// import { styles } from 'react-animations/lib/swing';
 
-
+import { styles } from './datahelpers'
 
 var chatSocket = ""
 
@@ -96,10 +98,49 @@ export class Goofspiel extends Component {
 
       <span className="sr-only">Loading...</span>
     </Spinner>)
-    let gameblock =
-      <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
-        <Loaders />
-      </div>
+    // let gameblock =
+    //   <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+    //     <Loaders />
+    //   </div>
+
+    let gameblock;
+
+
+
+    getcookie((id) => {
+      if (id > 0) {
+        gameblock =
+          <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+            <h1 className="logo" style={{ position: "absolute", top: "250px", left: "38%" }}>Waiting for player...</h1>
+            <Loaders />
+            <h1 className="logo" style={{ position: "absolute", top: "500px", left: "38%" }}>Waiting for player...</h1>
+          </div>
+      } else {
+        gameblock =
+          <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+            <h1 className="logo" style={{ position: "absolute", top: "250px", left: "40%" }}>Start New Game...</h1>
+            <Loaders />
+            <h1 className="logo" style={{ position: "absolute", top: "500px", left: "38%" }}>Select Active Game...</h1>
+          </div>
+      }
+    })
+
+    if (data.gameplay && data.gameplay.status && data.gameplay.status == "Game Over") {
+      gameblock =
+        <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
+
+          <h1 className="logo" style={{ position: "absolute", top: "250px", left: "43%" }}>{data.gameplay.winner}</h1>
+
+          <Loaders />
+
+          <h1 className="logo" style={{ position: "absolute", top: "500px", left: "43%" }}>Game Over</h1>
+
+        </div >
+    }
+
+
+
+
     ////////////////////////////////////////////////////////////////
 
 
@@ -177,6 +218,13 @@ export class Goofspiel extends Component {
           newprizecard = <img className={anime} key={data.gameplay.prizeCard}
             src={require(`../../images/cards/${data.gameplay.previous[2]}D.png`)} />
         }
+
+
+
+
+
+
+
         if (Object.keys(data.gameplay.players).length > 1 && data.gameplay.status != "Game Over") {
 
           player1Name = <p className="logo text-white" style={{ position: "absolute" }} >{Object.keys(data.gameplay.players)[0]}</p>
@@ -242,10 +290,13 @@ export class Goofspiel extends Component {
 
       <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
         style={{ height: "57em" }} >
-        <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
+
+        <div key="{game.url}jm" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
-          <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
-          <button className="btn btn-success btn-lg leader text-dark">Archive</button>
+          <div style={{ marginTop: "20%" }}>
+            <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
+            <button className="btn btn-success btn-lg leader text-dark">Archive</button>
+          </div>
         </div>
         {player1Name}
         {gameblock}
@@ -253,10 +304,10 @@ export class Goofspiel extends Component {
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
             display: "flex", flexDirection: "column",
-            justifyContent: "space-evenly"
+            justifyContent: "none"
           }}>
           <Activegames gamename={this.state.name} setSocket={setSocket} />
-          <div>
+          <div style={{ marginTop: "10%" }}>
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
             <button className="btn btn-danger btn-lg rules">Rules</button>
           </div>

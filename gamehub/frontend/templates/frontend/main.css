@@ -278,3 +278,8 @@
 .table-borderless th {
   border: 0;
 }
+
+.construction {
+  height: 120px;
+  margin-left: 20%;
+}
