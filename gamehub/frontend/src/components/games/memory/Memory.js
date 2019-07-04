@@ -306,14 +306,15 @@ export class Memory extends Component {
 
     return (
 
-      <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
+      <section key="game.url" className="bg-common game-top-div  justify-content-center"
         style={{ height: "57em" }} >
 
-        <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
+        {/* <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
             display: "flex", flexDirection: "column",
             justifyContent: "space-evenly"
-          }}>
+          }}> */}
+        <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div>
             <button onClick={() => { newGame(2) }} className="btn btn-success btn-lg leader text-dark">2 Player Game</button>

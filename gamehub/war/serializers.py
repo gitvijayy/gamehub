@@ -12,13 +12,15 @@ import json
 
 
 def stringToIntArray(string_deck):
+    if(string_deck == ''):
+        return []
     string_deck_inarray = string_deck.split(',')
     return list(map(int, string_deck_inarray))
 
 
 def generateHalfDeck():
     card_list = []
-    while(len(card_list) < 26):
+    while(len(card_list) < 4):
         # print(card_list)
         # card_list.append(1) # <----------------------- change this to new card
         random_card = random.randint(1, 52)
@@ -33,7 +35,7 @@ def generateSecondHalfDeck(opponent):
     # opponent_deck_string_inarray = opponent_deck_string.split(',')
     # opponent_deck = list(map(int, opponent_deck_string_inarray))
     opponent_deck = stringToIntArray(opponent_deck_string)
-    for card in range(1, 53):
+    for card in range(1, 5):
         if(not (card in opponent_deck)):
             card_list.append(card)
     random.shuffle(card_list)
@@ -70,6 +72,7 @@ def fetchCards(round, game, user_id):
             # print('this is the modified deck: ' + modified_deck_string)
             player.deck = modified_deck_string
             player.deck_length = array_deck_length
+            # player.deck_length = 0
             print('still did not crash')
             print(modified_deck_string)
             print(array_deck_length)
@@ -85,15 +88,19 @@ def handleWin(player, turns, round):
     arr_deck = stringToIntArray(str_deck)
     # arr_deck.insert(0,turn2.action)
     # arr_deck.insert(0,turn1.action)
+    print('just passed arr_deck')
     arr_deck_new = []
     for turn in turns:
         arr_deck_new.append(turn.action)
+    print('just passed array in arrays')
     arr_deck_new.extend(arr_deck)
     deck_length = len(arr_deck_new)
+    print('this is the new deck')
     str_deck_modified = ','.join(str(card) for card in arr_deck_new)
+    print('passed modified deck' + str_deck_modified)
     player.deck = str_deck_modified
     player.deck_length = deck_length
-    # round.status = player.username
+    # round.status = player
     print('everything worked so far')
     player.save()
 
@@ -106,8 +113,7 @@ def handleTie(round):
 
 def checkLoser(player, round):
     if(player.deck_length == 0):
-        game_id = round.game_id
-        game = Games.objects.get(game_id=game_id)
+        game = round.game_id
         game.status = 'Game Over'
         game.save()
 
@@ -151,12 +157,12 @@ def handleRound(round):
         else:
             print('Error: no names were matched')
 
-    if ((cardplayed1[len(cardplayed1)-1] % 13) > (cardplayed2[len(cardplayed2)-1] % 13)):
+    if ((cardplayed1[len(cardplayed1)-1] % 13) >= (cardplayed2[len(cardplayed2)-1] % 13)):
         handleWin(player1, turns, round)
         checkLoser(player2, round)
         return True
     # <-------------- bug needs fixing, tie is not handled
-    elif((cardplayed1[len(cardplayed1)-1] % 13) <= (cardplayed2[len(cardplayed2)-1] % 13)):
+    elif((cardplayed1[len(cardplayed1)-1] % 13) < (cardplayed2[len(cardplayed2)-1] % 13)):
         handleWin(player2, turns, round)
         checkLoser(player1, round)
         return True
@@ -218,7 +224,7 @@ class TurnSerializer(serializers.ModelSerializer):
             #     cards = fetchCards(validated_data['round_id'], self.context['request'].user)
             cards = fetchCards(
                 validated_data['round_id'], validated_data['round_id'].game_id, self.context['request'].user)
-            print(cards)
+            # print(cards)
             for card in cards:
                 newTurn = Turns.objects.create(
                     round_id=validated_data['round_id'],
@@ -228,6 +234,7 @@ class TurnSerializer(serializers.ModelSerializer):
                 # newTurn.save()
                 # print('new Turn saved')
             if(handleRound(validated_data['round_id'])):
+                print('passed the handle Rounds')
                 newRound = Rounds.objects.create(
                     game_id=validated_data['round_id'].game_id)
                 newRound.save()
@@ -283,6 +290,7 @@ class GameSerializer(serializers.ModelSerializer):
         def addFirstPlayer(game):
             deck = generateHalfDeck()
             deck_length = len(deck)
+            # deck_length = 1 #<====================== Introduced a bug
             stringDeck = ','.join(str(card) for card in deck)
             # print('got into the game')
             addPlayer = Players.objects.create(
@@ -295,6 +303,7 @@ class GameSerializer(serializers.ModelSerializer):
         def addSecondPlayer(game, opponent):
             deck = generateSecondHalfDeck(opponent)
             deck_length = len(deck)
+            # deck_length =  1 #<====================== Introduced a bug
             stringDeck = ','.join(str(card) for card in deck)
             addPlayer = Players.objects.create(
                 game_id=game,

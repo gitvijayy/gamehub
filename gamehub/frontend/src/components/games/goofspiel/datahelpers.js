@@ -1,5 +1,5 @@
 import { StyleSheet, css } from 'aphrodite';
-import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight, zoomIn, zoomOut, flipInY } from 'react-animations'
+import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight, zoomIn, zoomOut, flipInY, hinge } from 'react-animations'
 import { delay } from 'q';
 
 export const cards = () => {
@@ -212,6 +212,11 @@ export const styles = StyleSheet.create({
   bounceInDown1: {
     animationName: bounceInDown,
     animationDuration: '2s'
+  },
+
+  hinge: {
+    animationName: hinge,
+    animationDuration: '2s'
   }
 
 })
@@ -227,7 +232,8 @@ export const cssAnimations = {
   betblockSpinner: css(styles.betblockSpinner),
   zoomInOnly: css(styles.zoomInOnly),
   zoomOutOnly: css(styles.zoomOutOnly),
-  flipInY1: css(styles.flipInY)
+  flipInY1: css(styles.flipInY),
+  hinge: css(styles.hinge, styles.betblock),
 }
 
 

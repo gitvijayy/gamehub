@@ -316,7 +316,7 @@ export class Goofspiel extends Component {
                 {player2bet}
                 {/* {playerbets[1]} */}
               </div>
-              <table className="table table-borderless table-dark  text-center" style={{ width: "25%", marginTop: "2%" }}>
+              <table className="table table-borderless table-dark  text-center" style={{ width: "100px", marginTop: "2%" }}>
                 <p className="logo" style={{ marginTop: "10%", marginLeft: "29%" }}>Goofspiel</p>
 
                 <thead className="text-dark login" style={{ background: "red" }}>
@@ -365,15 +365,16 @@ export class Goofspiel extends Component {
     let modalClose = () => this.setState({ modalShowLogin: false, modalShowRules: false });
     return (
 
-      <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
+      <section key="game.url" className="bg-common game-top-div justify-content-center"
 
         style={{ height: "57em" }} >
 
-        <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
+        {/* <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
           style={{
             display: "flex", flexDirection: "column",
             justifyContent: "none"
-          }}>
+          }}> */}
+        <div key="{game.url}jm" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div style={{ marginTop: "10%" }}>
             <button onClick={() => { newGame() }} className="btn btn-success btn-lg leader text-dark">New Game</button>
@@ -395,7 +396,7 @@ export class Goofspiel extends Component {
         {player1Name}
         {gameblock}
         {player2Name}
-        <div key="{game.url}jm" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
+        <div key="{game.url}m" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
           <div style={{ marginTop: "20%" }}>
             {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>

@@ -7,8 +7,6 @@ class Activeplayers extends Component {
   componentDidMount() {
 
     this.props.getActivePlayers()
-
-
   }
 
   render() {

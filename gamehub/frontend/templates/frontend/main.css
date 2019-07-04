@@ -126,6 +126,7 @@
 
 .game-top-div {
   margin: 3%;
+  display: flex;
 }
 
 .media-margin {
@@ -152,24 +153,26 @@
 
 @media screen and (max-width: 1000px) {
   .side-containers {
-    visibility: hidden;
+    /* visibility: hidden;
     clear: both;
-    float: left;
+    float: left; */
     /* margin: 10px auto 5px 20px;
     width: 28%; */
-    margin: 0;
+    /* margin: 0;
     width: 0;
-    display: none;
+    display: none; */
+    position: relative;
   }
-  .media-margin {
-    margin-left: 0;
-  }
+  /* .media-margin {
+    margin-left: 0; */
 }
+/* } */
 
 @media screen and (max-width: 1000px) {
   .game-top-div {
-    margin: 2%;
-    max-width: 100%;
+    /* margin: 2%;
+    max-width: 100%; */
+    display: block;
   }
 }
 
@@ -378,4 +381,22 @@
 
 .playingcardwar img:hover {
   cursor: pointer;
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* @keyframes fade {
+  from
+} */
+
+.sideCardWar {
+  /* opacity: 0; 
+  animation:  fadeout 3s; */
 }

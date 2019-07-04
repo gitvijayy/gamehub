@@ -16,12 +16,6 @@ const tokenConfig = (getState) => {
   }
 
 export const getWarGamePlay = (gameId) => (dispatch, getState) => {
-    // let abc = defaultgame(123)
-    // const roundId = state.props.gameplay.status? state.props.gameplay.: null
-    // console.log(state)
-    // console.log(getState())
-    // console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHello')
-    // console.log("in")
     
     axios.get(`/api/war/games/${gameId}/`, tokenConfig(getState)).then(res => {
   

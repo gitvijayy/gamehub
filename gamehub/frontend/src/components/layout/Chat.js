@@ -22,7 +22,7 @@ export class Chat extends Component {
     //     messages: [...this.state.messages, message]
     //   })
     // }
-    document.getElementById("scrollToBottom").scrollIntoView({ behavior: "smooth" });
+    // document.getElementById("scrollToBottom").scrollIntoView({ behavior: "smooth" });
   }
 
   componentDidMount() {
@@ -76,7 +76,7 @@ export class Chat extends Component {
           className="text-center pre-scrollable" style={{ height: "250px", maxHeight: "250px", marginBottom: "5%" }}>
 
           {messages}
-          <div id="scrollToBottom"></div>
+          {/* <div id="scrollToBottom"></div> */}
         </div>
 
 
@@ -88,7 +88,7 @@ export class Chat extends Component {
           onKeyDown={(e) => { (e.key === 'Enter' && e.target.value) ? this.props.onKeyDown(e, user) : null }}
         />
 
-       
+
 
 
       </Fragment>

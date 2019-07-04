@@ -10,6 +10,10 @@ import { Activegames } from '../../layout/Activegames'
 import Activeplayers from '../../layout/Activeplayers'
 import { getcookie } from '../../games/goofspiel/datahelpers'
 import WarRules from './warRules'
+import WarGameOver from './warGameOver'
+import { async } from 'q';
+import NewGameWar from './newGameWar'
+import WatingGameWar from './waitingGameWar'
 // import auth from '../../../reducers/auth';
 
 const chatSocket = new WebSocket(
@@ -24,7 +28,8 @@ export class WarGame extends Component {
         this.state = {
             count: 0,
             name: 'war',
-            rules: false
+            rules: false,
+            cookie: ''
         }
     }
 
@@ -74,13 +79,13 @@ export class WarGame extends Component {
     }
     addNewGame = (e) => {
         this.props.makeNewGame(() => {
-            this.props.getWarActivegames(() => {
-                chatSocket.send(JSON.stringify({
-                    'message': 'kkkkk'
-                }))
+                this.props.getWarActivegames(() => {
+                    chatSocket.send(JSON.stringify({
+                        'message': 'kkkkk'
+                    }))
+                })
             })
-        })
-        document.cookie`gameid = ${e.target.id}`
+        // document.cookie`gameid = ${e.target.id}`
     }
 
     // startNewGame = (e) => {
@@ -112,7 +117,7 @@ export class WarGame extends Component {
     componentDidUpdate() {
         chatSocket.onmessage = (e) => {
             //   const game_id= document.cookie.split('=')[1]
-            var data = JSON.parse(e.data);
+            // var data = JSON.parse(e.data);
             //   var message = data['message'];
             //   console.log('I UPDATED')
             //   console.log(message)
@@ -130,10 +135,30 @@ export class WarGame extends Component {
     }
     render() {
         const game = this.props.gameplay.status ? this.props.gameplay : null
-        const activeUsers = this.props.activeplayers
-        console.log(activeUsers)
-        console.log(game)
-        const cookie_id = document.cookie.split('=')[2]
+        const game_id = document.cookie.split(';')[0].split('=')[1]
+        console.log('this is the cookie' + game_id)
+        // const activeUsers = this.props.activeplayers
+        // console.log(activeUsers)
+        // console.log(game)
+        const gameStatus = game? game.status:null
+        console.log('this is the game status: ' + gameStatus)
+        // const myCookies ={}
+        //  const getcookies = () =>{
+        //     let cookies = {}
+        //     document.cookie.split(";").forEach(cookie => {
+        //     name = cookie.split("=")[0].trim()
+        //     cookies[name] = cookie.split("=")[1];
+        //     console.log(cookies)
+        //     return cookies
+        // })
+    // }
+        // const cookies = getcookies()
+        // const cookies = document.cookies.split(';').forEach(cookie =>{
+        //     name = cookie.split("=")[0].trim();
+        //     cookies[name] = cookie.split("=")[1];
+        // })
+        // const cookie = cookies ? cookies[0].gameid: 'no'
+        // console.log('this is cookie inside war' + cookie)
         let modalClose = () => this.setState({ rules: false });
         // const getDecks = (game) => {
         //     const decks = game.playerswar.map(player => {
@@ -159,24 +184,25 @@ export class WarGame extends Component {
         const lastRound = game && game.round.length > 0 ? game.round[game.round.length - 2] : null
         const lastTurns = lastRound ? lastRound.turns : 'Loading'
         // console.log(lastRound)
-        console.log(round)
-        const lastuserTurn = typeof lastTurns === 'string' ? lastTurns : lastTurns.filter(turn => {
-            return turn.player.username === this.props.user.username
-        })
-        const lastOpponentTurn = typeof lastTurns === 'string' ? lastTurns : lastTurns.filter(turn => {
+        // console.log(round)
+        console.log(lastTurns)
+        const lastuserTurn = this.props.user && typeof lastTurns !== 'string' ? lastTurns.filter(turn => {
+            return turn.player.username === this.props.user.username 
+        }) : lastTurns
+        const lastOpponentTurn = this.props.user && typeof lastTurns !== 'string' ?  lastTurns.filter(turn => {
             return turn.player.username !== this.props.user.username
-        })
-        const userturn = typeof turns === 'string' ? [] : turns.filter(turn => {
+        }) : lastTurns
+        const userturn = this.props.user && typeof turns !== 'string' ? turns.filter(turn => {
             return turn.player.username === this.props.user.username
-        })
-        const opponentturn = typeof turns === 'string' ? [] : turns.filter(turn => {
+        }): []
+        const opponentturn = this.props.user && typeof turns !== 'string' ? turns.filter(turn => {
             return turn.player.username !== this.props.user.username
-        })
-        const user = game ? game.playerswar.filter(player => {
+        }) : []
+        const user = game && this.props.user ?  game.playerswar.filter(player => {
             return player.player.username === this.props.user.username
         }) : []
 
-        const opponent = game ? game.playerswar.filter(player => {
+        const opponent = game && this.props.user?  game.playerswar.filter(player => {
             return player.player.username !== this.props.user.username
         }) : []
 
@@ -193,30 +219,12 @@ export class WarGame extends Component {
         const games = this.props.games.length > 0 ? this.props.games : 'Loading'
         // const gamestest = 'Loading'
         // console.log(games)
-
-        const loadRules = () => {
-            <section className='rules'>
-                <p> Welcome To War!! </p>
-                <p> Dealing: The deck is divided evenly, with each player receiving 26 cards, dealt one at a time, face down. Anyone may deal first. Each player places their stack of cards face down, in front of them. </p>
-                <p> Each player turns up a card at the same time and the player with the higher card takes both cards and puts them, face down, on the bottom of his stack. </p>
-                <p> Winner is the player who took all the cards in the deck </p>
-            </section>
-        }
-
+        // console.log('this is the cookie_id ' + cookie_id);
         return (
             <Fragment>
                 <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
                     style={{ height: "57em" }} >
                     <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2">
-                        {/* <Activeplayers /> */}
-                        {/* <button className='btn btn-dark btn-lg newgame text-white'>Players Online</button> */}
-                        {/* <div className='container pre-scrollable'>
-                {activeUsers.map(user => {
-                    return(
-                        <button className=" btn btn-dark btn-lg newgame-war text-white" onClick={this.goToGame} key={user.id}>{user.user.username}</button>
-                )
-                })}
-            </div> */}
                         <Activeplayers />
                         <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
                         <button className="btn btn-success btn-lg leader text-dark">Archive</button>
@@ -225,7 +233,9 @@ export class WarGame extends Component {
 
 
 
-                    {cookie_id === '0' ? <button className="col-12 col-md-10 bg-alternate-2 beggining-button" onClick={this.addNewGame}>New Game</button> :
+                    {game_id === '0' ? <NewGameWar /> :
+                     gameStatus === 'Game Over'? <WarGameOver user={user} opponent={opponent}/>:
+                     gameStatus === 'New'? <WatingGameWar />:
                         // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
                         <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
 
@@ -242,7 +252,7 @@ export class WarGame extends Component {
                                 <img src={fetchDeckImage('red')} />
 
                                 {opponentturn[0] ? <img src={convertNumberToCard(opponentturn[0].action - 1)} key={opponentturn[0].id} /> : <div className='empty-cardwar' />}
-                                {lastOpponentTurn[0].action ? <img src={convertNumberToCard(lastOpponentTurn[0].action - 1)} key={lastOpponentTurn[0].id} className='sideCard' /> : <div className='empty-cardwar' />}
+                                {lastOpponentTurn[0].action ? <img src={convertNumberToCard(lastOpponentTurn[0].action - 1)} key={lastOpponentTurn[0].id} className='sideCardWar' /> : <div className='empty-cardwar' />}
                             </div>
 
 
@@ -261,7 +271,7 @@ export class WarGame extends Component {
                             <div className="playingcardwar">
                                 <img src={fetchDeckImage('green')} onClick={(e) => { this.addTurn(e) }} />
                                 {userturn.length > 0 ? <img src={convertNumberToCard(userturn[0].action - 1)} /> : <div className='empty-cardwar' />}
-                                {lastuserTurn[0].action ? <img src={convertNumberToCard(lastuserTurn[0].action - 1)} className='sideCard' /> : <div className='empty-cardwar' />}
+                                {lastuserTurn[0].action ? <img src={convertNumberToCard(lastuserTurn[0].action - 1)} className='sideCardWar' /> : <div className='empty-cardwar' />}
                             </div>
 
                             <div className='titles-opponent'>
@@ -274,21 +284,21 @@ export class WarGame extends Component {
                     <div className="col-12 col-md-2 bg-common game-top-div-war game-cards  bg-alternate-2"
                         style={{
                             display: "flex", flexDirection: "column",
-                            justifyContent: "space-evenly"
+                            justifyContent: "space-around"
                         }}>
                         {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
-                        <div>
-                            <button className='btn btn-dark btn-lg newgame text-white'>Active Games</button>
+                        
+                            <button className='btn btn-dark btn-lg text-white'>Active Games</button>
                             <div className='container pre-scrollable'>
                                 {typeof games === 'string' ? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button> :
                                     games.map(game => {
                                         return (
                                             game.game_id.status === 'New' ? <button className="col-12 alert-warning btn-lg game-top-div" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War {games.indexOf(game) + 1}</button> :
-                                                <button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
+                                            game.game_id.status === 'Game Over' ? null:<button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
                                         )
                                     })}
                             </div>
-                        </div>
+                        
                         {/* <Activegames gamename={this.state.name} setSocket={setSocket}/> */}
                         <div>
                             <button onClick={this.addNewGame} className="btn btn-success btn-lg leader text-dark">New Game</button>
