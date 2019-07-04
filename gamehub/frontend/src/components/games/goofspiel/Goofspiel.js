@@ -300,19 +300,19 @@ export class Goofspiel extends Component {
               <p className="logo" >{Object.keys(data.gameplay.players)[0]}</p>
             </div> */}
             {playercards[0]}
-            <div className="playingcard middlebox">
+            <div className="playingcard middlebox justify-content-end">
               {/* <img className="aces" src={require("../images/aces.png")} /> */}
-              <div>
-                <button className="btn btn-danger btn-lg rules">{player1bet1}{Object.keys(data.gameplay.players)[0]}</button>
+              <div style={{ position: "absolute", left: "20px" }}>
+                <button style={{ height: "65px" }} className="btn btn-danger btn-lg rules">{player1bet1}{Object.keys(data.gameplay.players)[0]}</button>
                 {player1bet}
                 {/* {playerbets[0]} */}
               </div>
-              <div>
+              <div style={{ position: "absolute", left: "220px" }}>
                 <button className="btn btn-success btn-lg leader text-dark" style={{ height: "65px" }}>Round {roundid}<br />Prize</button>
                 {newprizecard}
               </div>
-              <div>
-                <button className="btn btn-danger btn-lg rules">{player2bet1}{Object.keys(data.gameplay.players)[1]}</button>
+              <div style={{ position: "absolute", left: "420px" }}>
+                <button style={{ height: "65px" }} className="btn btn-danger btn-lg rules">{player2bet1}{Object.keys(data.gameplay.players)[1]}</button>
                 {player2bet}
                 {/* {playerbets[1]} */}
               </div>

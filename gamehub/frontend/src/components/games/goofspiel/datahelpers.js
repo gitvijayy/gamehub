@@ -153,12 +153,12 @@ export const styles = StyleSheet.create({
 
   fadeOutLeft: {
     animationName: fadeOutLeft,
-    animationDuration: '3s',
+    animationDuration: '4s',
 
   },
   fadeOutRight: {
     animationName: fadeOutRight,
-    animationDuration: '3s',
+    animationDuration: '4s',
   },
   zoomIn: {
     animationName: zoomIn,
@@ -172,7 +172,7 @@ export const styles = StyleSheet.create({
   },
   zoomOut: {
     animationName: zoomOut,
-    animationDuration: '3s',
+    animationDuration: '4s',
 
   },
   bounceInUp: {

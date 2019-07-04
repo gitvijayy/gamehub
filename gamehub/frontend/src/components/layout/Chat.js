@@ -56,8 +56,8 @@ export class Chat extends Component {
     if (this.props.user && this.props.user.username) {
       user = this.props.user.username
     }
-
-    const messages = this.props.messages.map((message, index) => {
+    const mess = this.props.messages.reverse()
+    const messages = mess.map((message, index) => {
       return (
         <Fragment key={index}>
           <b>@{message.name}</b>
