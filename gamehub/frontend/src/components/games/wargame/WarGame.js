@@ -14,6 +14,7 @@ import WarGameOver from './warGameOver'
 import { async } from 'q';
 import NewGameWar from './newGameWar'
 import WatingGameWar from './waitingGameWar'
+import Chat from '../../layout/Chat'
 // import auth from '../../../reducers/auth';
 
 const chatSocket = new WebSocket(
@@ -29,8 +30,15 @@ export class WarGame extends Component {
             count: 0,
             name: 'war',
             rules: false,
-            cookie: ''
+            cookie: '',
+            messages: []
         }
+    }
+
+    onKeyDown = (e) => {
+        this.setState({
+            message : e.target.value
+        })
     }
 
     addTurn = (e) => {
@@ -225,9 +233,28 @@ export class WarGame extends Component {
                 <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
                     style={{ height: "57em" }} >
                     <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2">
-                        <Activeplayers />
-                        <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
-                        <button className="btn btn-success btn-lg leader text-dark">Archive</button>
+                        <div>
+                    <button className='btn btn-dark btn-lg text-white bg-dark'>Active Games</button>
+                            <div className='container pre-scrollable' style={{
+                                height: '520px',
+                                'margin-top':'20%'
+                            }}>
+                                {typeof games === 'string' ? '' :
+                                    games.map(game => {
+                                        return (
+                                            game.game_id.status === 'New' ? <button className="col-12 alert-warning btn-lg game-top-div" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War {games.indexOf(game) + 1}</button> :
+                                            game.game_id.status === 'Game Over' ? null:<button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
+                                        )
+                                    })}
+                            </div>
+                        </div>
+                            <div>
+                            <button onClick={this.addNewGame} className="btn btn-success btn-lg leader text-dark">New Game</button>
+                            <button className="btn btn-danger btn-lg rules" onClick={() => this.setState({ rules: true })}>Rules</button>
+                        </div>
+                        {/* <Activeplayers /> */}
+                        {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
+                        <button className="btn btn-success btn-lg leader text-dark">Archive</button> */}
                     </div>
 
 
@@ -288,7 +315,7 @@ export class WarGame extends Component {
                         }}>
                         {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
                         
-                            <button className='btn btn-dark btn-lg text-white'>Active Games</button>
+                            {/* <button className='btn btn-dark btn-lg text-white'>Active Games</button>
                             <div className='container pre-scrollable'>
                                 {typeof games === 'string' ? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button> :
                                     games.map(game => {
@@ -297,12 +324,14 @@ export class WarGame extends Component {
                                             game.game_id.status === 'Game Over' ? null:<button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
                                         )
                                     })}
-                            </div>
+                            </div> */}
                         
                         {/* <Activegames gamename={this.state.name} setSocket={setSocket}/> */}
-                        <div>
-                            <button onClick={this.addNewGame} className="btn btn-success btn-lg leader text-dark">New Game</button>
-                            <button className="btn btn-danger btn-lg rules" onClick={() => this.setState({ rules: true })}>Rules</button>
+                        <Activeplayers />
+                        <div style={{ marginTop: "20%" }}>
+                            {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
+                            <button className="btn btn-success btn-lg leader text-dark">Archive</button> */}
+                            <Chat messages={this.state.messages} onKeyDown={this.onKeyDown} />
                         </div>
                     </div>
                 </section >
