@@ -69,11 +69,11 @@ export class Goofspiel extends Component {
 
       }
 
-      if (message.type == "Chat") {
-        this.setState({
-          messages: [...this.state.messages, message]
-        })
-      }
+      // if (message.type == "Chat") {
+      //   this.setState({
+      //     messages: [...this.state.messages, message]
+      //   })
+      // }
 
 
     };
@@ -124,23 +124,23 @@ export class Goofspiel extends Component {
       })
     }
 
-    let onKeyDown = (e, user) => {
+    // let onKeyDown = (e, user) => {
 
-      if (e.keyCode == 13) {
-        let message = {
-          "name": user,
-          "message": e.target.value,
-          "type": "Chat"
-        }
+    //   if (e.keyCode == 13) {
+    //     let message = {
+    //       "name": user,
+    //       "message": e.target.value,
+    //       "type": "Chat"
+    //     }
 
-        e.target.value = ""
-        chatSocket.send(JSON.stringify({
-          'message': message
-        }));
+    //     e.target.value = ""
+    //     chatSocket.send(JSON.stringify({
+    //       'message': message
+    //     }));
 
-      }
+    //   }
 
-    }
+    // }
 
     /////////////////////////////////////////////////////////////
     const data = this.props.gameplay
@@ -401,7 +401,8 @@ export class Goofspiel extends Component {
           <div style={{ marginTop: "20%" }}>
             {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
             <button className="btn btn-success btn-lg leader text-dark">Archive</button> */}
-            <Chat messages={this.state.messages} onKeyDown={onKeyDown} />
+            <Chat />
+            {/* messages={this.state.messages} onKeyDown={onKeyDown} */}
           </div>
         </div>
 

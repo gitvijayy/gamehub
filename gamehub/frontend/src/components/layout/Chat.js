@@ -3,51 +3,73 @@ import { connect } from 'react-redux'
 import { getCookies } from '../games/goofspiel/datahelpers'
 var chatSocket = ""
 
-chatSocket = new WebSocket(
-  'ws://' + window.location.host +
-  `/ws/games/chatbox/`);
+// chatSocket = new WebSocket(
+//   'ws://' + window.location.host +
+//   `/ws/games/chatbox/`);
 
 
 export class Chat extends Component {
 
-  // state = {
-  //   messages: []
-  // }
+
+
+
+  // this.containerEl = document.createElement('div'); // STEP 1: create an empty div
+  // this.externalWindow = null;
+  state = {
+    messages: []
+  }
+
+
+
 
   componentDidUpdate() {
-    // chatSocket.onmessage = (e) => {
-    //   var data = JSON.parse(e.data);
-    //   var message = data['message'];
-    //   this.setState({
-    //     messages: [...this.state.messages, message]
-    //   })
-    // }
+    chatSocket.onmessage = (e) => {
+      var data = JSON.parse(e.data);
+      var message = data['message'];
+      let mess = this.state.messages.reverse()
+      // if (this._isMounted) {
+      this.setState({
+        messages: [message, ...mess]
+      })
+      // }
+    }
+
+
     // document.getElementById("scrollToBottom").scrollIntoView({ behavior: "smooth" });
   }
 
   componentDidMount() {
 
-    // chatSocket = new WebSocket(
-    //   'ws://' + window.location.host +
-    //   `/ws/games/chatbox/`);
+    // this._isMounted = true;
+
+
+    chatSocket = new WebSocket(
+      'ws://' + window.location.host +
+      `/ws/games/chatbox/`);
   }
 
-  // onKeyDown = (e, user) => {
 
-  //   if (e.keyCode == 13) {
-  //     let message = {
-  //       "name": user,
-  //       "message": e.target.value
-  //     }
-
-  //     e.target.value = ""
-  //     chatSocket.send(JSON.stringify({
-  //       'message': message
-  //     }));
-
-  //   }
-
+  // componentWillUnmount() {
+  //   this._isMounted = false;
   // }
+
+
+  onKeyDown = (e, user) => {
+
+    if (e.keyCode == 13) {
+      let message = {
+        "name": user,
+        "message": e.target.value
+      }
+
+      e.target.value = ""
+      chatSocket.send(JSON.stringify({
+        'message': message
+      }));
+
+    }
+
+  }
 
   render() {
 
@@ -56,8 +78,8 @@ export class Chat extends Component {
     if (this.props.user && this.props.user.username) {
       user = this.props.user.username
     }
-    const mess = this.props.messages.reverse()
-    const messages = mess.map((message, index) => {
+    // const mess = this.props.messages.reverse()
+    const messages = this.state.messages.map((message, index) => {
       return (
         <Fragment key={index}>
           <b>@{message.name}</b>
@@ -85,7 +107,7 @@ export class Chat extends Component {
           name='content'
           style={{ resize: "none", marginBottom: "5%" }}
           placeholder='ENTER to Submit'
-          onKeyDown={(e) => { (e.key === 'Enter' && e.target.value) ? this.props.onKeyDown(e, user) : null }}
+          onKeyDown={(e) => { (e.key === 'Enter' && e.target.value) ? this.onKeyDown(e, user) : null }}
         />
 
 

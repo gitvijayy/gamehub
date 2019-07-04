@@ -49,11 +49,11 @@ export class Memory extends Component {
       var message = data['message'];
 
 
-      if (message.type == "Chat") {
-        this.setState({
-          messages: [...this.state.messages, message]
-        })
-      }
+      // if (message.type == "Chat") {
+      //   this.setState({
+      //     messages: [...this.state.messages, message]
+      //   })
+      // }
 
       if (message.type != "Chat") {
 
@@ -79,23 +79,23 @@ export class Memory extends Component {
 
   render() {
 
-    let onKeyDown = (e, user) => {
+    // let onKeyDown = (e, user) => {
 
-      if (e.keyCode == 13) {
-        let message = {
-          "name": user,
-          "message": e.target.value,
-          "type": "Chat"
-        }
+    //   if (e.keyCode == 13) {
+    //     let message = {
+    //       "name": user,
+    //       "message": e.target.value,
+    //       "type": "Chat"
+    //     }
 
-        e.target.value = ""
-        chatSocket.send(JSON.stringify({
-          'message': message
-        }));
+    //     e.target.value = ""
+    //     chatSocket.send(JSON.stringify({
+    //       'message': message
+    //     }));
 
-      }
+    //   }
 
-    }
+    // }
 
 
     let gameblock;
@@ -335,7 +335,8 @@ export class Memory extends Component {
         <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
           <div style={{ marginTop: "10%" }}>
-            <Chat messages={this.state.messages} onKeyDown={onKeyDown} />
+            <Chat />
+            {/* messages={this.state.messages} onKeyDown={onKeyDown} */}
           </div>
         </div>
 

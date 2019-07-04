@@ -37,7 +37,7 @@ export class WarGame extends Component {
 
     onKeyDown = (e) => {
         this.setState({
-            message : e.target.value
+            message: e.target.value
         })
     }
 
@@ -87,12 +87,12 @@ export class WarGame extends Component {
     }
     addNewGame = (e) => {
         this.props.makeNewGame(() => {
-                this.props.getWarActivegames(() => {
-                    chatSocket.send(JSON.stringify({
-                        'message': 'kkkkk'
-                    }))
-                })
+            this.props.getWarActivegames(() => {
+                chatSocket.send(JSON.stringify({
+                    'message': 'kkkkk'
+                }))
             })
+        })
         // document.cookie`gameid = ${e.target.id}`
     }
 
@@ -148,7 +148,7 @@ export class WarGame extends Component {
         // const activeUsers = this.props.activeplayers
         // console.log(activeUsers)
         // console.log(game)
-        const gameStatus = game? game.status:null
+        const gameStatus = game ? game.status : null
         console.log('this is the game status: ' + gameStatus)
         // const myCookies ={}
         //  const getcookies = () =>{
@@ -159,7 +159,7 @@ export class WarGame extends Component {
         //     console.log(cookies)
         //     return cookies
         // })
-    // }
+        // }
         // const cookies = getcookies()
         // const cookies = document.cookies.split(';').forEach(cookie =>{
         //     name = cookie.split("=")[0].trim();
@@ -195,22 +195,22 @@ export class WarGame extends Component {
         // console.log(round)
         console.log(lastTurns)
         const lastuserTurn = this.props.user && typeof lastTurns !== 'string' ? lastTurns.filter(turn => {
-            return turn.player.username === this.props.user.username 
+            return turn.player.username === this.props.user.username
         }) : lastTurns
-        const lastOpponentTurn = this.props.user && typeof lastTurns !== 'string' ?  lastTurns.filter(turn => {
+        const lastOpponentTurn = this.props.user && typeof lastTurns !== 'string' ? lastTurns.filter(turn => {
             return turn.player.username !== this.props.user.username
         }) : lastTurns
         const userturn = this.props.user && typeof turns !== 'string' ? turns.filter(turn => {
             return turn.player.username === this.props.user.username
-        }): []
+        }) : []
         const opponentturn = this.props.user && typeof turns !== 'string' ? turns.filter(turn => {
             return turn.player.username !== this.props.user.username
         }) : []
-        const user = game && this.props.user ?  game.playerswar.filter(player => {
+        const user = game && this.props.user ? game.playerswar.filter(player => {
             return player.player.username === this.props.user.username
         }) : []
 
-        const opponent = game && this.props.user?  game.playerswar.filter(player => {
+        const opponent = game && this.props.user ? game.playerswar.filter(player => {
             return player.player.username !== this.props.user.username
         }) : []
 
@@ -230,25 +230,25 @@ export class WarGame extends Component {
         // console.log('this is the cookie_id ' + cookie_id);
         return (
             <Fragment>
-                <section key="game.url" className="bg-common game-top-div d-flex justify-content-center"
+                <section key="game.url" className="bg-common game-top-div justify-content-center"
                     style={{ height: "57em" }} >
                     <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2">
                         <div>
-                    <button className='btn btn-dark btn-lg text-white bg-dark'>Active Games</button>
+                            <button className='btn btn-dark btn-lg text-white bg-dark'>Active Games</button>
                             <div className='container pre-scrollable' style={{
                                 height: '520px',
-                                'margin-top':'20%'
+                                'margin-top': '20%'
                             }}>
                                 {typeof games === 'string' ? '' :
                                     games.map(game => {
                                         return (
                                             game.game_id.status === 'New' ? <button className="col-12 alert-warning btn-lg game-top-div" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War {games.indexOf(game) + 1}</button> :
-                                            game.game_id.status === 'Game Over' ? null:<button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
+                                                game.game_id.status === 'Game Over' ? null : <button className="col-12 alert-success btn-lg" onClick={this.goToGame} id={game.game_id.id} key={game.game_id.id}>War{games.indexOf(game) + 1}</button>
                                         )
                                     })}
                             </div>
                         </div>
-                            <div>
+                        <div>
                             <button onClick={this.addNewGame} className="btn btn-success btn-lg leader text-dark">New Game</button>
                             <button className="btn btn-danger btn-lg rules" onClick={() => this.setState({ rules: true })}>Rules</button>
                         </div>
@@ -261,52 +261,52 @@ export class WarGame extends Component {
 
 
                     {game_id === '0' ? <NewGameWar /> :
-                     gameStatus === 'Game Over'? <WarGameOver user={user} opponent={opponent}/>:
-                     gameStatus === 'New'? <WatingGameWar />:
-                        // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
-                        <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
+                        gameStatus === 'Game Over' ? <WarGameOver user={user} opponent={opponent} /> :
+                            gameStatus === 'New' ? <WatingGameWar /> :
+                                // {/* {cookie_id === '0'? console.log('the cookie id is 0'): console.log('the cookie id is ' + cookie_id)} */}
+                                <div className="col-12 col-md-10 bg-alternate-2" style={{ height: "52em" }} >
 
-                            <div className='titles-opponent'>
-                                <p className='opponent-deck-amount'> Cards Left : {opponent.length > 0 ? opponent[0].deck_length : ''}</p>
-                                {/* <button className="btn btn-danger btn-lg rules">Cards Left : 27</button> */}
-                                <p className='player-name'>{opponent.length > 0 ? opponent[0].player.username : 'Waiting for player to join'} {opponent.length > 0 ? opponentturn.length > 0 ? ':Played, waiting' : ':Thinking' : ''}</p>
-                                <img src={require('../../images/male.png')} className='player-icon' />
-                            </div>
+                                    <div className='titles-opponent'>
+                                        <p className='opponent-deck-amount'> Cards Left : {opponent.length > 0 ? opponent[0].deck_length : ''}</p>
+                                        {/* <button className="btn btn-danger btn-lg rules">Cards Left : 27</button> */}
+                                        <p className='player-name'>{opponent.length > 0 ? opponent[0].player.username : 'Waiting for player to join'} {opponent.length > 0 ? opponentturn.length > 0 ? ':Played, waiting' : ':Thinking' : ''}</p>
+                                        <img src={require('../../images/male.png')} className='player-icon' />
+                                    </div>
 
-                            <div className="playingcardwar">
-
-
-                                <img src={fetchDeckImage('red')} />
-
-                                {opponentturn[0] ? <img src={convertNumberToCard(opponentturn[0].action - 1)} key={opponentturn[0].id} /> : <div className='empty-cardwar' />}
-                                {lastOpponentTurn[0].action ? <img src={convertNumberToCard(lastOpponentTurn[0].action - 1)} key={lastOpponentTurn[0].id} className='sideCardWar' /> : <div className='empty-cardwar' />}
-                            </div>
+                                    <div className="playingcardwar">
 
 
+                                        <img src={fetchDeckImage('red')} />
 
-                            <div className="playingcardwar middle">
-                                {/* <div className="middle"> */}
-                                {/* <div className="cardsplayed"> {convertNumberToCard(2)} </div> */}
-                                {/* <img src={require("../../images/dark_soldier.png")} /> */}
-                                <img className="aces" src={require("../../images/warlogo.png")} />
-                                {/* <img src={require("../../images/shouting_soldier.jpg")} /> */}
-                                {/* <div className="cardsplayed"> {convertNumberToCard(11)} </div> */}
-                                {/* </div> */}
-                            </div>
+                                        {opponentturn[0] ? <img src={convertNumberToCard(opponentturn[0].action - 1)} key={opponentturn[0].id} /> : <div className='empty-cardwar' />}
+                                        {lastOpponentTurn[0].action ? <img src={convertNumberToCard(lastOpponentTurn[0].action - 1)} key={lastOpponentTurn[0].id} className='sideCardWar' /> : <div className='empty-cardwar' />}
+                                    </div>
 
 
-                            <div className="playingcardwar">
-                                <img src={fetchDeckImage('green')} onClick={(e) => { this.addTurn(e) }} />
-                                {userturn.length > 0 ? <img src={convertNumberToCard(userturn[0].action - 1)} /> : <div className='empty-cardwar' />}
-                                {lastuserTurn[0].action ? <img src={convertNumberToCard(lastuserTurn[0].action - 1)} className='sideCardWar' /> : <div className='empty-cardwar' />}
-                            </div>
 
-                            <div className='titles-opponent'>
-                                <p className='opponent-deck-amount'> Cards Left : {user.length > 0 ? user[0].deck_length : 'Loading'}</p>
-                                <p className='player-name'>{user.length > 0 ? user[0].player.username : 'Loading'} : {userturn.length === 0 ? 'Your Turn' : 'Waiting for opponent'}</p>
-                                <img src={require('../../images/male.png')} className='player-icon' />
-                            </div>
-                        </div>
+                                    <div className="playingcardwar middle">
+                                        {/* <div className="middle"> */}
+                                        {/* <div className="cardsplayed"> {convertNumberToCard(2)} </div> */}
+                                        {/* <img src={require("../../images/dark_soldier.png")} /> */}
+                                        <img className="aces" src={require("../../images/warlogo.png")} />
+                                        {/* <img src={require("../../images/shouting_soldier.jpg")} /> */}
+                                        {/* <div className="cardsplayed"> {convertNumberToCard(11)} </div> */}
+                                        {/* </div> */}
+                                    </div>
+
+
+                                    <div className="playingcardwar">
+                                        <img src={fetchDeckImage('green')} onClick={(e) => { this.addTurn(e) }} />
+                                        {userturn.length > 0 ? <img src={convertNumberToCard(userturn[0].action - 1)} /> : <div className='empty-cardwar' />}
+                                        {lastuserTurn[0].action ? <img src={convertNumberToCard(lastuserTurn[0].action - 1)} className='sideCardWar' /> : <div className='empty-cardwar' />}
+                                    </div>
+
+                                    <div className='titles-opponent'>
+                                        <p className='opponent-deck-amount'> Cards Left : {user.length > 0 ? user[0].deck_length : 'Loading'}</p>
+                                        <p className='player-name'>{user.length > 0 ? user[0].player.username : 'Loading'} : {userturn.length === 0 ? 'Your Turn' : 'Waiting for opponent'}</p>
+                                        <img src={require('../../images/male.png')} className='player-icon' />
+                                    </div>
+                                </div>
                     }
                     <div className="col-12 col-md-2 bg-common game-top-div-war game-cards  bg-alternate-2"
                         style={{
@@ -314,8 +314,8 @@ export class WarGame extends Component {
                             justifyContent: "space-around"
                         }}>
                         {/* <Activegames gamename={'war'} activegames={this.props.activegames} /> */}
-                        
-                            {/* <button className='btn btn-dark btn-lg text-white'>Active Games</button>
+
+                        {/* <button className='btn btn-dark btn-lg text-white'>Active Games</button>
                             <div className='container pre-scrollable'>
                                 {typeof games === 'string' ? <button className=" btn btn-dark btn-lg newgame text-white">No Games</button> :
                                     games.map(game => {
@@ -325,7 +325,7 @@ export class WarGame extends Component {
                                         )
                                     })}
                             </div> */}
-                        
+
                         {/* <Activegames gamename={this.state.name} setSocket={setSocket}/> */}
                         <Activeplayers />
                         <div style={{ marginTop: "20%" }}>
