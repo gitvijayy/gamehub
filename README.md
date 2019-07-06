@@ -14,7 +14,7 @@ A game center application where users can play card games and have fun. Full sta
 !["Goofspiel"](https://github.com/gitvijayy/gamehub/blob/master/docs/goofspiel.png?raw=true)
 !["Memory"](https://github.com/gitvijayy/gamehub/blob/master/docs/memory.png?raw=true)
 !["War"](https://github.com/gitvijayy/gamehub/blob/master/docs/war.png?raw=true)
-!["Rules"]()
+!["Rules"](https://github.com/gitvijayy/gamehub/blob/master/docs/rules.png?raw=true)
 
 ## Getting Started
 
