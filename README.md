@@ -20,20 +20,20 @@ A game center application where users can play card games and have fun. Full sta
 
 ### Install dependencies
 
-npm install
-pipenv update
+- npm install
+- pipenv update
 
 ### Serve API on localhost:8000
 
-python gamehub/manage.py runserver
+- python gamehub/manage.py runserver
 
 ### Run webpack (from root)
 
-npm run dev
+- npm run dev
 
 ### Build for production
 
-npm run build
+- npm run build
 
 ## Tech Stack
 
