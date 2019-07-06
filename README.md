@@ -10,11 +10,11 @@ A game center application where users can play card games and have fun. Full sta
 
 ## Final Product
 
-!["Landing Page"](https://github.com/gitvijayy/Goofspiel/blob/master/public/images/gameplay.png)
-!["Goofspiel"](https://github.com/gitvijayy/Goofspiel/blob/master/public/images/login.png)
-!["Memory"](https://github.com/gitvijayy/Goofspiel/blob/master/public/images/gameplay.png)
-!["War"](https://github.com/gitvijayy/Goofspiel/blob/master/public/images/login.png)
-!["Rules"](https://github.com/gitvijayy/Goofspiel/blob/master/public/images/login.png)
+!["Landing Page"](https://github.com/gitvijayy/gamehub/blob/master/docs/landing.png?raw=true)
+!["Goofspiel"](https://github.com/gitvijayy/gamehub/blob/master/docs/goofspiel.png?raw=true)
+!["Memory"](https://github.com/gitvijayy/gamehub/blob/master/docs/memory.png?raw=true)
+!["War"](https://github.com/gitvijayy/gamehub/blob/master/docs/war.png?raw=true)
+!["Rules"]()
 
 ## Getting Started
 
@@ -37,14 +37,14 @@ npm run build
 
 ## Tech Stack
 
-Django
-Python
-Django-Channels
-Channels Redis
-Websockets
-Javascript
-React
-Redux
-React Router
-React Animations
-React Alerts
+- Django
+- Python
+- Django-Channels
+- Channels Redis
+- Websockets
+- Javascript
+- React
+- Redux
+- React Router
+- React Animations
+- React Alerts
