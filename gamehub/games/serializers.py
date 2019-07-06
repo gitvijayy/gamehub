@@ -125,6 +125,12 @@ class ActivePlayersSerializer(serializers.ModelSerializer):
         depth = 1
 
     def create(self,  validated_data):
+        # activeplayers = Usersonline.objects.filter(status='online')
+        # for user in activeplayers:
+        #     user.status = 'logout'
+        #     user.save()
+
+        # raise serializers.ValidationError("Not Your Turn")
         get_user = Usersonline.objects.get(user=self.context['request'].user)
         get_user.status = "logout"
         get_user.save()

@@ -69,6 +69,9 @@ export class Memory extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      messages: ["mounted"]
+    })
     getcookie((id) => {
       chatSocket = new WebSocket(
         'ws://' + window.location.host +
@@ -79,23 +82,7 @@ export class Memory extends Component {
 
   render() {
 
-    // let onKeyDown = (e, user) => {
 
-    //   if (e.keyCode == 13) {
-    //     let message = {
-    //       "name": user,
-    //       "message": e.target.value,
-    //       "type": "Chat"
-    //     }
-
-    //     e.target.value = ""
-    //     chatSocket.send(JSON.stringify({
-    //       'message': message
-    //     }));
-
-    //   }
-
-    // }
 
 
     let gameblock;
@@ -172,7 +159,7 @@ export class Memory extends Component {
 
       gameblock =
         (< Fragment >
-          <div className="memorycard" style={{ marginTop: "7%" }}>
+          <div className="memorycard" style={{ marginTop: "3%" }}>
             {
               cards.map((action, index) => {
                 let faceupCards = data.gameplay.faceupCards
@@ -223,19 +210,6 @@ export class Memory extends Component {
           </div>
 
 
-          {/* {let player1block = <div>
-            <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].points} Point</h3>
-            <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].chances} Chance</h5>
-            <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
-          </div>
-
-          if (players[1]) {
-            player2block = < div >
-              <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].points} Point</h3>
-              <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
-              <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
-            </div >
-          } */}
 
           <div className="playingcard middlebox">
             <div >
@@ -252,7 +226,7 @@ export class Memory extends Component {
               <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
               <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
             </div >}
-          </div>}
+          </div>
 
 
 
@@ -277,43 +251,16 @@ export class Memory extends Component {
       }
 
 
-      // let player1block = <div>
-      //   <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].points} Point</h3>
-      //   <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].chances} Chance</h5>
-      //   <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
-      // </div>
-
-      // if (players[1]) {
-      //   player2block = < div >
-      //     <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].points} Point</h3>
-      //     <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
-      //     <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
-      //   </div >
-      // }
-
-      // playerblock = <div className="playingcard middlebox">
-      //   {player1block}
-      //   <div>
-      //     <p className="logo" style={{ marginLeft: "15%" }}>Memory</p>
-      //     <img style={{ width: "150px", boxShadow: "none", paddingBottom: "25px" }} src={require(`../../images/aces.png`)} />
-      //   </div>
-      //   {player2block}
-      // </div>
 
 
     }
     let modalClose = () => this.setState({ modalShowLogin: false, modalShowRules: false });
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
     return (
 
       <section key="game.url" className="bg-common game-top-div  justify-content-center"
         style={{ height: "57em" }} >
 
-        {/* <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
-          style={{
-            display: "flex", flexDirection: "column",
-            justifyContent: "space-evenly"
-          }}> */}
         <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div>
@@ -327,7 +274,7 @@ export class Memory extends Component {
 
         <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
           {gameblock}
-          {/* {playerblock} */}
+
         </div>
 
 
@@ -335,14 +282,15 @@ export class Memory extends Component {
         <div key="{game.url}jm" className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
           <div style={{ marginTop: "10%" }}>
-            <Chat />
-            {/* messages={this.state.messages} onKeyDown={onKeyDown} */}
+            <Chat messages={this.state.messages} />
+
           </div>
         </div>
 
         <Rules show={this.state.modalShowRules} onHide={modalClose} gamename={this.state.gamename} rules={this.state.rules} />
       </section >
     )
+    ////////////////////////////////////////////////////////////////////////////////////////   
   }
 }
 const mapStateToProps = state => ({
@@ -352,3 +300,70 @@ const mapStateToProps = state => ({
   animation: state.goofspiel.memoryAnimation
 })
 export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames, getActivePlayers })(Memory)
+
+
+
+{/* <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
+          style={{
+            display: "flex", flexDirection: "column",
+            justifyContent: "space-evenly"
+          }}> */}
+
+
+
+// let player1block = <div>
+//   <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].points} Point</h3>
+//   <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].chances} Chance</h5>
+//   <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
+// </div>
+
+// if (players[1]) {
+//   player2block = < div >
+//     <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].points} Point</h3>
+//     <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
+//     <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
+//   </div >
+// }
+
+// playerblock = <div className="playingcard middlebox">
+//   {player1block}
+//   <div>
+//     <p className="logo" style={{ marginLeft: "15%" }}>Memory</p>
+//     <img style={{ width: "150px", boxShadow: "none", paddingBottom: "25px" }} src={require(`../../images/aces.png`)} />
+//   </div>
+//   {player2block}
+// </div>
+
+
+
+{/* {let player1block = <div>
+            <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].points} Point</h3>
+            <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[0]].chances} Chance</h5>
+            <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player1Spinner}{players[0]}</button>
+          </div>
+
+          if (players[1]) {
+            player2block = < div >
+              <h3 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].points} Point</h3>
+              <h5 className={css(styles.pointsMemory)}>{data.gameplay.playerdata[players[1]].chances} Chance</h5>
+              <button className="btn btn-danger btn-lg rules" style={{ marginTop: 0 }}>{player2Spinner}{players[1]}</button>
+            </div >
+          } */}
+
+           // let onKeyDown = (e, user) => {
+
+    //   if (e.keyCode == 13) {
+    //     let message = {
+    //       "name": user,
+    //       "message": e.target.value,
+    //       "type": "Chat"
+    //     }
+
+    //     e.target.value = ""
+    //     chatSocket.send(JSON.stringify({
+    //       'message': message
+    //     }));
+
+    //   }
+
+    // }

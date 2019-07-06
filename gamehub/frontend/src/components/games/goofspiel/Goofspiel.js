@@ -81,6 +81,10 @@ export class Goofspiel extends Component {
 
   componentDidMount() {
 
+    this.setState({
+      messages: ["mounted"]
+    })
+
     getcookie((id) => {
       chatSocket = new WebSocket(
         'ws://' + window.location.host +
@@ -401,7 +405,7 @@ export class Goofspiel extends Component {
           <div style={{ marginTop: "20%" }}>
             {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
             <button className="btn btn-success btn-lg leader text-dark">Archive</button> */}
-            <Chat />
+            <Chat messages={this.state.messages} />
             {/* messages={this.state.messages} onKeyDown={onKeyDown} */}
           </div>
         </div>

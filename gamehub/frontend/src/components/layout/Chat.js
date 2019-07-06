@@ -15,9 +15,16 @@ export class Chat extends Component {
 
   // this.containerEl = document.createElement('div'); // STEP 1: create an empty div
   // this.externalWindow = null;
-  state = {
-    messages: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      messages: [],
+      currentMessage: "",
+      mount: this.props.messages
+    }
+
   }
+
 
 
 
@@ -55,6 +62,12 @@ export class Chat extends Component {
 
 
   onKeyDown = (e, user) => {
+
+    this.setState({
+      currentMessage: e.target.value
+    })
+
+    console.log(this.state.currentMessage)
 
     if (e.keyCode == 13) {
       let message = {
@@ -107,7 +120,8 @@ export class Chat extends Component {
           name='content'
           style={{ resize: "none", marginBottom: "5%" }}
           placeholder='ENTER to Submit'
-          onKeyDown={(e) => { (e.key === 'Enter' && e.target.value) ? this.onKeyDown(e, user) : null }}
+          onKeyDown={(e) => { this.onKeyDown(e, user) }}
+        // onKeyDown={(e) => { (e.key === 'Enter' && e.target.value) ? this.onKeyDown(e, user) : null }}
         />
 
 

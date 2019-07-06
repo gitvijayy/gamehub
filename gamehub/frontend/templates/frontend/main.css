@@ -151,7 +151,7 @@
   margin: 10%;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 600px) {
   .side-containers {
     /* visibility: hidden;
     clear: both;
@@ -168,7 +168,7 @@
 }
 /* } */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 600px) {
   .game-top-div {
     /* margin: 2%;
     max-width: 100%; */

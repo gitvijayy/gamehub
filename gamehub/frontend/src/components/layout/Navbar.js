@@ -24,7 +24,7 @@ class Navbar extends Component {
       console.log("logging out")
       setTimeout(() => {
         this.props.logout()
-      }, 1000);
+      }, 2000);
 
 
 
