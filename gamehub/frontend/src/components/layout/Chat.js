@@ -6,15 +6,8 @@ var chatSocket = ""
 // chatSocket = new WebSocket(
 //   'ws://' + window.location.host +
 //   `/ws/games/chatbox/`);
-
-
 export class Chat extends Component {
 
-
-
-
-  // this.containerEl = document.createElement('div'); // STEP 1: create an empty div
-  // this.externalWindow = null;
   constructor(props) {
     super(props)
     this.state = {
@@ -25,20 +18,16 @@ export class Chat extends Component {
 
   }
 
-
-
-
-
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       var message = data['message'];
       let mess = this.state.messages.reverse()
-      // if (this._isMounted) {
+
       this.setState({
         messages: [message, ...mess]
       })
-      // }
+
     }
 
 
@@ -47,8 +36,6 @@ export class Chat extends Component {
 
   componentDidMount() {
 
-    // this._isMounted = true;
-
 
     chatSocket = new WebSocket(
       'ws://' + window.location.host +
@@ -56,9 +43,6 @@ export class Chat extends Component {
   }
 
 
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  // }
 
 
   onKeyDown = (e, user) => {
@@ -91,7 +75,7 @@ export class Chat extends Component {
     if (this.props.user && this.props.user.username) {
       user = this.props.user.username
     }
-    // const mess = this.props.messages.reverse()
+
     const messages = this.state.messages.map((message, index) => {
       return (
         <Fragment key={index}>
@@ -111,9 +95,8 @@ export class Chat extends Component {
           className="text-center pre-scrollable" style={{ height: "250px", maxHeight: "250px", marginBottom: "5%" }}>
 
           {messages}
-          {/* <div id="scrollToBottom"></div> */}
-        </div>
 
+        </div>
 
         <input
           className="bg-dark text-light form-control"
@@ -121,11 +104,8 @@ export class Chat extends Component {
           style={{ resize: "none", marginBottom: "5%" }}
           placeholder='ENTER to Submit'
           onKeyDown={(e) => { this.onKeyDown(e, user) }}
-        // onKeyDown={(e) => { (e.key === 'Enter' && e.target.value) ? this.onKeyDown(e, user) : null }}
+
         />
-
-
-
 
       </Fragment>
     )

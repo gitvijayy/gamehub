@@ -13,13 +13,10 @@ class Activeplayers extends Component {
 
 
     const male = require("../images/male.png")
-    // const { players } = this.state
+
 
     let loadplayers;
 
-    // if (this.props.activeplayers && this.props.activeplayers[0] && this) {
-    //   console.log(this.props.activeplayers[0].user)
-    // }
 
     let blockStyle = {
       maxHeight: "380px!important",
@@ -54,13 +51,13 @@ class Activeplayers extends Component {
 
 
     return (
-      // <section className=" text-dark side-containers active-users">
+
       <Fragment>
         <button style={{ marginTop: "5%" }} className="btn btn-dark btn-lg  text-white bg-dark">Players</button>
 
         {loadplayers}
       </Fragment>
-      // </section>
+
     )
   }
 }

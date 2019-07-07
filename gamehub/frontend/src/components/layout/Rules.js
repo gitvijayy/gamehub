@@ -6,7 +6,6 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 export default class Rules extends Component {
   render() {
-    // // if (this.props.isauthenticated == "True") {
     const rules = this.props.rules.map((rule) => {
       return (
         <Fragment key={rule}>

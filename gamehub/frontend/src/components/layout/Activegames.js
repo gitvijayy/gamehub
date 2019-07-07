@@ -1,14 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { getActiveGames, getGamePlay, getActivePlayers } from '../../actions/goofspiel'
 import { connect } from 'react-redux'
-import { cssAnimations, getCookies } from '../games/goofspiel/datahelpers'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { getcookie } from '../games/memory/datahelpers';
-import { StyleSheet, css } from 'aphrodite';
-import { styles } from '../games/memory/datahelpers'
-import { bounceInLeft } from 'react-animations'
-// import { getActiveGames } from '../../actions/goofspiel'
-import { Activeplayers } from '../layout/Activeplayers'
+
 
 class Activegames extends Component {
 
@@ -19,12 +14,6 @@ class Activegames extends Component {
   }
 
 
-
-  // componentDidUpdate() {
-  //   getcookie((id) => {
-  //     this.setState({ id: id })
-  //   })
-  // }
 
   componentDidMount() {
     getcookie((id) => {
@@ -63,9 +52,7 @@ class Activegames extends Component {
         if (game.game_id.status == "New") {
           gameclass = "col-12 alert-warning btn-lg"
         }
-        // getcif (this.state.id == game.game_id.id) {
-        //   gameclass = "col-12 alert-dark btn-lg"
-        // }
+
 
         getcookie((id) => {
           if (id == game.game_id.id) {

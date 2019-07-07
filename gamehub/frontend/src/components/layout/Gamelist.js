@@ -87,10 +87,6 @@ class Gamelist extends Component {
     }
 
 
-
-
-
-
   }
 
 
@@ -99,16 +95,7 @@ class Gamelist extends Component {
 
 
   onClick = (e) => {
-    // this.setState({ loading: true });
-    // setTimeout(
-    //   function () {
-    //     this.setState({ loading: false });
-    //   }
-    //     .bind(this),
-    //   2000
-    // );
-    // return e
-    // <Link to={e.target.name}>Register</Link>
+
     document.cookie = `gameid=0`
     document.cookie = `gamename=${e}`
     this.props.setGame(e)
@@ -134,8 +121,6 @@ class Gamelist extends Component {
               this.onClick(game.name)
             }} className="btn btn-warning btn-lg text-dark " to={game.url} >PLAY</Link>
               :
-              // <Link style={styles} onClick={() => this.setState({ modalShowLogin: true })}
-              //   className="btn btn-warning btn-lg text-dark " to={game.url}>PLAY</Link>
 
               <button role="button" onClick={() => this.setState({ modalShowLogin: true })}
                 className="btn btn-warning btn-lg text-dark">Play
@@ -145,7 +130,7 @@ class Gamelist extends Component {
 
             }
 
-            {/* < button style={styles} className=" btn btn-warning btn-lg text-dark">Rules</button> */}
+
             <button role="button" onClick={() => this.setState({ rules: game.rules, gamename: game.name, modalShowRules: true })}
               className="btn btn-warning btn-lg text-dark">Rules
 
