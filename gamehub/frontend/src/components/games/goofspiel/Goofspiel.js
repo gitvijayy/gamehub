@@ -2,26 +2,15 @@ import React, { Component, Fragment, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getGamePlay, getNewGame, setGame, getActiveGames, addTurn, getActivePlayers } from '../../../actions/goofspiel.js'
-import { goofspielGamePlay, cards, getcookie, animate, getCookies } from './datahelpers.js'
-// import { addTurn } from '../../actions/defaultgame'
+import { getcookie } from './datahelpers.js'
 import Activeplayers from '../../layout/Activeplayers'
 import Activegames from '../../layout/Activegames'
 import Loaders from '../../layout/Loaders'
-import Loader2 from '../../layout/Loaders'
 import Spinner from 'react-bootstrap/Spinner'
-import { ANIMATION_STATUS } from '../../../actions/types'
-// import { StyleSheet, css } from 'aphrodite';
-// import { fadeIn } from 'react-animations'
-// import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight } from 'react-animations'
-// import { styles } from './datahelpers'
 import { cssAnimations } from './datahelpers'
 import Rules from '../../layout/Rules'
 import Chat from '../../layout/Chat'
-import Loader from 'react-loader-spinner'
-import { css } from 'aphrodite';
-// import { styles } from 'react-animations/lib/swing';
 
-import { styles } from './datahelpers'
 
 var chatSocket = ""
 
@@ -53,7 +42,6 @@ export class Goofspiel extends Component {
   }
 
 
-
   componentDidUpdate() {
     chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
@@ -68,12 +56,6 @@ export class Goofspiel extends Component {
         })
 
       }
-
-      // if (message.type == "Chat") {
-      //   this.setState({
-      //     messages: [...this.state.messages, message]
-      //   })
-      // }
 
 
     };
@@ -96,12 +78,10 @@ export class Goofspiel extends Component {
 
   render() {
 
-    let user1;
+
     if (this.props.user && this.props.user.user && this.props.user.user.username) {
       user1 = this.props.user.username
     }
-
-
 
     const setSocket = (id) => {
       chatSocket = new WebSocket(
@@ -115,12 +95,7 @@ export class Goofspiel extends Component {
         "no_of_players": 2
       }
       this.props.getNewGame(game, (id) => {
-        // this.props.getNewGame(this.state.name, (id) => {
-        // console.log(this.props.newgame)
-        // id = this.props.newgame.id
-        // chatSocket = new WebSocket(
-        //   'ws://' + window.location.host +
-        //   `/ws/games/${id}/`);
+
         document.cookie = `gameid=${id}`
         chatSocket.send(JSON.stringify({
           'message': "message"
@@ -128,23 +103,7 @@ export class Goofspiel extends Component {
       })
     }
 
-    // let onKeyDown = (e, user) => {
 
-    //   if (e.keyCode == 13) {
-    //     let message = {
-    //       "name": user,
-    //       "message": e.target.value,
-    //       "type": "Chat"
-    //     }
-
-    //     e.target.value = ""
-    //     chatSocket.send(JSON.stringify({
-    //       'message': message
-    //     }));
-
-    //   }
-
-    // }
 
     /////////////////////////////////////////////////////////////
     const data = this.props.gameplay
@@ -157,19 +116,12 @@ export class Goofspiel extends Component {
     let player2bet = <img className="playerbet" key={"p2"} src={require(`../../images/bet2.png`)} />
     let player1bet1 = ""
     let player2bet1 = ""
-    // let spinner = (<Spinner animation="border" role="status" className={cssAnimations.betblockSpinner}>
 
-    //   <span className="sr-only">Loading...</span>
-    // </Spinner>)
 
     let spinner = (<Spinner animation="border" role="status" style={{ marginRight: "7%" }}>
 
       <span className="sr-only">Loading...</span>
     </Spinner>)
-    // let gameblock =
-    //   <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
-    //     <Loaders />
-    //   </div>
 
     let gameblock;
 
@@ -257,11 +209,7 @@ export class Goofspiel extends Component {
 
         playerpoints.push(points)
 
-        // if (!data.gameplay.current[0]) {
-        //   player1bet = spinner
-        // } else if (!data.gameplay.current[1]) {
-        //   player2bet = spinner
-        // }
+
         if (!data.gameplay.current[0]) {
           player1bet1 = spinner
         } else if (!data.gameplay.current[1]) {
@@ -300,16 +248,14 @@ export class Goofspiel extends Component {
           player1Name = <p className="logo text-white" style={{ position: "absolute" }} >{Object.keys(data.gameplay.players)[0]}</p>
           player2Name = <p className="logo text-white" style={{ position: "absolute", top: "925px" }} >{Object.keys(data.gameplay.players)[1]}</p>
           gameblock = <div className="col-12 col-md-10 bg-alternate-2 " style={{ height: "52em" }} >
-            {/* <div className="player1name">
-              <p className="logo" >{Object.keys(data.gameplay.players)[0]}</p>
-            </div> */}
+
             {playercards[0]}
             <div className="playingcard middlebox justify-content-end">
-              {/* <img className="aces" src={require("../images/aces.png")} /> */}
+
               <div style={{ position: "absolute", left: "20px" }}>
                 <button style={{ height: "65px" }} className="btn btn-danger btn-lg rules">{player1bet1}{Object.keys(data.gameplay.players)[0]}</button>
                 {player1bet}
-                {/* {playerbets[0]} */}
+
               </div>
               <div style={{ position: "absolute", left: "220px" }}>
                 <button className="btn btn-success btn-lg leader text-dark" style={{ height: "65px" }}>Round {roundid}<br />Prize</button>
@@ -318,7 +264,7 @@ export class Goofspiel extends Component {
               <div style={{ position: "absolute", left: "420px" }}>
                 <button style={{ height: "65px" }} className="btn btn-danger btn-lg rules">{player2bet1}{Object.keys(data.gameplay.players)[1]}</button>
                 {player2bet}
-                {/* {playerbets[1]} */}
+
               </div>
               <table className="table table-borderless table-dark  text-center" style={{ width: "100px", marginTop: "2%" }}>
                 <p className="logo" style={{ marginTop: "10%", marginLeft: "29%" }}>Goofspiel</p>
@@ -335,9 +281,7 @@ export class Goofspiel extends Component {
               </table>
             </div>
             {playercards[1]}
-            {/* <div className="player2name">
-              <p className="logo" >{Object.keys(data.gameplay.players)[1]}</p>
-            </div> */}
+
           </div>
         }
       }
@@ -347,7 +291,7 @@ export class Goofspiel extends Component {
         round_id: data.gameplay.roundid,
         action: e.target.id
       }
-      // console.log(turn)
+
       this.props.addTurn(this.state.name, turn, () => {
         chatSocket.send(JSON.stringify({
           'message': "message"
@@ -372,12 +316,6 @@ export class Goofspiel extends Component {
       <section key="game.url" className="bg-common game-top-div justify-content-center"
 
         style={{ height: "57em" }} >
-
-        {/* <div key="{game.url}j" className="col-12 col-md-2 bg-common game-top-div game-cards  bg-alternate-2"
-          style={{
-            display: "flex", flexDirection: "column",
-            justifyContent: "none"
-          }}> */}
         <div key="{game.url}jm" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activegames gamename={this.state.name} setSocket={setSocket} />
           <div style={{ marginTop: "10%" }}>
@@ -385,17 +323,9 @@ export class Goofspiel extends Component {
             <button role="button" onClick={() => this.setState({ modalShowRules: true })}
               className="btn btn-danger btn-lg rules">Rules</button>
 
-
-
-
           </div>
 
-
-
         </div>
-
-
-
 
         {player1Name}
         {gameblock}
@@ -403,10 +333,9 @@ export class Goofspiel extends Component {
         <div key="{game.url}m" style={{ justifyContent: "none" }} className="col-12 col-md-2 bg-common game-top-div game-cards bg-alternate-2">
           <Activeplayers />
           <div style={{ marginTop: "20%" }}>
-            {/* <button className="btn btn-success btn-lg leader text-dark">Leaderboard</button>
-            <button className="btn btn-success btn-lg leader text-dark">Archive</button> */}
+
             <Chat messages={this.state.messages} />
-            {/* messages={this.state.messages} onKeyDown={onKeyDown} */}
+
           </div>
         </div>
 
@@ -423,7 +352,7 @@ const mapStateToProps = state => ({
   newgame: state.goofspiel.newgame[0],
   activegames: state.goofspiel.activegames,
   animate: state.goofspiel.animate
-  // gameid:getcookie()
+
 })
 
 export default connect(mapStateToProps, { getNewGame, getGamePlay, addTurn, setGame, getActiveGames, getActivePlayers })(Goofspiel)

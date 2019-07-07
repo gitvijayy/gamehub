@@ -1,6 +1,5 @@
 import { StyleSheet, css } from 'aphrodite';
 import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight, zoomIn, zoomOut, flipInY, hinge } from 'react-animations'
-import { delay } from 'q';
 
 export const cards = () => {
   let suits = ["C", "H", "S", "D"]
@@ -14,7 +13,6 @@ export const cards = () => {
 }
 
 export const goofspielGamePlay = (payload) => {
-  console.log(payload)
   let gameplay = {
     name: payload.name,
     gameid: payload.id,
@@ -31,11 +29,6 @@ export const goofspielGamePlay = (payload) => {
     winner: ""
   }
 
-  // let players = payload.players.map(value => {
-  //   gameplay.players[value.player.username] = []
-  //   gameplay.playerpoints[value.player.username] = 0
-  //   return value.player.username
-  // })
 
   let players = payload.game.map(value => {
     gameplay.players[value.player.username] = []
@@ -119,8 +112,6 @@ export const goofspielGamePlay = (payload) => {
     gameplay.animate = "startgame"
   }
 
-
-  console.log(gameplay)
   return {
     gameplay
 
@@ -141,12 +132,9 @@ export const getCookies = (cb) => {
   document.cookie.split(";").forEach(cookie => {
     name = cookie.split("=")[0].trim()
     cookies[name] = cookie.split("=")[1];
-    // if (name == "gameid") {
-    //   cb(cookie.split("=")[1])
-    // }
+
   })
   cb(cookies)
-  // return cookies
 }
 
 export const styles = StyleSheet.create({

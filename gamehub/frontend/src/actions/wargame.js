@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { createMessage, returnErrors } from './messages'
-import { GET_LEADS, DELETE_LEAD, ADD_LEAD, GET_ERRORS, GET_GAMEPLAY, ADD_TURN, GET_WAR_GAMEPLAY, MAKE_NEW_GAME, GET_WAR_ACTIVEGAMES, GET_ACTIVEPLAYERS } from './types'
+import { returnErrors } from './messages'
+import { GET_WAR_GAMEPLAY, MAKE_NEW_GAME, GET_WAR_ACTIVEGAMES, GET_ACTIVEPLAYERS } from './types'
 
 const tokenConfig = (getState) => {
   const token = getState().auth.token
@@ -30,8 +30,7 @@ export const getWarGamePlay = (gameId) => (dispatch, getState) => {
 }
 
 export const addWarTurn = (round, callback) => (dispatch, getState) => {
-  console.log('I am inside the warTurn')
-  console.log('this is the rounds : ' + round)
+
   axios.post(`/api/war/turns/`, { 'round_id': round }, tokenConfig(getState)).then(res => {
     callback()
 
@@ -42,11 +41,10 @@ export const addWarTurn = (round, callback) => (dispatch, getState) => {
 }
 
 export const makeNewGame = (state) => (dispatch, getState) => {
-  console.log('got into makeNewGame')
+
 
   axios.post('/api/war/games/', {}, tokenConfig(getState)).then(res => {
-    console.log('made a new game')
-    console.log(res)
+
     dispatch({
       type: MAKE_NEW_GAME,
       payload: res.data

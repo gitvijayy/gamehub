@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { register } from '../../actions/auth'
 import { createMessage } from '../../actions/messages'
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+
 export class Register extends Component {
   state = {
     username: '',
@@ -34,12 +33,12 @@ export class Register extends Component {
 
   render() {
     if (this.props.isauthenticated == "True") {
-      // return <Redirect to="/" />
+
       this.props.onHide
     }
     const { username, email, password, password2 } = this.state
     return (
-      // m-auto
+
 
       <Modal
         {...this.props}
@@ -56,8 +55,6 @@ export class Register extends Component {
         </Modal.Header>
         <Modal.Body className="bg-light text-dark">
 
-
-          {/* <div className="card card-body mt-4 mb-4"> */}
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <label>username</label>
@@ -67,14 +64,7 @@ export class Register extends Component {
                 value={username} />
 
             </div>
-            {/* <div className="form-group">
-              <label >Email</label>
-              <input type="Email"
-                className="form-control"
-                name="email"
-                onChange={this.onChange}
-                value={email} />
-            </div> */}
+
 
             <div className="form-group">
               <label >Password</label>
@@ -97,14 +87,8 @@ export class Register extends Component {
             </div>
           </form>
 
-
-          {/* <img onClick={this.onClick} id="vijay" src=" https://cf.geekdo-images.com/opengraph/img/5UuUOQiIySCooAhYTNYX0Gvhqmk=/fit-in/1200x630/pic111209.jpg" /> */}
-          {/* </div> */}
-
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
-        </Modal.Footer> */}
+
       </Modal>
 
     )

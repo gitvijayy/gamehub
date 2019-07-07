@@ -13,11 +13,7 @@ import { ANIMATION_STATUS } from '../../../actions/types'
 import { StyleSheet, css } from 'aphrodite';
 import Rules from '../../layout/Rules'
 import Chat from '../../layout/Chat'
-// import { fadeIn } from 'react-animations'
-// import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight } from 'react-animations'
-// import { styles } from './datahelpers'
-// import { cssAnimations } from './datahelpers'
-// import { styles } from 'react-animations/lib/swing';
+
 import Loader from 'react-loader-spinner'
 
 import { styles } from './datahelpers'
@@ -48,12 +44,6 @@ export class Memory extends Component {
       var data = JSON.parse(e.data);
       var message = data['message'];
 
-
-      // if (message.type == "Chat") {
-      //   this.setState({
-      //     messages: [...this.state.messages, message]
-      //   })
-      // }
 
       if (message.type != "Chat") {
 
@@ -110,11 +100,7 @@ export class Memory extends Component {
     let spinner = (<Spinner animation="border" role="status" style={{ marginRight: "7%" }}> <span className="sr-only">Loading...</span></Spinner>)
     let player1Spinner = ""
     let player2Spinner = ""
-    // let player1Name = ""
-    // let player2Name = ""
-    // let playerpoints = []
-    // let playerchances = []
-    let playerblock = ""
+
     let players = []
 
     const setSocket = (id) => {
@@ -153,8 +139,7 @@ export class Memory extends Component {
     if (data && data.gameplay && data.gameplay.cards && data.gameplay.status == "Active") {
       let cards = data.gameplay.cards
       players = Object.keys(data.gameplay.playerdata)
-      // playerpoints.push(data.gameplay.playerdata[players[0]].points)
-      // playerchances.push(data.gameplay.playerdata[players[0]].chances)
+
       let player2block = ""
 
       gameblock =

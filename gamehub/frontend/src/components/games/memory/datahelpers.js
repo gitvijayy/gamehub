@@ -1,6 +1,5 @@
 import { StyleSheet, css } from 'aphrodite';
 import { bounceInUp, bounceInDown, fadeOutLeft, fadeOutRight, zoomIn, zoomOut, flipInY, flipOutY, bounceInLeft } from 'react-animations'
-import { delay } from 'q';
 
 export const cards = () => {
   let suits = ["C", "H", "S", "D"]
@@ -23,10 +22,7 @@ export const memoryCards = () => {
     cardsMapped.push(`${card}${cards1.suits[2]}`)
     cardsMapped.push(`${card}${cards1.suits[3]}`)
   })
-  // cards1.suits.forEach(suit => {
-  //   cards1.cardnumbers.forEach(card => {
-  //     cardsMapped.push(`${card}${suit}`)
-  //   })
+
   return cardsMapped
 }
 
@@ -109,16 +105,7 @@ export const styles = StyleSheet.create({
     animationDuration: '2s'
 
   },
-  // },boun: {
-  //   animationName: zoomIn,
-  //   animationDuration: '2s'
 
-  // },
-  // zoomOutOnly: {
-  //   animationName: zoomIn,
-  //   animationDuration: '2s'
-
-  // },
 
 })
 
@@ -149,8 +136,6 @@ export const memoryGamePlay = (payload) => {
     },
 
 
-
-    // style: { boxShadow: "none" }
 
   }
 
@@ -247,11 +232,9 @@ export const memoryGamePlay = (payload) => {
   }))
 
 
-  // console.log(gameplay.playerdata)
   gameplay.cards = cards
 
 
-  console.log(gameplay)
   return {
     gameplay
   }
@@ -259,65 +242,3 @@ export const memoryGamePlay = (payload) => {
 }
 
 
-
-
-
-
-// let lastPlayer = gameplay.turnPlayer[gameplay.turnPlayer.length - 1]
-// if (index == payload.memoryrounds.length - 2) {
-//   console.log("here")
-
-//   console.log("lastplayer", lastPlayer)
-//   console.log(round.turns)
-
-//   // if (round.turns.length && round.turns[0] && round.turns[1]) {
-//   //   console.log("lastasd", lastPlayer)
-
-//   //   let faceupCards = gameplay.faceupCards
-//   //   let players = Object.keys(gameplay.playerdata)
-//   //   console.log(1, round.turns[0].action)
-//   //   console.log(2, faceupCards[faceupCards.length - 2])
-//   //   console.log(3, round.turns[1].action)
-//   //   console.log(4, faceupCards[faceupCards.length - 1])
-//   //   console.log(5, Object.keys(gameplay.playerdata)[0])
-//   //   console.log(6, gameplay.playerdata[Object.keys(gameplay.playerdata)[1]].turn)
-//   //   console.log(7, gameplay.playerdata[lastPlayer].turn)
-//   //   console.log(players)
-
-
-
-//   //   // if (round.turns[0].action&& 
-
-//   //   // )
-
-//   //   if ((round.turns[0].action == faceupCards[faceupCards.length - 2]) && (round.turns[1].action == faceupCards[faceupCards.length - 1])) {
-//   //     console("in")
-//   //     gameplay.playerdata[lastPlayer].turn = true
-//   //   }
-//   //   if (lastPlayer == players[0]) {
-//   //     //   console("in1")
-//   //     gameplay.playerdata[lastPlayer].turn = true
-//   //   }
-//   //   console.log(lastPlayer, players[1])
-//   //   if (players[1]) {
-//   //     console.log("testasdasdasdasd")
-//   //   }
-//   //   console.log(typeof lastPlayer)
-//   //   console.log(typeof players[1])
-//   //   console.log(players[0])
-//   //   console.log(players[1])
-
-
-//   //   if (lastPlayer == players[1]) {
-//   //     console("inasdasdasdads2")
-//   //     //   // gameplay.playerdata[Object.keys(gameplay.playerdata)[1]].turn = true
-//   //   }
-
-
-//   // }
-//   // else {
-//   //   console.log("asdasd")
-
-//   //   gameplay.playerdata[lastPlayer].turn = true
-//   // }
-// }
