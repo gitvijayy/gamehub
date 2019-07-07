@@ -15,23 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django.conf.urls import include as include1, url
-# from django.views.generic import TemplateView
-# from django.contrib import admin
-# from django.urls import path, include, re_path
-# from django.views.generic import TemplateView
+from django.conf.urls import url
+
 urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
-    # path('', include('defaultgame.urls')),
     path('', include('war.urls')),
     path('', include('memory.urls')),
     path('', include('goofspiel.urls')),
     path('', include('games.urls')),
     path('admin/', admin.site.urls),
-    url(r'^chat/', include('chat.urls')),
-    # url(r'^ws/socket/', include('defaultgame.urls'))
-
-    # path('chat/', include1('chat.api.urls', namespace='chat')),
-    # re_path(r'^.*', TemplateView.as_view(template_name='index.html'))
 ]
