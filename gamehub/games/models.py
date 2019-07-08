@@ -1,9 +1,6 @@
 from django.db import models
 
-# Create your models here.
-# from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
 
 
 class Games(models.Model):
@@ -19,8 +16,6 @@ class Players(models.Model):
         Games, related_name="game", on_delete=models.CASCADE, null=True)
     player = models.ForeignKey(
         User, related_name="user", on_delete=models.CASCADE, null=True)
-    # status = models.CharField(max_length=500, blank=True)
-    # player = models.ManyToManyField(Games)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -28,9 +23,3 @@ class Usersonline(models.Model):
     user = models.ForeignKey(
         User, related_name="onlineuser", on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=500, blank=True)
-
-
-# class Leaderboard(models.Model):
-#     game = models.CharField(max_length=500, blank=True)
-#     username = models.CharField(max_length=500, blank=True)
-#     status = models.CharField(max_length=500, blank=True)
