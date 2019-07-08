@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'goofspiel',
     'games',
     'memory'
-    # 'online_users'
+
 
 ]
 
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
-    # 'online_users.middleware.OnlineNowMiddleware',
+
 ]
 
 ROOT_URLCONF = 'gamehub.urls'
@@ -99,16 +99,7 @@ CHANNEL_LAYERS = {
     },
 }
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('127.0.0.1', 6379)],
-#         },
-#     },
-# }
-
-
+# setup for postgres
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

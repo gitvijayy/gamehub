@@ -1,9 +1,8 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-# from .serializers import validateSerializer
-# from .serializers import addPlayerSerializer
+
 from .serializers import GameSerializer
-# from .serializers import PlayerSerializer
+
 from .serializers import TurnSerializer
 from games.models import Games
 from games.models import Players
