@@ -81,7 +81,6 @@ class TurnSerializer(serializers.ModelSerializer):
             if player_valid_turn and prize_card != 0:
                 raise serializers.ValidationError("Not Your Turn")
 
-            # prize_card = prize_card_generator(gameid)
             if prize_card == 0:
                 newturn = add_turn(roundid, validated_data['action'], user)
                 gameover = Games.objects.get(id=gameid.id)
